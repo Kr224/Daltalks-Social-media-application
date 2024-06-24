@@ -8,7 +8,7 @@ const ProfilePage = () => {
   useEffect(() => {
     const fetchProfile = async () => {
       try {
-        const response = await axios.get(`http://localhost:8080/get/profile/${id}`);
+        const response = await axios.get(`http://localhost:8080/profiles/getById/${id}`);
         console.log(response);
         setProfile(response.data);
       } catch (error) {
