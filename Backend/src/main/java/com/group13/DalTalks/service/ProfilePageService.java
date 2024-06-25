@@ -5,11 +5,11 @@ import com.group13.DalTalks.model.ProfilePage;
 import java.util.List;
 
 public interface ProfilePageService {
-  String createProfile(ProfilePage page);
+  ProfilePage createProfile(ProfilePage page);
 
   ProfilePage getProfilePageById(int id);
 
-  String updateProfilePage(int id, ProfilePage page);
+  ProfilePage updateProfilePage(int id, ProfilePage page);
 
-  String deleteProfilePage(int id);
+  ProfilePage deleteProfilePage(int id);
 }

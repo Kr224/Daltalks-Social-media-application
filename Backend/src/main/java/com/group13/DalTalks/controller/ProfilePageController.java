@@ -13,7 +13,7 @@ public class ProfilePageController {
   private ProfilePageService profilePageService;
 
   @PostMapping("/profiles/save")
-  public String createProfilePage(@RequestBody ProfilePage profilePage) {
+  public ProfilePage createProfilePage(@RequestBody ProfilePage profilePage) {
     return profilePageService.createProfile(profilePage);
   }
 
@@ -23,12 +23,12 @@ public class ProfilePageController {
   }
 
   @PostMapping("/profiles/update/{id}")
-  public String updateProfilePage(@PathVariable int id, @RequestBody ProfilePage profilePage){
+  public ProfilePage updateProfilePage(@PathVariable int id, @RequestBody ProfilePage profilePage){
     return profilePageService.updateProfilePage(id, profilePage);
   }
 
   @DeleteMapping("/profiles/delete/{id}")
-  public String deleteProfilePage(@PathVariable int id){
+  public ProfilePage deleteProfilePage(@PathVariable int id){
     return profilePageService.deleteProfilePage(id);
   }
 

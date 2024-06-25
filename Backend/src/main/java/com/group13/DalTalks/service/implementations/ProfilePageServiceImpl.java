@@ -15,36 +15,49 @@ public class ProfilePageServiceImpl implements ProfilePageService {
   private ProfilePageRepository profilePageRepository;
 
   @Override
-  public String createProfile(ProfilePage page) {
-    profilePageRepository.save(page);
-    return "Profile Created";
+  public ProfilePage createProfile(ProfilePage page) {
+    return profilePageRepository.save(page);
   }
 
   @Override
   public ProfilePage getProfilePageById(int id) {
-    return profilePageRepository.getReferenceById(id);
+    Optional<ProfilePage> returned = profilePageRepository.findById(id);
+
+    if (returned.isPresent()) {
+      return returned.get();
+    }
+
+    return null;
   }
 
   @Override
-  public String updateProfilePage(int id, ProfilePage page) {
+  public ProfilePage updateProfilePage(int id, ProfilePage page) {
     Optional<ProfilePage> toUpdate = profilePageRepository.findById(id);
 
-    ProfilePage update = toUpdate.get();
+    if (toUpdate.isPresent()) {
+      ProfilePage update = toUpdate.get();
 
-    update.setInterests(page.getInterests());
-    update.setStatus(page.getStatus());
-    update.setBirthday(page.getBirthday());
-    update.setLocation(page.getLocation());
-    update.setMajor(page.getMajor());
+      update.setInterests(page.getInterests());
+      update.setStatus(page.getStatus());
+      update.setBirthday(page.getBirthday());
+      update.setLocation(page.getLocation());
+      update.setMajor(page.getMajor());
 
-    profilePageRepository.save(update);
+      return profilePageRepository.save(update);
+    }
 
-    return "Updated Profile";
+    return null;
   }
 
   @Override
-  public String deleteProfilePage(int id) {
-    profilePageRepository.deleteById(id);
-    return "Profile Deleted";
+  public ProfilePage deleteProfilePage(int id) {
+    Optional<ProfilePage> found = profilePageRepository.findById(id);
+
+    if (found.isPresent()){
+      profilePageRepository.deleteById(id);
+      return found.get();
+    }
+
+    return null;
   }
 }
