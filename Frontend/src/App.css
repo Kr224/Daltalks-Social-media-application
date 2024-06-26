@@ -42,12 +42,6 @@
   position: fixed;
   top: 0;
   left: 0;
-  width: 100%; /* This corresponds to span={6} in a 24-column grid */
-  height: 100vh; /* Full height */
-  z-index: 1000; /* Ensure it is above other content */
 }
 
-.content-col {
-  margin-left: 25%; 
-  width: 100%; /* This corresponds to span={18} in a 24-column grid */
-}
+

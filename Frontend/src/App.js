@@ -10,12 +10,12 @@ const App = () => {
   return (
     <div className="App">
       <Row justify="center" align="top">
-        <Col span={6} className="navigation-col">
-          <div>
+        <Col span={6}>
+          <div class="navigation-col">
             <Navigation />
           </div>
         </Col>
-        <Col span={13} className="content-col">
+        <Col span={18} className="content-col">
           <div>
             <Router>
                 <Routes>
@@ -25,11 +25,6 @@ const App = () => {
             </Router>
           </div>
         </Col>  
-        <Col span={5} className="Friencd-col">
-          <div>
-            <Friend />
-          </div>
-        </Col>
       </Row>
     </div>
   );
