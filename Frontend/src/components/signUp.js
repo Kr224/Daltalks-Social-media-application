@@ -38,7 +38,7 @@ const SignUp = () => {
         <h2 style={{ marginBottom: '20px' }}>Create Account</h2>
         <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '10px', width: '300px' }}>
           <input type="text" name="email" placeholder="Email Address" onChange={(e) => setEmail(e.target.value)} style={{ padding: '10px', borderRadius: '5px', border: '1px solid #ccc' }} />
-          <input type="text" name="password" placeholder="Password" onChange={(e) => setPassword(e.target.value)} style={{ padding: '10px', borderRadius: '5px', border: '1px solid #ccc' }} />
+          <input type="password" name="password" placeholder="Password" onChange={(e) => setPassword(e.target.value)} style={{ padding: '10px', borderRadius: '5px', border: '1px solid #ccc' }} />
           <input type="text" name="question" placeholder="Security Question" onChange={(e) => setQuestion(e.target.value)} style={{ padding: '10px', borderRadius: '5px', border: '1px solid #ccc' }} />
           <input type="text" name="answer" placeholder="Security Answer" onChange={(e) => setAnswer(e.target.value)} style={{ padding: '10px', borderRadius: '5px', border: '1px solid #ccc' }} />
           
