@@ -1,9 +1,8 @@
 import './App.css';
-import Friend from './Components/friends';
 import Navigation from './Components/navigation';
 import Post from './Components/post';
 import User from './Components/user';
-import { Col, Divider, Row } from 'antd';
+import { Col, Row } from 'antd';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 const App = () => {
@@ -11,7 +10,7 @@ const App = () => {
     <div className="App">
       <Row justify="center" align="top">
         <Col span={6}>
-          <div class="navigation-col">
+          <div>
             <Navigation />
           </div>
         </Col>

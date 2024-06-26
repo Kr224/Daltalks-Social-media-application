@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Avatar, Space, Card, Button } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 import '../css/friends.css'
