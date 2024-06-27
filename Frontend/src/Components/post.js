@@ -9,21 +9,31 @@ import '../css/post.css';
 
 const Post = () => {
     const value = "vertical";
-    const [post, setPost] = useState(null);
-
+    const [post, setPosts] = useState(null);
+    const [email, setEmails] = useState([]);
 
     useEffect(() => {
         const fetchPost = async () => {
-          try {
-            const response = await axios.get(`http://localhost:8080/api/post/getAllPost`);
-            setPost(response.data);
-          } catch (error) {
-            console.error('Error fetching resume', error);
-          }
+            try {
+                const response = await axios.get(`http://localhost:8080/api/getAllPost`);
+                const fetchedPosts = response.data;
+                setPosts(fetchedPosts);
+
+                const emailPromises = fetchedPosts.map(async (post) => {
+                    const userID = post.userID;
+                    const emailResponse = await axios.get(`http://localhost:8080/api/getEmailByUserID/${userID}`);
+                    return emailResponse.data;
+                });
+
+                const fetchedEmails = await Promise.all(emailPromises);
+                setEmails(fetchedEmails);
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
         };
-    
+
         fetchPost();
-      }, []);
+    }, []);
 
     return (
         <div class="main">
@@ -48,7 +58,7 @@ const Post = () => {
                                                         <Avatar size={48} icon={<UserOutlined />} />
                                                     </div>
                                                     <div class="username">
-                                                        <a href="#">{pos.userID}</a>
+                                                        <a href="#">{email[index]}</a>
                                                     </div>
                                                 </Space>  
                                                 <div class="timestamp">

@@ -1,6 +1,5 @@
-package com.group13.DalTalks.service.Implementations;
+package com.group13.DalTalks.service.Implementation;
 
-import com.group13.DalTalks.model.Post;
 import com.group13.DalTalks.model.User;
 import com.group13.DalTalks.repository.UserRepository;
 import com.group13.DalTalks.service.UserService;
@@ -30,6 +29,17 @@ public class UserServiceImpl implements UserService{
     public List<User> getAllUser(){
         return (List<User>)
                 userRepository.findAll();
+    }
+
+    @Override
+    public String getEmailByUserID(Integer userID) {
+        Optional<User> userOptional = userRepository.findById(userID);
+        if (userOptional.isPresent()) {
+            User user = userOptional.get();
+            return user.getEmail();
+        } else {
+            return ("User not found with ID: " + userID);
+        }
     }
 
     private void validateEmail(String email){

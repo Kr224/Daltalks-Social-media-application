@@ -9,4 +9,6 @@ public interface UserService {
     public String createUser(User user);
 
     List<User> getAllUser();
+
+    String getEmailByUserID(Integer userID);
 }
