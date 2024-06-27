@@ -1,16 +1,22 @@
 import React, { useState } from 'react';
 import { Button } from 'antd';
 import { HomeOutlined, UserOutlined } from '@ant-design/icons';
+import { Link } from 'react-router-dom';
+
 
 const Navigation = () => {
     return (
       <div>
         <h1>Dal Talk</h1>
         <Button type="text">
-          <HomeOutlined />Home
+          <a href="/">
+            <HomeOutlined />Home
+          </a>
         </Button>
         <Button type="text">
-          <UserOutlined />User
+          <a href="/profile">
+            <UserOutlined />User
+          </a>
         </Button>
       </div>
     );

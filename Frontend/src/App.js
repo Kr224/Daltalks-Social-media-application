@@ -4,6 +4,7 @@ import Post from './Components/post';
 import User from './Components/user';
 import { Col, Row } from 'antd';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import ProfilePage from '../src/ProfilePage'
 
 const App = () => {
   return (
@@ -19,7 +20,7 @@ const App = () => {
             <Router>
                 <Routes>
                   <Route index element={<Post />} />
-                  <Route path="/user" element={<User/>} />
+                  <Route path="/profile" element={<ProfilePage />} />
                 </Routes>
             </Router>
           </div>
