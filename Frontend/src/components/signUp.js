@@ -4,13 +4,13 @@ import axios from 'axios';
 const SignUp = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [question, setQuestion] = useState('');
-    const [answer, setAnswer] = useState('');
+    const [securityQuestion, setQuestion] = useState('');
+    const [securityAnswer, setAnswer] = useState('');
     
     const handleSubmit = async (event) => {
         event.preventDefault();
 
-        if (!email || !password || !question || !answer) {
+        if (!email || !password || !securityQuestion || !securityAnswer) {
             alert('Please fill in all required fields');
             return;
           }
@@ -18,13 +18,13 @@ const SignUp = () => {
         const formData = {
             email,
             password,
-            question,
-            answer
+            securityQuestion,
+            securityAnswer
         };
       
         try {
           const response = await axios.post('http://localhost:8080/api/signup/create', formData);
-          console.log(response.data);
+          console.log(formData);
           alert('Account created successfully');
         } catch (error) {
           console.error(error);
