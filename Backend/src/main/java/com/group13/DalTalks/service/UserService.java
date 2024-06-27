@@ -4,5 +4,8 @@ import com.group13.DalTalks.model.User;
 
 public interface UserService {
 
-    public String createUser(User user);
+    String createUser(User user);
+
+    User login(String email, String password) throws IllegalArgumentException;
+
 }

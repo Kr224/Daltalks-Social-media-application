@@ -1,35 +1,23 @@
-// Login.js
 import React, { useState } from 'react';
-import './Login.css';
+import { Link } from 'react-router-dom';
+import axios from 'axios';
+import '../Login.css';
 
 const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
 
-        fetch('/api/auth/login', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ email, password })
-        })
-        .then(response => {
-            if (!response.ok) {
-                return response.text().then(message => { throw new Error(message); });
-            }
-            return response.json();
-        })
-        .then(data => {
+        try {
+            const response = await axios.post('http://localhost:8080/api/user/login', { email, password });
             localStorage.setItem('loggedIn', 'true');
-            window.location.href = '/dashboard'; // Redirect to dashboard or home page
-        })
-        .catch(error => {
-            setErrorMessage(error.message);
-        });
+            window.location.href = '/profile';
+        } catch (error) {
+            setErrorMessage(error.response.data.message || 'An error occurred. Please try again.');
+        }
     };
 
     return (
@@ -55,10 +43,13 @@ const Login = () => {
                             required
                         />
                     </div>
+                    <div className="forgot-password">
+                        <p><Link to="/forgot-password">Forgot password?</Link></p>
+                    </div>
                     <button type="submit" className="login-button">Log In</button>
                     <div className="error-message">{errorMessage}</div>
-                    <div className="forgot-password">
-                        <a href="#">Forgot password?</a>
+                    <div className="extra-links">
+                        <p>Don't have an account? <Link to="/signup">Sign up</Link></p>
                     </div>
                 </form>
             </div>
