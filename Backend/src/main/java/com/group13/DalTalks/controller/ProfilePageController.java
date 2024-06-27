@@ -5,6 +5,7 @@ import com.group13.DalTalks.service.ProfilePageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
 @RequestMapping("/profiles")
 public class ProfilePageController {
@@ -12,22 +13,22 @@ public class ProfilePageController {
   @Autowired
   private ProfilePageService profilePageService;
 
-  @PostMapping("/profiles/save")
+  @PostMapping("/save")
   public ProfilePage createProfilePage(@RequestBody ProfilePage profilePage) {
     return profilePageService.createProfile(profilePage);
   }
 
-  @GetMapping("/profiles/getById/{id}")
+  @GetMapping("/getById/{id}")
   public ProfilePage getProfilePageById(@PathVariable int id) {
     return profilePageService.getProfilePageById(id);
   }
 
-  @PostMapping("/profiles/update/{id}")
+  @PostMapping("/update/{id}")
   public ProfilePage updateProfilePage(@PathVariable int id, @RequestBody ProfilePage profilePage){
     return profilePageService.updateProfilePage(id, profilePage);
   }
 
-  @DeleteMapping("/profiles/delete/{id}")
+  @DeleteMapping("/delete/{id}")
   public ProfilePage deleteProfilePage(@PathVariable int id){
     return profilePageService.deleteProfilePage(id);
   }
