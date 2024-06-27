@@ -68,11 +68,17 @@ body {
 }
 
 .forgot-password {
+    text-align: right;
     margin-top: 20px;
+    margin-bottom: 15px;
 }
 
 .forgot-password a {
     color: #00376b;
     text-decoration: none;
     font-size: 12px;
+}
+
+.forgot-password a:hover {
+    text-decoration: underline;
 }
