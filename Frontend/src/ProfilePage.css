@@ -11,10 +11,10 @@
 .profile {
     border: 1px solid #ddd;
     padding: 20px;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     box-shadow: 0 0 10px rgba(50, 50, 50, 0.1);
 }
 
 .profile p {
-    margin: 0 0 15px;
+    margin: 15 0 15px;
 }
