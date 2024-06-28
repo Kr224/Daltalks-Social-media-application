@@ -31,7 +31,7 @@ const Friend = () => {
                 <div class="user-info">
                   <p class="account-name">{user.email}</p>
                   <Button type="primary" className="follow">Follow</Button>
-                  <Button type="primary">Remove</Button>
+                  <Button type="primary" danger>Remove</Button>
                 </div>
               </Card> 
             </div>             
