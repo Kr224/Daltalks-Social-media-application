@@ -1,18 +1,17 @@
 import React from 'react';
-import FriendRequestComponent from './components/FriendRequestComponent';
-import './App.css';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import Login from './components/Login';
+import SignUp from './components/signUp';
 
-function App() {
+const App = () => {
     return (
-        <div className="App">
-            <header className="App-header">
-                <h1>DalTalks</h1>
-            </header>
-            <main>
-                <FriendRequestComponent />
-            </main>
-        </div>
+        <Router>
+            <Routes>
+                <Route path="/login" element={<Login />} />
+                <Route path="/signup" element={<SignUp />} />
+            </Routes>
+        </Router>
     );
-}
+};
 
 export default App;
