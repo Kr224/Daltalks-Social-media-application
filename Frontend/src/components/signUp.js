@@ -1,21 +1,22 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import '../Login.css';
 
 const SignUp = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [securityQuestion, setQuestion] = useState('');
-    const [securityAnswer, setAnswer] = useState('');
+    const [securityQuestion, setSecurityQuestion] = useState('');
+    const [securityAnswer, setSecurityAnswer] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
+    const navigate = useNavigate();
 
     const handleSubmit = async (event) => {
         event.preventDefault();
 
         if (!email || !password || !securityQuestion || !securityAnswer) {
-          alert('Please fill in all required fields');
-          return;
+            alert('Please fill in all required fields');
+            return;
         }
 
         const formData = {
@@ -26,11 +27,12 @@ const SignUp = () => {
         };
 
         try {
-          const response = await axios.post('http://localhost:8080/api/signup/create', formData);
-          console.log(formData);
-          alert('Account created successfully');
+            const response = await axios.post('http://localhost:8080/api/user/create', formData);
+            console.log(formData);
+            alert('Account created successfully');
+            navigate('/login');
         } catch (error) {
-            setErrorMessage(error.response.data.message || 'An error occurred. Please try again.');
+            setErrorMessage(error.response?.data?.message || 'An error occurred. Please try again.');
         }
     };
 
@@ -61,7 +63,7 @@ const SignUp = () => {
                         <input
                             type="text"
                             value={securityQuestion}
-                            onChange={(e) => setQuestion(e.target.value)}
+                            onChange={(e) => setSecurityQuestion(e.target.value)}
                             placeholder="Security Question"
                             required
                         />
@@ -70,7 +72,7 @@ const SignUp = () => {
                         <input
                             type="text"
                             value={securityAnswer}
-                            onChange={(e) => setAnswer(e.target.value)}
+                            onChange={(e) => setSecurityAnswer(e.target.value)}
                             placeholder="Security Answer"
                             required
                         />
