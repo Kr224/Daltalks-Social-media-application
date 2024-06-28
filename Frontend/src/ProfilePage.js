@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
-import '../ProfilePage.css' 
+import './ProfilePage.css' 
 
 //this displays the profile information by getting it from the database
 const ProfilePage = () => {
