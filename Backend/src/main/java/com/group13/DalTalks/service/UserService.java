@@ -1,14 +1,18 @@
 package com.group13.DalTalks.service;
 
 import com.group13.DalTalks.model.User;
+import java.util.*;
 
-import java.util.List;
 
 public interface UserService {
 
-    public String createUser(User user);
+    String createUser(User user);
 
     List<User> getAllUser();
 
-    String getEmailByUserID(Integer userID);
+    User login(String email, String password) throws IllegalArgumentException;
+
+    User forgotPassword(String email, String securityAnswer) throws IllegalArgumentException;
+
+    void resetPassword(String email, String newPassword);
 }
