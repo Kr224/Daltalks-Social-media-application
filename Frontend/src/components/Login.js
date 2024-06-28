@@ -13,8 +13,10 @@ const Login = () => {
 
         try {
             const response = await axios.post('http://localhost:8080/api/user/login', { email, password });
+            const { id } = response.data;
             localStorage.setItem('loggedIn', 'true');
-            window.location.href = '/profile';
+            localStorage.setItem('userId', id);
+            window.location.href = '../ProfilePage';
         } catch (error) {
             setErrorMessage(error.response.data.message || 'An error occurred. Please try again.');
         }
