@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import Login from './components/Login';
 import SignUp from './components/signUp';
+import ForgotPassword from './components/forgotPassword';
 import ProfilePage from './components/ProfilePage';
 import ErrorPage from './components/ErrorPage';
 import PrivateRoute from './components/PrivateRoute';
@@ -12,6 +13,7 @@ const App = () => {
             <Routes>
                 <Route path="/login" element={<Login />} />
                 <Route path="/signup" element={<SignUp />} />
+                <Route path="/forgotPassword" element={<ForgotPassword />} />
                 <Route path="/error" element={<ErrorPage />} />
                 <Route
                     path="/profile"

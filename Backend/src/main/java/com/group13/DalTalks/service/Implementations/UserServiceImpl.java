@@ -59,4 +59,13 @@ public class UserServiceImpl implements UserService {
 
         return user;
     }
+
+    @Override
+    public void resetPassword(String email, String newPassword) throws IllegalArgumentException {
+        validatePassword(newPassword);
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid email address!"));
+        user.setPassword(newPassword);
+        userRepository.save(user);
+    }
 }

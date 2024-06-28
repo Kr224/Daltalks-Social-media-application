@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
 @RequestMapping("/api/user")
@@ -42,6 +44,18 @@ public class UserController {
         }
         catch (IllegalArgumentException e) {
             return ResponseEntity.status(404).body(e.getMessage());
+        }
+    }
+
+    @PostMapping("/resetPassword")
+    public ResponseEntity<?> resetPassword(@RequestBody Map<String, String> resetRequest) {
+        try {
+            String email = resetRequest.get("email");
+            String newPassword = resetRequest.get("newPassword");
+            userService.resetPassword(email, newPassword);
+            return ResponseEntity.ok("Password reset successful!");
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(400).body(e.getMessage());
         }
     }
 
