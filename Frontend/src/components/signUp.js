@@ -6,24 +6,28 @@ import '../Login.css';
 const SignUp = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [question, setQuestion] = useState('');
-    const [answer, setAnswer] = useState('');
-    const [errorMessage, setErrorMessage] = useState('');
-
+    const [securityQuestion, setQuestion] = useState('');
+    const [securityAnswer, setAnswer] = useState('');
+    
     const handleSubmit = async (event) => {
         event.preventDefault();
 
+        if (!email || !password || !securityQuestion || !securityAnswer) {
+            alert('Please fill in all required fields');
+            return;
+          }
+      
         const formData = {
             email,
             password,
-            question,
-            answer
+            securityQuestion,
+            securityAnswer
         };
 
         try {
-            await axios.post('http://localhost:8080/api/user/create', formData);
-            alert('Account created successfully');
-            window.location.href = '/login';
+          const response = await axios.post('http://localhost:8080/api/signup/create', formData);
+          console.log(formData);
+          alert('Account created successfully');
         } catch (error) {
             setErrorMessage(error.response.data.message || 'An error occurred. Please try again.');
         }
