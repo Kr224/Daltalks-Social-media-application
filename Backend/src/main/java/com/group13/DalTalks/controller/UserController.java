@@ -33,4 +33,16 @@ public class UserController {
             return ResponseEntity.status(400).body(e.getMessage());
         }
     }
+
+    @PostMapping("/forgotPassword")
+    public ResponseEntity<?> forgotPassword(@RequestBody User forgotPasswordRequest) {
+        try {
+            User user = userService.forgotPassword(forgotPasswordRequest.getEmail(), forgotPasswordRequest.getSecurityAnswer());
+            return ResponseEntity.ok(user);
+        }
+        catch (IllegalArgumentException e) {
+            return ResponseEntity.status(404).body(e.getMessage());
+        }
+    }
+
 }

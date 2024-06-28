@@ -8,4 +8,5 @@ public interface UserService {
 
     User login(String email, String password) throws IllegalArgumentException;
 
+    User forgotPassword(String email, String securityAnswer) throws IllegalArgumentException;
 }
