@@ -26,9 +26,9 @@ const SignUp = () => {
         };
 
         try {
-            await axios.post('http://localhost:8080/api/user/create', formData);
-            alert('Account created successfully');
-            window.location.href = '/login';
+          const response = await axios.post('http://localhost:8080/api/signup/create', formData);
+          console.log(formData);
+          alert('Account created successfully');
         } catch (error) {
             setErrorMessage(error.response.data.message || 'An error occurred. Please try again.');
         }
