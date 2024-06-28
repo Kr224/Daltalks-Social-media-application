@@ -21,6 +21,10 @@ const App = () => {
                 <Routes>
                   <Route index element={<Post />} />
                   <Route path="/profile" element={<ProfilePage />} />
+                  <Route path="/create" />
+                  <Route path="/reset" />
+                  <Route path="/signin" />
+                  <Route path="/authorize" />
                 </Routes>
             </Router>
           </div>
