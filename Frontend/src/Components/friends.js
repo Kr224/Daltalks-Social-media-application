@@ -7,20 +7,41 @@ import '../css/friends.css'
 
 const Friend = () => {
   const [User, setUser] = useState(null);
+  const [message, setMessage] = useState('');
 
 
-    useEffect(() => {
-        const fetchUser = async () => {
-          try {
-            const response = await axios.get(`http://localhost:8080/api/user/getAllUser`);
-            setUser(response.data);
-          } catch (error) {
-            console.error('Error fetching resume', error);
-          }
-        };
+  useEffect(() => {
+      const fetchUser = async () => {
+        try {
+          const response = await axios.get(`http://localhost:8080/api/user/getAllUser`);
+          setUser(response.data);
+        } catch (error) {
+          console.error('Error fetching resume', error);
+        }
+      };
     
-        fetchUser();
-      }, []);
+      fetchUser();
+  }, []);
+
+  const handleRemoveFriend = async (friendEmail) => {
+      try {
+          const response = await axios.post('/api/user/remove-friend', { userEmail: 'current_user_email', friendEmail });
+          setMessage(response.data);
+      } catch (error) {
+          setMessage(error.response.data.message);
+      }
+  };
+
+    const handleAddFriend = async (friendEmail) => {
+      try {
+          const response = await axios.post('/api/user/send-friend-request', { userEmail: 'current_user_email', friendEmail});
+          setMessage(response.data);
+      } catch (error) {
+          setMessage(error.response.data.message);
+      }
+  };
+
+
     return (
       <div>
         {User ? (
@@ -30,8 +51,8 @@ const Friend = () => {
               <Avatar size={48} icon={<UserOutlined />} />
                 <div class="user-info">
                   <p class="account-name">{user.email}</p>
-                  <Button type="primary" className="follow">Follow</Button>
-                  <Button type="primary" danger>Remove</Button>
+                  <Button type="primary" className="follow" onClick={() => handleAddFriend(user.email)}>Follow</Button>
+                  <Button type="primary" danger onClick={() => handleRemoveFriend(user.email)}>Remove</Button>
                 </div>
               </Card> 
             </div>             
