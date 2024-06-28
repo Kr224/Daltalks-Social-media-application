@@ -8,16 +8,15 @@ const SignUp = () => {
     const [password, setPassword] = useState('');
     const [securityQuestion, setQuestion] = useState('');
     const [securityAnswer, setAnswer] = useState('');
-    const [errorMessage, setErrorMessage] = useState('');
-
+    
     const handleSubmit = async (event) => {
         event.preventDefault();
 
         if (!email || !password || !securityQuestion || !securityAnswer) {
-          alert('Please fill in all required fields');
-          return;
-        }
-
+            alert('Please fill in all required fields');
+            return;
+          }
+      
         const formData = {
             email,
             password,
@@ -60,7 +59,7 @@ const SignUp = () => {
                     <div className="input-group">
                         <input
                             type="text"
-                            value={securityQuestion}
+                            value={question}
                             onChange={(e) => setQuestion(e.target.value)}
                             placeholder="Security Question"
                             required
@@ -69,7 +68,7 @@ const SignUp = () => {
                     <div className="input-group">
                         <input
                             type="text"
-                            value={securityAnswer}
+                            value={answer}
                             onChange={(e) => setAnswer(e.target.value)}
                             placeholder="Security Answer"
                             required
