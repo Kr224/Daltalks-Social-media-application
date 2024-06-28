@@ -21,8 +21,8 @@ const SignUp = () => {
         const formData = {
             email,
             password,
-            question,
-            answer
+            securityQuestion,
+            securityAnswer
         };
 
         try {
