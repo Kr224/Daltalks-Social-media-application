@@ -1,7 +1,9 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import Login from './components/Login';
 import SignUp from './components/signUp';
+import ErrorPage from './components/ErrorPage';
+import PrivateRoute from './components/PrivateRoute';
 
 const App = () => {
     return (
@@ -9,6 +11,11 @@ const App = () => {
             <Routes>
                 <Route path="/login" element={<Login />} />
                 <Route path="/signup" element={<SignUp />} />
+                <Route path="/error" element={<ErrorPage />} />
+                <Route
+                    path="/"
+                    element={<Navigate to="/login" />}
+                />
             </Routes>
         </Router>
     );

@@ -6,13 +6,26 @@ import '../Login.css';
 const SignUp = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+<<<<<<< Updated upstream
     const [question, setQuestion] = useState('');
     const [answer, setAnswer] = useState('');
+=======
+    const [securityQuestion, setQuestion] = useState('');
+    const [securityAnswer, setAnswer] = useState('');
+>>>>>>> Stashed changes
     const [errorMessage, setErrorMessage] = useState('');
 
     const handleSubmit = async (event) => {
         event.preventDefault();
 
+<<<<<<< Updated upstream
+=======
+        if (!email || !password || !securityQuestion || !securityAnswer) {
+          alert('Please fill in all required fields');
+          return;
+        }
+
+>>>>>>> Stashed changes
         const formData = {
             email,
             password,
@@ -55,7 +68,7 @@ const SignUp = () => {
                     <div className="input-group">
                         <input
                             type="text"
-                            value={question}
+                            value={securityQuestion}
                             onChange={(e) => setQuestion(e.target.value)}
                             placeholder="Security Question"
                             required
@@ -64,7 +77,7 @@ const SignUp = () => {
                     <div className="input-group">
                         <input
                             type="text"
-                            value={answer}
+                            value={securityAnswer}
                             onChange={(e) => setAnswer(e.target.value)}
                             placeholder="Security Answer"
                             required

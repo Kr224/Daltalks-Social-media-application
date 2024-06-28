@@ -16,7 +16,11 @@ const Login = () => {
             const { id } = response.data;
             localStorage.setItem('loggedIn', 'true');
             localStorage.setItem('userId', id);
+<<<<<<< Updated upstream
             window.location.href = '/profile';
+=======
+            window.location.href = '../ProfilePage';
+>>>>>>> Stashed changes
         } catch (error) {
             setErrorMessage(error.response.data.message || 'An error occurred. Please try again.');
         }
