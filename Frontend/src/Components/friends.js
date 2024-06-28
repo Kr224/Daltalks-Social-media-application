@@ -30,7 +30,8 @@ const Friend = () => {
               <Avatar size={48} icon={<UserOutlined />} />
                 <div class="user-info">
                   <p class="account-name">{user.email}</p>
-                  <Button type="primary">Follow</Button>
+                  <Button type="primary" className="follow">Follow</Button>
+                  <Button type="primary">Remove</Button>
                 </div>
               </Card> 
             </div>             
