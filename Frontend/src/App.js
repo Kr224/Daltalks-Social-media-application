@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-d
 import Login from './components/Login';
 import SignUp from './components/signUp';
 import ProfilePage from './components/ProfilePage';
+import ProfilePageForm  from './ProfilePageForm';
 import ErrorPage from './components/ErrorPage';
 import PrivateRoute from './components/PrivateRoute';
 
@@ -14,8 +15,12 @@ const App = () => {
                 <Route path="/signup" element={<SignUp />} />
                 <Route path="/error" element={<ErrorPage />} />
                 <Route
-                    path="/profile"
+                    path="/profile/:id"
                     element={<PrivateRoute element={ProfilePage} />}
+                />
+                <Route
+                    path="/editprofile"
+                    element={<PrivateRoute element={ProfilePageForm} />}
                 />
                 <Route path="/" element={<Navigate to="/login" />} />
             </Routes>

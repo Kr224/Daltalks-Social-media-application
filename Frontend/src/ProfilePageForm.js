@@ -4,8 +4,8 @@ import axios from 'axios';
 
 //this form sets up a profile with 5 entities 
 const ProfilePageForm = () => {
-    // need to get user ID -> pass as prop? 
-    const id = 1;
+    // need to get user ID -> stored in local storage 
+    var id = localStorage.getItem('userId');
 
     const [interests, setInterests] = useState('');
     const [status, setStatus] = useState('');
