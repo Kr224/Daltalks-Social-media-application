@@ -1,4 +1,4 @@
-package com.group13.DalTalks.service.Implementations;
+package com.group13.DalTalks.service.implementations;
 
 import com.group13.DalTalks.model.ProfilePage;
 import com.group13.DalTalks.repository.ProfilePageRepository;
