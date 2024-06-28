@@ -47,4 +47,16 @@ public class UserServiceImpl implements UserService {
 
         return user;
     }
+
+    @Override
+    public User forgotPassword(String email, String securityAnswer) throws IllegalArgumentException {
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid email address!"));
+
+        if (!user.getSecurityAnswer().equals(securityAnswer)) {
+            throw new IllegalArgumentException("Security answer is incorrect!");
+        }
+
+        return user;
+    }
 }
