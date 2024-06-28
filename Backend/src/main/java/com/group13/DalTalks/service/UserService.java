@@ -15,4 +15,6 @@ public interface UserService {
     User forgotPassword(String email, String securityAnswer) throws IllegalArgumentException;
 
     void resetPassword(String email, String newPassword);
+
+    String getEmailByUserID(Integer userID);
 }

@@ -1,4 +1,4 @@
-package com.group13.DalTalks.service.implementations;
+package com.group13.DalTalks.service.Implementations;
 
 import com.group13.DalTalks.model.User;
 import com.group13.DalTalks.repository.UserRepository;
@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.regex.Pattern;
+import java.util.*;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -68,4 +69,21 @@ public class UserServiceImpl implements UserService {
         user.setPassword(newPassword);
         userRepository.save(user);
     }
+
+    @Override
+    public List<User> getAllUser(){
+        return userRepository.findAll();
+    }
+
+    @Override
+    public String getEmailByUserID(Integer userID) {
+        Optional<User> userOptional = userRepository.findById(userID);
+        if (userOptional.isPresent()) {
+            User user = userOptional.get();
+            return user.getEmail();
+        } else {
+            return ("User not found with ID: " + userID);
+        }
+    }
+
 }

@@ -3,6 +3,7 @@ import { Col, Row, Card, Avatar, Input, Flex, Space } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 import Friend from './friends';
 import axios from 'axios';
+import Navigation from './navigation';
 
 
 import '../css/post.css';
@@ -38,6 +39,12 @@ const Post = () => {
     return (
         <div class="main">
             <Row justify="center" align="top">
+                <Col span={4}>
+                    <div>
+                        <Navigation />
+                    </div>
+                </Col>
+
                 <Col span={16} className="navigation-col">
                     <div>
                         <div class='search'>
@@ -86,7 +93,7 @@ const Post = () => {
                     </div>
                 </Col>
 
-                <Col span={8} className="friends-col">
+                <Col span={4} className="friends-col">
                     <div>
                         <Friend />
                     </div> 

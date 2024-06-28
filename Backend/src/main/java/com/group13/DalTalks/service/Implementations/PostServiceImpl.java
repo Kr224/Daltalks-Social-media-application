@@ -1,4 +1,4 @@
-package com.group13.DalTalks.service.Implementation;
+package com.group13.DalTalks.service.Implementations;
 
 import com.group13.DalTalks.model.Post;
 import com.group13.DalTalks.repository.PostRepository;
