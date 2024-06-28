@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import '../ForgotPassword.css';
 
@@ -6,22 +7,22 @@ const ForgotPassword = () => {
     const [email, setEmail] = useState('');
     const [securityAnswer, setSecurityAnswer] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
-    const [resetToken, setResetToken] = useState(null);
+    const [identityVerified, setIdentityVerified] = useState(false);
     const [newPassword, setNewPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [resetSuccessMessage, setResetSuccessMessage] = useState('');
+    const navigate = useNavigate();
 
     const handleVerification = async (event) => {
         event.preventDefault();
 
         try {
-            const response = await axios.post('http://localhost:8080/api/user/forgotPassword', { email, securityAnswer });
-            const { resetToken } = response.data;
-            setResetToken(resetToken);
+            await axios.post('http://localhost:8080/api/user/forgotPassword', { email, securityAnswer });
+            setIdentityVerified(true);
             setErrorMessage('');
         } catch (error) {
-            setErrorMessage(error.response.data.message || 'An error occurred. Please try again.');
-            setResetToken(null);
+            setErrorMessage(error.response?.data?.message || 'An error occurred. Please try again.');
+            setIdentityVerified(false);
         }
     };
 
@@ -34,14 +35,20 @@ const ForgotPassword = () => {
         }
 
         try {
-            await axios.post('http://localhost:8080/api/user/resetPassword', { resetToken, newPassword });
-            setResetToken(null);
-            setNewPassword('');
-            setConfirmPassword('');
-            setResetSuccessMessage('Password reset successful!');
-            setErrorMessage('');
+            const response = await axios.post('http://localhost:8080/api/user/resetPassword', { email, newPassword });
+            if (response && response.data) {
+                setIdentityVerified(false);
+                setNewPassword('');
+                setConfirmPassword('');
+                setResetSuccessMessage('Password reset successful!');
+                setErrorMessage('');
+                // Redirect to login page
+                setTimeout(() => {
+                    navigate('/login');
+                }, 2000);
+            }
         } catch (error) {
-            setErrorMessage(error.response.data.message || 'An error occurred. Please try again.');
+            setErrorMessage(error.response?.data?.message || 'An error occurred. Please try again.');
         }
     };
 
@@ -49,30 +56,33 @@ const ForgotPassword = () => {
         <div className="container">
             <div className="forgot-password-box">
                 <h1 className="forgot-password-title">Forgot Password</h1>
-                {resetToken ? (
-                    <form onSubmit={handlePasswordReset}>
-                        <div className="input-group">
-                            <input
-                                type="password"
-                                value={newPassword}
-                                onChange={(e) => setNewPassword(e.target.value)}
-                                placeholder="New Password"
-                                required
-                            />
-                        </div>
-                        <div className="input-group">
-                            <input
-                                type="password"
-                                value={confirmPassword}
-                                onChange={(e) => setConfirmPassword(e.target.value)}
-                                placeholder="Confirm Password"
-                                required
-                            />
-                        </div>
-                        <button type="submit" className="submit-button">Reset Password</button>
-                        <div className="error-message">{errorMessage}</div>
-                        <div className="success-message">{resetSuccessMessage}</div>
-                    </form>
+                {identityVerified ? (
+                    <>
+                        <div className="success-message">Identity Verified!</div>
+                        <form onSubmit={handlePasswordReset}>
+                            <div className="input-group">
+                                <input
+                                    type="password"
+                                    value={newPassword}
+                                    onChange={(e) => setNewPassword(e.target.value)}
+                                    placeholder="New Password"
+                                    required
+                                />
+                            </div>
+                            <div className="input-group">
+                                <input
+                                    type="password"
+                                    value={confirmPassword}
+                                    onChange={(e) => setConfirmPassword(e.target.value)}
+                                    placeholder="Confirm Password"
+                                    required
+                                />
+                            </div>
+                            <button type="submit" className="submit-button">Reset Password</button>
+                            <div className="error-message">{errorMessage}</div>
+                            <div className="success-message">{resetSuccessMessage}</div>
+                        </form>
+                    </>
                 ) : (
                     <form onSubmit={handleVerification}>
                         <div className="input-group">
