@@ -1,4 +1,4 @@
-package com.group13.DalTalks.service.implementations;
+package com.group13.DalTalks.service.Implementations;
 
 import com.group13.DalTalks.model.ProfilePage;
 import com.group13.DalTalks.repository.ProfilePageRepository;
@@ -46,7 +46,9 @@ public class ProfilePageServiceImpl implements ProfilePageService {
       return profilePageRepository.save(update);
     }
 
-    return null;
+    else {
+      return createProfile(page);
+    }
   }
 
   @Override

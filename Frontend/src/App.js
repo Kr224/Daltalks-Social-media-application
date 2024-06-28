@@ -4,6 +4,7 @@ import Login from './components/Login';
 import SignUp from './components/signUp';
 import ForgotPassword from './components/forgotPassword';
 import ProfilePage from './components/ProfilePage';
+import ProfilePageForm  from './ProfilePageForm';
 import ErrorPage from './components/ErrorPage';
 import PrivateRoute from './components/PrivateRoute';
 
@@ -16,8 +17,12 @@ const App = () => {
                 <Route path="/forgotPassword" element={<ForgotPassword />} />
                 <Route path="/error" element={<ErrorPage />} />
                 <Route
-                    path="/profile"
+                    path="/profile/:id"
                     element={<PrivateRoute element={ProfilePage} />}
+                />
+                <Route
+                    path="/editprofile"
+                    element={<PrivateRoute element={ProfilePageForm} />}
                 />
                 <Route path="/" element={<Navigate to="/login" />} />
             </Routes>
