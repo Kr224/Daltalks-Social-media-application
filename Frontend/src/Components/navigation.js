@@ -3,6 +3,7 @@ import { Button } from 'antd';
 import { HomeOutlined, UserOutlined } from '@ant-design/icons';
 
 const Navigation = () => {
+  const id = localStorage.getItem('userID');
     return (
       <div>
         <h1>Dal Talk</h1>
@@ -12,7 +13,7 @@ const Navigation = () => {
           </a>
         </Button>
         <Button type="text">
-          <a href="/profile">
+          <a href={`/profile/${id}`}>{user.email}
             <UserOutlined />User
           </a>
         </Button>
