@@ -13,7 +13,7 @@ const Navigation = () => {
           </a>
         </Button>
         <Button type="text">
-          <a href={`/profile/${id}`}>{user.email}
+          <a href={`/profile/${id}`}>
             <UserOutlined />User
           </a>
         </Button>
