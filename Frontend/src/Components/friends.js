@@ -50,7 +50,9 @@ const Friend = () => {
               <Card style={{ width: 300 }}>
               <Avatar size={48} icon={<UserOutlined />} />
                 <div class="user-info">
-                  <p class="account-name">{user.email}</p>
+                  <p class="account-name">
+                    <a href={`/profile/${user.id}`}>{user.email}</a>
+                  </p>
                   <Button type="primary" className="follow" onClick={() => handleAddFriend(user.email)}>Follow</Button>
                   <Button type="primary" danger onClick={() => handleRemoveFriend(user.email)}>Remove</Button>
                 </div>
