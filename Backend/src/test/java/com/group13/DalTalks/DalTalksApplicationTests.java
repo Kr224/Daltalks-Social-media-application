@@ -1,16 +1,13 @@
 package com.group13.DalTalks;
 
-import com.group13.DalTalks.model.User;
 import com.group13.DalTalks.repository.UserRepository;
-import com.group13.DalTalks.service.UserService;
-import com.group13.DalTalks.service.implementations.UserServiceImpl;
+import com.group13.DalTalks.service.Implementations.UserServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.util.Optional;
 

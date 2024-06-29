@@ -14,6 +14,8 @@ public class User {
     private String securityQuestion;
     private String securityAnswer;
 
+    // Constructors, getters, and setters
+
     public User() {
     }
 

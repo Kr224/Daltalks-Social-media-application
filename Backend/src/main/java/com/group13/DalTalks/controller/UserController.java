@@ -1,12 +1,14 @@
 package com.group13.DalTalks.controller;
 
 import com.group13.DalTalks.model.User;
+import com.group13.DalTalks.model.Post;
+
 import com.group13.DalTalks.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Map;
+import java.util.*;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
@@ -57,6 +59,11 @@ public class UserController {
         } catch (IllegalArgumentException e) {
             return ResponseEntity.status(400).body(e.getMessage());
         }
+    }
+
+    @GetMapping("/getAllUser")
+    public List<User> getAllUsers(){
+        return userService.getAllUser();
     }
 
 }
