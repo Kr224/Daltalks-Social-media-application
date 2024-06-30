@@ -56,7 +56,6 @@ const Post = () => {
                         </div>
                     ) : (
                         posts.map((post, index) => (
-                            posts.map((post, index) => (
                                 <div class='post'>
                                     <Flex gap="middle" vertical>
                                         <Flex vertical="true" class = "post-header">
@@ -84,7 +83,6 @@ const Post = () => {
                                         </Flex>
                                     </Flex>
                                 </div>
-                            ))
                         ))
                     )}
                 </Col>
