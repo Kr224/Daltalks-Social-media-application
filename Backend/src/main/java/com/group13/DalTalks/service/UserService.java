@@ -8,7 +8,6 @@ public interface UserService {
 
     String createUser(User user);
 
-    List<User> getAllUser();
 
     User login(String email, String password) throws IllegalArgumentException;
 
@@ -17,4 +16,6 @@ public interface UserService {
     void resetPassword(String email, String newPassword);
 
     String getEmailByUserID(Integer userID);
+
+    List<User> getAllUserExcept(int userID);
 }

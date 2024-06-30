@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Avatar, Space, Card, Button } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
+import { useNavigate } from 'react-router-dom';
+
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
@@ -15,7 +17,7 @@ const Friend = () => {
   useEffect(() => {
       const fetchUser = async () => {
         try {
-          const response = await axios.get(`http://localhost:8080/api/user/getAllUser`);
+          const response = await axios.get(`http://localhost:8080/api/user/getAllUser/${currentID}`);
           setUser(response.data);
         } catch (error) {
           console.error('Error fetching resume', error);
