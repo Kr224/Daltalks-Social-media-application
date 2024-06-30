@@ -14,7 +14,7 @@ const ProfilePage = () => {
   useEffect(() => {
     const fetchProfile = async () => {
       try {
-        const response = await axios.get(`http://localhost:8080/profiles/getById/${id}`)
+        const response = await axios.get(`http://localhost:8080/profiles/getByUserID/${id}`)
         console.log(response);
         setProfile(response.data);
       } catch (error) {

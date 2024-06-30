@@ -23,9 +23,14 @@ public class ProfilePageController {
     return profilePageService.getProfilePageById(id);
   }
 
-  @PostMapping("/update/{id}")
-  public ProfilePage updateProfilePage(@PathVariable int id, @RequestBody ProfilePage profilePage){
-    return profilePageService.updateProfilePage(id, profilePage);
+  @GetMapping("/getByUserID/{id}")
+  public ProfilePage getProfilePageByUserID(@PathVariable int id) {
+    return profilePageService.getProfilePageByUserID(id);
+  }
+
+  @PostMapping("/update/{userID}")
+  public ProfilePage updateProfilePageByUserID(@PathVariable int userID, @RequestBody ProfilePage profilePage){
+    return profilePageService.updateProfilePage(userID, profilePage);
   }
 
   @DeleteMapping("/delete/{id}")

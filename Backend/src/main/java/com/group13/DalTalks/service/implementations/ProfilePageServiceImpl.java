@@ -31,12 +31,24 @@ public class ProfilePageServiceImpl implements ProfilePageService {
   }
 
   @Override
-  public ProfilePage updateProfilePage(int id, ProfilePage page) {
-    Optional<ProfilePage> toUpdate = profilePageRepository.findById(id);
+  public ProfilePage getProfilePageByUserID(int userID) {
+    Optional<ProfilePage> returned = Optional.ofNullable(profilePageRepository.findByUserID(userID));
+
+    if (returned.isPresent()) {
+      return returned.get();
+    }
+
+    return null;
+  }
+
+  @Override
+  public ProfilePage updateProfilePage(int userID, ProfilePage page) {
+    Optional<ProfilePage> toUpdate = Optional.ofNullable(profilePageRepository.findByUserID(userID));
 
     if (toUpdate.isPresent()) {
       ProfilePage update = toUpdate.get();
 
+      update.setUserID(page.getUserID());
       update.setInterests(page.getInterests());
       update.setStatus(page.getStatus());
       update.setBirthday(page.getBirthday());
@@ -47,6 +59,7 @@ public class ProfilePageServiceImpl implements ProfilePageService {
     }
 
     else {
+      page.setUserID(userID);
       return createProfile(page);
     }
   }
