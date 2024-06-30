@@ -48,7 +48,6 @@ public class ProfilePageServiceImpl implements ProfilePageService {
     if (toUpdate.isPresent()) {
       ProfilePage update = toUpdate.get();
 
-      update.setUserID(page.getUserID());
       update.setInterests(page.getInterests());
       update.setStatus(page.getStatus());
       update.setBirthday(page.getBirthday());
