@@ -17,12 +17,14 @@ public class ProfilePage {
   private String birthday;
   private String major;
   private String location;
+  private int userID;
 
   public ProfilePage() {
   }
 
-  public ProfilePage(int id, String interests, String status, String birthday, String major, String location) {
+  public ProfilePage(int id, int userID, String interests, String status, String birthday, String major, String location) {
     this.id = id;
+    this.userID = userID;
     this.interests = interests;
     this.status = status;
     this.birthday = birthday;
@@ -36,6 +38,14 @@ public class ProfilePage {
 
   public void setId(int id) {
     this.id = id;
+  }
+
+  public int getUserID() {
+    return userID;
+  }
+
+  public void setUserID(int userID) {
+    this.userID = userID;
   }
 
   public String getInterests() {

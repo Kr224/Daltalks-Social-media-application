@@ -6,7 +6,9 @@ import axios from 'axios';
 const ProfilePageForm = () => {
     // need to get user ID -> stored in local storage 
     var id = localStorage.getItem('userId');
+    console.log(id);
 
+    const [userid, setUserid] = useState(id);
     const [interests, setInterests] = useState('');
     const [status, setStatus] = useState('');
     const [birthday, setBirthday] = useState('');
@@ -22,6 +24,7 @@ const ProfilePageForm = () => {
             birthday,
             major,
             location,
+            userid
         };
       
         try {

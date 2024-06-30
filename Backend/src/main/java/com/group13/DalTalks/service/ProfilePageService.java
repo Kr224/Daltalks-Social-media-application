@@ -9,7 +9,9 @@ public interface ProfilePageService {
 
   ProfilePage getProfilePageById(int id);
 
-  ProfilePage updateProfilePage(int id, ProfilePage page);
+  ProfilePage getProfilePageByUserID(int userID);
+
+  ProfilePage updateProfilePage(int userID, ProfilePage page);
 
   ProfilePage deleteProfilePage(int id);
 }

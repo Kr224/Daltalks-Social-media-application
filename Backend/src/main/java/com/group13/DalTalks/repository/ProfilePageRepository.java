@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ProfilePageRepository extends JpaRepository<ProfilePage, Integer> {
+  ProfilePage findByUserID(int userID);
 }

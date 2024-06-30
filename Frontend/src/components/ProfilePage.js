@@ -28,13 +28,16 @@ const ProfilePage = () => {
         fetchProfile();
     }, [id]);
 
-    if (loading) {
-        return (
-            <div className="loading-container">
-                <Spin size="large" />
-            </div>
-        );
-    }
+  useEffect(() => {
+    const fetchProfile = async () => {
+      try {
+        const response = await axios.get(`http://localhost:8080/profiles/getByUserID/${id}`)
+        console.log(response);
+        setProfile(response.data);
+      } catch (error) {
+        console.error('Error fetching profile', error);
+      }
+    };
 
     return (
         <div className="profile-container">
