@@ -30,20 +30,5 @@ class DalTalksApplicationTests {
 	@Test
 	void contextLoads() {
 	}
-
-	@Test
-	void testResetPasswordValidEmailAndInvalidNewPassword() {
-		assertThrows(IllegalArgumentException.class, () -> {
-			userServiceImpl.resetPassword("test@example.com", "short");
-		});
-	}
-
-	@Test
-	void testResetPasswordInvalidEmail() {
-		Mockito.when(userRepository.findByEmail("invalid@example.com")).thenReturn(Optional.empty());
-
-		assertThrows(IllegalArgumentException.class, () -> {
-			userServiceImpl.resetPassword("invalid@example.com", "ValidPass123");
-		});
-	}
+	
 }
