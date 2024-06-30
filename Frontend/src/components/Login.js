@@ -16,7 +16,7 @@ const Login = () => {
             const { id } = response.data;
             localStorage.setItem('loggedIn', 'true');
             localStorage.setItem('userId', id);
-            window.location.href = '/profile';
+            window.location.href = '/main';
         } catch (error) {
             setErrorMessage(error.response.data.message || 'An error occurred. Please try again.');
         }
