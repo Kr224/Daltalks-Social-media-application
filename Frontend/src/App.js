@@ -1,13 +1,13 @@
 import './App.css';
-import Post from './Components/post';
+import Post from './components/post';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
-import Login from './Components/Login';
-import SignUp from './Components/signUp';
-import ForgotPassword from './Components/forgotPassword';
-import ProfilePage from './Components/ProfilePage';
+import Login from './components/Login';
+import SignUp from './components/signUp';
+import ForgotPassword from './components/forgotPassword';
+import ProfilePage from './components/ProfilePage';
 import ProfilePageForm  from './ProfilePageForm';
-import ErrorPage from './Components/ErrorPage';
-import PrivateRoute from './Components/PrivateRoute';
+import ErrorPage from './components/ErrorPage';
+import PrivateRoute from './components/PrivateRoute';
 
 
 const App = () => {
