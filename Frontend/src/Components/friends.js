@@ -8,12 +8,13 @@ import '../css/friends.css'
 const Friend = () => {
   const [User, setUser] = useState(null);
   const [message, setMessage] = useState('');
+  const currentID = localStorage.getItem('userId');
 
 
   useEffect(() => {
       const fetchUser = async () => {
         try {
-          const response = await axios.get(`http://localhost:8080/api/user/getAllUser`);
+          const response = await axios.get(`http://localhost:8080/api/user/getAllUser/${currentID}`);
           setUser(response.data);
         } catch (error) {
           console.error('Error fetching resume', error);

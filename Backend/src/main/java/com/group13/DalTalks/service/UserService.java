@@ -17,5 +17,5 @@ public interface UserService {
 
     String getEmailByUserID(Integer userID);
 
-    List<User> getAllExceptUserID(int userID);
+    List<User> getAllUserExcept(int userID);
 }

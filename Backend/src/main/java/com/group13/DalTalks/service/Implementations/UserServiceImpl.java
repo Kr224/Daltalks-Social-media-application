@@ -5,6 +5,7 @@ import com.group13.DalTalks.repository.UserRepository;
 import com.group13.DalTalks.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import java.util.stream.Collectors;
 
 import java.util.regex.Pattern;
 import java.util.*;
@@ -77,10 +78,12 @@ public class UserServiceImpl implements UserService {
         user.setPassword(newPassword);
         userRepository.save(user);
     }
-
-    @Override
-    public List<User> getAllExceptUserID(int userID) {
-        return this.userRepository.findAllExceptUserID(userID);
+    
+    public List<User> getAllUserExcept(int userID) {
+        return this.userRepository.findAll()
+                                   .stream()
+                                   .filter(user -> user.getId() != userID)
+                                   .collect(Collectors.toList());
     }
 
     @Override
