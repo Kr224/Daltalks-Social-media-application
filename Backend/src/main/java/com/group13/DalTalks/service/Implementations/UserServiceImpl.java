@@ -19,6 +19,7 @@ public class UserServiceImpl implements UserService {
     public String createUser(User user) {
         validateEmail(user.getEmail());
         validatePassword(user.getPassword());
+        checkDuplicateEmail(user.getEmail());
 
         userRepository.save(user);
         return "User created successfully";
@@ -34,6 +35,13 @@ public class UserServiceImpl implements UserService {
         String regex = "^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[^a-zA-Z0-9]).{8,}$";
         if (!Pattern.compile(regex).matcher(password).matches()) {
             throw new IllegalArgumentException("Password must be at least 8 characters long, contain at least one uppercase letter, one lowercase letter, one number, and one special character.");
+        }
+    }
+
+    private void checkDuplicateEmail(String email) {
+        Optional<User> existingUser = userRepository.findByEmail(email);
+        if (existingUser.isPresent()) {
+            throw new IllegalArgumentException("An account with this email already exists.");
         }
     }
 
