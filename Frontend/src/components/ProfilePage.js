@@ -5,40 +5,28 @@ import { Card, Spin, Typography, Avatar, Row, Col } from 'antd';
 import { UserOutlined, EditOutlined } from '@ant-design/icons';
 import Navigation from './navigation';
 import '../css/ProfilePage.css';
-
+ 
 const { Title, Paragraph } = Typography;
-
+ 
 const ProfilePage = () => {
     const { id } = useParams();
     const [profile, setProfile] = useState(null);
     const [loading, setLoading] = useState(true);
-
+ 
     useEffect(() => {
-        const fetchProfile = async () => {
-            try {
-                const response = await axios.get(`http://localhost:8080/profiles/getById/${id}`);
-                setProfile(response.data);
-            } catch (error) {
-                console.error('Error fetching profile', error);
-            } finally {
-                setLoading(false);
-            }
-        };
-
+      const fetchProfile = async () => {
+        try {
+          const response = await axios.get(`http://localhost:8080/profiles/getByUserID/${id}`)
+          console.log(response);
+          setProfile(response.data);
+        } catch (error) {
+          console.error('Error fetching profile', error);
+        }
+      };
         fetchProfile();
     }, [id]);
-
-  useEffect(() => {
-    const fetchProfile = async () => {
-      try {
-        const response = await axios.get(`http://localhost:8080/profiles/getByUserID/${id}`)
-        console.log(response);
-        setProfile(response.data);
-      } catch (error) {
-        console.error('Error fetching profile', error);
-      }
-    };
-
+   
+ 
     return (
         <div className="profile-container">
             <Navigation />
@@ -89,7 +77,7 @@ const ProfilePage = () => {
                 )}
             </Card>
         </div>
-    );
+    )
 };
-
+ 
 export default ProfilePage;
