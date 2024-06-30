@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { Button, Input, Form } from 'antd';
-import Navigation from './navigation';
+import Navigation from './navigation.js';
 
 const ProfilePageForm = () => {
     const id = localStorage.getItem('userId');

@@ -2,12 +2,14 @@ import React, { useEffect, useState } from 'react';
 import { Avatar, Space, Card, Button } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 import '../css/friends.css'
 
 const Friend = () => {
   const [User, setUser] = useState(null);
   const [message, setMessage] = useState('');
+  const navigate = useNavigate();
 
 
   useEffect(() => {
@@ -50,8 +52,8 @@ const Friend = () => {
               <Card style={{ width: 300 }}>
               <Avatar size={48} icon={<UserOutlined />} />
                 <div class="user-info">
-                  <p class="account-name">
-                    <a href={`/profile/${user.id}`}>{user.email}</a>
+                  <p class="account-name" onClick={() => navigate(`/profile/${user.id}`)}>
+                    <a>{user.email}</a>
                   </p>
                   <Button type="primary" className="follow" onClick={() => handleAddFriend(user.email)}>Follow</Button>
                   <Button type="primary" danger onClick={() => handleRemoveFriend(user.email)}>Remove</Button>

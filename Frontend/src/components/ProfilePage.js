@@ -3,7 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import axios from 'axios';
 import { Card, Spin, Typography, Avatar, Row, Col } from 'antd';
 import { UserOutlined, EditOutlined } from '@ant-design/icons';
-import Navigation from './navigation';
+import Navigation from './navigation.js';
 import '../css/ProfilePage.css';
  
 const { Title, Paragraph } = Typography;
