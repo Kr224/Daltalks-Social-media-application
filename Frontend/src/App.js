@@ -8,6 +8,7 @@ import ProfilePage from './Components/ProfilePage';
 import ProfilePageForm from './Components/ProfilePageForm';
 import ErrorPage from './Components/ErrorPage';
 import PrivateRoute from './Components/PrivateRoute';
+// import Navigation from './Components/navigation'; // Assuming you have a Navigation component
 
 const App = () => {
   return (
