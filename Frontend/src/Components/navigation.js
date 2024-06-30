@@ -21,7 +21,7 @@ const Navigation = () => {
           <HomeOutlined /> Home
         </a>
       </Button>
-      <Button type="text" onClick={() => navigate(`/profile/${id}`)}>
+      <Button type="text" onClick={() => navigate(`/profile`)}>
         <UserOutlined /> User
       </Button>
       <Button type="text" onClick={handleLogout}>

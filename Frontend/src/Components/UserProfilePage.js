@@ -8,7 +8,7 @@ import '../css/ProfilePage.css';
  
 const { Title, Paragraph } = Typography;
  
-const ProfilePage = () => {
+const UserProfilePage = () => {
     const { id } = useParams();
     const [profile, setProfile] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -31,6 +31,13 @@ const ProfilePage = () => {
         <div className="profile-container">
             <Navigation />
             <Card className="profile-card">
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
+                    <div>
+                        <Link to={`/editprofile/`}>
+                            <EditOutlined style={{ fontSize: '24px', color: '#1890ff' }} />
+                        </Link>
+                    </div>
+                </div>
                 <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '20px' }}>
                     <Avatar size={100} icon={<UserOutlined />} />
                 </div>
@@ -73,4 +80,4 @@ const ProfilePage = () => {
     )
 };
  
-export default ProfilePage;
+export default UserProfilePage;
