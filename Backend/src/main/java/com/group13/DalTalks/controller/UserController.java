@@ -61,9 +61,9 @@ public class UserController {
         }
     }
 
-    @GetMapping("/getAllUser")
-    public List<User> getAllUsers(){
-        return userService.getAllUser();
+    @GetMapping("/getAllUser/{id}")
+    public List<User> getAllUsers(@PathVariable int userID){
+        return userService.getAllExceptUserID(userID);
     }
 
 }

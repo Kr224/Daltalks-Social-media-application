@@ -34,10 +34,7 @@ public class PostController {
         userService.createUser(user);
     }
 
-    @GetMapping("/getAllUser")
-    public List<User> getAllUsers(){
-        return userService.getAllUser();
-    }
+
 
     @GetMapping("/getEmailByUserID/{id}")
     public String getEmailByUserID(@PathVariable int id){
