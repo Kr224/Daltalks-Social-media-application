@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Avatar, Space, Card, Button } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
+import { useNavigate } from 'react-router-dom';
+
 import axios from 'axios';
 
 import '../css/friends.css'
@@ -9,6 +11,7 @@ const Friend = () => {
   const [User, setUser] = useState(null);
   const [message, setMessage] = useState('');
   const currentID = localStorage.getItem('userId');
+  const navigate = useNavigate();
 
 
   useEffect(() => {
