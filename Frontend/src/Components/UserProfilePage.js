@@ -9,7 +9,7 @@ import '../css/ProfilePage.css';
 const { Title, Paragraph } = Typography;
  
 const UserProfilePage = () => {
-    const { id } = useParams();
+    var id = localStorage.getItem('userId');
     const [profile, setProfile] = useState(null);
     const [loading, setLoading] = useState(true);
  
