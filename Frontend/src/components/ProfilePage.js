@@ -11,14 +11,15 @@ const { Title, Paragraph } = Typography;
 const ProfilePage = () => {
     const { id } = useParams();
     const [profile, setProfile] = useState(null);
-    const [loading, setLoading] = useState(true);
+    const [email, setEmail] = useState(null);
  
     useEffect(() => {
       const fetchProfile = async () => {
         try {
-          const response = await axios.get(`http://localhost:8080/profiles/getByUserID/${id}`)
-          console.log(response);
+          const response = await axios.get(`http://localhost:8080/profiles/getByUserID/${id}`);
+          const email = await axios.get(`http://localhost:8080/api/getEmailByUserID/${response.data.id}`);
           setProfile(response.data);
+          setEmail(email.data);
         } catch (error) {
           console.error('Error fetching profile', error);
         }
@@ -34,7 +35,7 @@ const ProfilePage = () => {
                 <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '20px' }}>
                     <Avatar size={100} icon={<UserOutlined />} />
                 </div>
-                <Title level={1} className="profile-title">My Profile</Title>
+                <Title level={1} className="profile-title">{email}'s Profile</Title>
                 {profile ? (
                     <div className="profile-details">
                         <Row gutter={[16, 16]}>

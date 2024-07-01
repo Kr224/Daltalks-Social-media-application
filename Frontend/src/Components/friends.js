@@ -46,7 +46,6 @@ const Friend = () => {
       }
   };
 
-
     return (
       <div>
         {User ? (
@@ -56,7 +55,7 @@ const Friend = () => {
               <Avatar size={48} icon={<UserOutlined />} />
                 <div class="user-info">
                   <p class="account-name" onClick={() => navigate(`/profile/${user.id}`)}>
-                    <a>{user.email}</a>
+                    <a>{user.email.split('@')[0]}</a>
                   </p>
                   <Button type="primary" className="follow" onClick={() => handleAddFriend(user.email)}>Follow</Button>
                   <Button type="primary" danger onClick={() => handleRemoveFriend(user.email)}>Remove</Button>
