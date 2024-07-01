@@ -2,10 +2,18 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
+const securityQuestions = [
+    "What was the name of your first pet?",
+    "What is your mother's maiden name?",
+    "What was the name of your first school?",
+    "What was the make and model of your first car?",
+    "What was your favorite food as a child?"
+];
+
 const SignUp = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [securityQuestion, setSecurityQuestion] = useState('');
+    const [selectedSecurityQuestion, setSelectedSecurityQuestion] = useState(securityQuestions[0]);
     const [securityAnswer, setSecurityAnswer] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
     const navigate = useNavigate();
@@ -13,7 +21,7 @@ const SignUp = () => {
     const handleSubmit = async (event) => {
         event.preventDefault();
 
-        if (!email || !password || !securityQuestion || !securityAnswer) {
+        if (!email || !password || !selectedSecurityQuestion || !securityAnswer) {
             alert('Please fill in all required fields');
             return;
         }
@@ -21,7 +29,7 @@ const SignUp = () => {
         const formData = {
             email,
             password,
-            securityQuestion,
+            securityQuestion: selectedSecurityQuestion,
             securityAnswer
         };
 
@@ -59,13 +67,17 @@ const SignUp = () => {
                         />
                     </div>
                     <div className="input-group">
-                        <input
-                            type="text"
-                            value={securityQuestion}
-                            onChange={(e) => setSecurityQuestion(e.target.value)}
-                            placeholder="Security Question"
+                        <select
+                            value={selectedSecurityQuestion}
+                            onChange={(e) => setSelectedSecurityQuestion(e.target.value)}
                             required
-                        />
+                        >
+                            {securityQuestions.map((question, index) => (
+                                <option key={index} value={question}>
+                                    {question}
+                                </option>
+                            ))}
+                        </select>
                     </div>
                     <div className="input-group">
                         <input
