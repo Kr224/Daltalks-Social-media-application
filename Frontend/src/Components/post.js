@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { Col, Row, Card, Avatar, Input, Space, Spin, Flex } from 'antd';
-import { UserOutlined } from '@ant-design/icons';
+import { Col, Row, Card, Avatar, Input, Space, Spin, Flex, Button } from 'antd';
+import { UserOutlined, LikeOutlined, CommentOutlined, SendOutlined } from '@ant-design/icons';
 import Friend from './friends';
 import axios from 'axios';
 import Navigation from './navigation';
@@ -48,7 +48,7 @@ const Post = () => {
                 </Col>
                 <Col span={16} className="navigation-col">
                     <div className="search">
-                        <Search placeholder="Search" style={{ marginBottom: '20px' }} />
+                        <Search className="search-bar"  placeholder="search" />
                     </div>
                     {loading ? (
                         <div className="loading-container">
@@ -58,7 +58,7 @@ const Post = () => {
                         posts.map((post, index) => (
                                 <div class='post'>
                                     <Flex gap="middle" vertical>
-                                        <Flex vertical="true" class = "post-header">
+                                        <Flex vertical className = "post-header">
                                             <Card style={{ width: 500 }} >
                                                 <div className="space-align-block" class="profile">
                                                     <Space align="start">
@@ -71,13 +71,13 @@ const Post = () => {
                                                     </Space>  
                                                 </div>
                                                 <div >
-                                                    <h4>Post Title: {post.postTitle}</h4>
-                                                    <p>Post content: {post.postBodyContent}</p>
+                                                    <h4 >Post Title: {post.postTitle}</h4>
+                                                    <p >Post content: {post.postBodyContent}</p>
                                                 </div>
                                                 <div class="post-actions">
-                                                    <button class="like-button">Like</button>
-                                                    <button class="comment-button">Comment</button>
-                                                    <button class="share-button">Share</button>
+                                                    <Button type="text" class="like-button"><LikeOutlined /></Button>
+                                                    <Button type="text" class="comment-button"><CommentOutlined /></Button>
+                                                    <Button type="text" class="share-button"><SendOutlined /></Button>
                                                 </div>
                                             </Card>
                                         </Flex>

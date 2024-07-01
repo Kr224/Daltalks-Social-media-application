@@ -4,7 +4,6 @@ import { HomeOutlined, UserOutlined, LogoutOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
 
 const Navigation = () => {
-  const id = localStorage.getItem('userId');
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -14,7 +13,7 @@ const Navigation = () => {
   };
 
   return (
-    <div>
+    <div style={{cursor: 'default'}}>
       <h1>DalTalks</h1>
       <Button type="text">
         <a href="/main">
