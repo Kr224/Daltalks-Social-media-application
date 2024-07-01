@@ -25,7 +25,8 @@ const Post = () => {
                 const emailPromises = fetchedPosts.map(async (post) => {
                     const userID = post.userID;
                     const emailResponse = await axios.get(`http://localhost:8080/api/getEmailByUserID/${userID}`);
-                    return emailResponse.data;
+                    const email = emailResponse.data.split('@')[0];
+                    return email;
                 });
 
                 const fetchedEmails = await Promise.all(emailPromises);
