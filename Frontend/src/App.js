@@ -8,6 +8,7 @@ import ProfilePage from './Components/ProfilePage';
 import ProfilePageForm from './Components/ProfilePageForm';
 import ErrorPage from './Components/ErrorPage';
 import PrivateRoute from './Components/PrivateRoute';
+import UserProfilePage from './Components/UserProfilePage';
 // import Navigation from './Components/navigation'; // Assuming you have a Navigation component
 
 const App = () => {
@@ -20,6 +21,7 @@ const App = () => {
           <Route path="/signup" element={<SignUp />} />
           <Route path="/forgotPassword" element={<ForgotPassword />} />
           <Route path="/error" element={<ErrorPage />} />
+          <Route path="/profile" element={<PrivateRoute element={UserProfilePage} />} />
           <Route path="/profile/:id" element={<PrivateRoute element={ProfilePage} />} />
           <Route path="/editprofile" element={<PrivateRoute element={ProfilePageForm} />} />
           <Route path="/main" element={<PrivateRoute element={Post} />} />
