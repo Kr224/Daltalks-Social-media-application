@@ -10,6 +10,8 @@ import ErrorPage from './Components/ErrorPage';
 import PrivateRoute from './Components/PrivateRoute';
 import UserProfilePage from './Components/UserProfilePage';
 // import Navigation from './Components/navigation'; // Assuming you have a Navigation component
+import FriendRequests from './Components/FriendRequests';
+import Friend from './Components/friends';
 
 const App = () => {
   return (
@@ -26,6 +28,8 @@ const App = () => {
           <Route path="/editprofile" element={<PrivateRoute element={ProfilePageForm} />} />
           <Route path="/main" element={<PrivateRoute element={Post} />} />
           <Route path="/" element={<Navigate to="/login" />} />
+          <Route path="/friend" element={<Friend />} />
+          <Route path="/friend-requests" element={<FriendRequests />} />
         </Routes>
       </Router>
     </div>
