@@ -13,6 +13,7 @@ const Friend = () => {
   const [message, setMessage] = useState('');
   const navigate = useNavigate();
   const currentID = localStorage.getItem('userId');
+  const loggedInUserEmail = localStorage.getItem('loggedInUserEmail'); //added new
 
 
   useEffect(() => {
@@ -30,7 +31,7 @@ const Friend = () => {
 
   const handleRemoveFriend = async (friendEmail) => {
       try {
-          const response = await axios.post('/api/user/remove-friend', { userEmail: 'current_user_email', friendEmail });
+          const response = await axios.post(`http://localhost:8080/api/user/removeFriend?friendshipId=${friendEmail}`);
           setMessage(response.data);
       } catch (error) {
           setMessage(error.response.data.message);
@@ -39,10 +40,13 @@ const Friend = () => {
 
     const handleAddFriend = async (friendEmail) => {
       try {
-          const response = await axios.post('/api/user/send-friend-request', { userEmail: 'current_user_email', friendEmail});
+          const response = await axios.post(`http://localhost:8080/api/user/sendFriendRequest?senderId=${currentID}&receiverId=${friendEmail}`);
           setMessage(response.data);
+          if (response.status === 200) {
+             navigate('/friend-requests');
+          }
       } catch (error) {
-          setMessage(error.response.data.message);
+          setMessage(error.response?.data?.message || 'Error sending friend request');
       }
   };
 
@@ -57,8 +61,8 @@ const Friend = () => {
                   <p class="account-name" onClick={() => navigate(`/profile/${user.id}`)}>
                     <a>{user.email.split('@')[0]}</a>
                   </p>
-                  <Button type="primary" className="follow" onClick={() => handleAddFriend(user.email)}>Follow</Button>
-                  <Button type="primary" danger onClick={() => handleRemoveFriend(user.email)}>Remove</Button>
+                  <Button type="primary" className="follow" onClick={() => handleAddFriend(user.id)}>Follow</Button>
+                  <Button type="primary" danger onClick={() => handleRemoveFriend(user.id)}>Remove</Button>
                 </div>
               </Card> 
             </div>             
