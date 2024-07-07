@@ -79,11 +79,35 @@ public class UserServiceImpl implements UserService {
         userRepository.save(user);
     }
     
+    @Override
     public List<User> getAllUserExcept(int userID) {
         return this.userRepository.findAll()
                                    .stream()
                                    .filter(user -> user.getId() != userID)
                                    .collect(Collectors.toList());
+
+                        //   return this.userRepository.findAll()
+                        //   .stream()
+                        //   .filter(user -> user.getId() != userID && "approved".equals(user.getStatus()))
+                        //   .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<User> getAllPendingUser() {
+        return this.userRepository.findAll()
+                                .stream()
+                                .filter(user -> "pending".equals(user.getStatus()))
+                                .collect(Collectors.toList());
+
+                        //   return this.userRepository.findAll()
+                        //   .stream()
+                        //   .filter(user -> user.getId() != userID && "approved".equals(user.getStatus()))
+                        //   .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<User> getAllUsers() {
+        return this.userRepository.findAll();
     }
 
     @Override
@@ -95,6 +119,21 @@ public class UserServiceImpl implements UserService {
         } else {
             return ("User not found with ID: " + userID);
         }
+    }
+
+    @Override
+    public void acceptUser(int userID){
+        Optional<User> userOptional = userRepository.findById(userID);
+        if (userOptional.isPresent()) {
+            User user = userOptional.get();
+            user.setStatus(null);
+        } else {
+        }
+    }
+
+    @Override
+    public void deleteUser(int userID){
+        this.userRepository.deleteById(userID);
     }
 
 }

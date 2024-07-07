@@ -12,6 +12,8 @@ import UserProfilePage from './Components/UserProfilePage';
 // import Navigation from './Components/navigation'; // Assuming you have a Navigation component
 import FriendRequests from './Components/FriendRequests';
 import Friend from './Components/friends';
+import Admin from './Components/admin';
+import AdminRoute from './Components/adminRoute';
 
 const App = () => {
   return (
@@ -24,6 +26,8 @@ const App = () => {
           <Route path="/forgotPassword" element={<ForgotPassword />} />
           <Route path="/error" element={<ErrorPage />} />
           <Route path="/profile" element={<PrivateRoute element={UserProfilePage} />} />
+          {/* <Route path="/admin" element={<AdminRoute element={Admin} />} /> */}
+          <Route path="/admin" element={<Admin />} />
           <Route path="/profile/:id" element={<PrivateRoute element={ProfilePage} />} />
           <Route path="/editprofile" element={<PrivateRoute element={ProfilePageForm} />} />
           <Route path="/main" element={<PrivateRoute element={Post} />} />

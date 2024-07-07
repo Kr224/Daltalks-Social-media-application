@@ -19,7 +19,7 @@ const Friend = () => {
   useEffect(() => {
       const fetchUser = async () => {
         try {
-          const response = await axios.get(`http://localhost:8080/api/user/getAllUser/${currentID}`);
+          const response = await axios.get(`http://localhost:8080/api/user/getAllUserExceptCurrent/${currentID}`);
           setUser(response.data);
         } catch (error) {
           console.error('Error fetching resume', error);

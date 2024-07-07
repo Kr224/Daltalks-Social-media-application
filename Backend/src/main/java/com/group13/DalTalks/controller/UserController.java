@@ -97,9 +97,29 @@ public class UserController {
         }
     }
 
-    @GetMapping("/getAllUser/{id}")
+    @GetMapping("/getAllUserExceptCurrent/{id}")
     public List<User> getAllUsers(@PathVariable int id){
         return userService.getAllUserExcept(id);
+    }
+
+    @GetMapping("/getAllPendingUser")
+    public List<User> getAllPendingUser(){
+        return userService.getAllPendingUser();
+    }
+
+    @GetMapping("/getAllUser")
+    public List<User> getAllUsers(){
+        return userService.getAllUsers();
+    }
+
+    @DeleteMapping("/deleteUser/{userID}")
+    public void deleteUser(@PathVariable int userID){
+        userService.deleteUser(userID);
+    }
+
+    @PutMapping("/acceptUser/{userID}")
+    public void acceptUser(@PathVariable int userID){
+        userService.acceptUser(userID);
     }
 
 }

@@ -30,7 +30,8 @@ const SignUp = () => {
             email,
             password,
             securityQuestion: selectedSecurityQuestion,
-            securityAnswer
+            securityAnswer,
+            status: "pending"
         };
 
         try {

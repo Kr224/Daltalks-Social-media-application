@@ -13,17 +13,19 @@ public class User {
     private String password;
     private String securityQuestion;
     private String securityAnswer;
+    private String status;
 
     // Constructors, getters, and setters
 
     public User() {
     }
 
-    public User(String email, String password, String securityQuestion, String securityAnswer) {
+    public User(String email, String password, String securityQuestion, String securityAnswer, String status) {
         this.email = email;
         this.password = password;
         this.securityQuestion = securityQuestion;
         this.securityAnswer = securityAnswer;
+        this.status = status;
     }
 
     // Getters and setters
@@ -66,5 +68,13 @@ public class User {
 
     public void setSecurityAnswer(String securityAnswer) {
         this.securityAnswer = securityAnswer;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }
