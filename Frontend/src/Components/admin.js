@@ -45,7 +45,9 @@ const Admin = () => {
   
       const acceptUser = async (userID) => {
         try {
+            console.log("HELLO1");
             await axios.put(`http://localhost:8080/api/user/acceptUser/${userID}`);
+            console.log("HELLO2");
         } catch (error) {
             alert(error);
         }

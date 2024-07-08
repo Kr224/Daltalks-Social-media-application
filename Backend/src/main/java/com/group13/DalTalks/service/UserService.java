@@ -23,7 +23,7 @@ public interface UserService {
     
     List<User> getAllUsers();
 
-    void acceptUser(int userID);
+    String acceptUser(int userID);
 
     void deleteUser(int userID);
 }

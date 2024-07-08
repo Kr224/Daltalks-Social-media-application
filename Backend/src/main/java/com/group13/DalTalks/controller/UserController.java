@@ -118,8 +118,8 @@ public class UserController {
     }
 
     @PutMapping("/acceptUser/{userID}")
-    public void acceptUser(@PathVariable int userID){
-        userService.acceptUser(userID);
+    public String acceptUser(@PathVariable int userID){
+        return userService.acceptUser(userID);
     }
 
 }

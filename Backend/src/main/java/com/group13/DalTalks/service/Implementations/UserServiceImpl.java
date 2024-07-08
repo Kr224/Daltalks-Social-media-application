@@ -122,12 +122,15 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void acceptUser(int userID){
+    public String acceptUser(int userID){
         Optional<User> userOptional = userRepository.findById(userID);
         if (userOptional.isPresent()) {
             User user = userOptional.get();
             user.setStatus(null);
+            userRepository.save(user);
+            return "User sucesfully save";
         } else {
+            return "Can not find user";
         }
     }
 
