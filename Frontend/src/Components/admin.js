@@ -13,31 +13,36 @@ const Admin = () => {
     const [value, setValue] = useState('vertical');
     const navigate = useNavigate();
 
+    const fetchPendingUser = async () => {
+        try {
+            const response = await axios.get('http://localhost:8080/api/user/getAllPendingUser');
+            const fetchedPendingUser = response.data;
+            setPendingUsers(fetchedPendingUser);
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+    };
+
+    const fetchUser = async () => {
+        try{
+            const response1 = await axios.get('http://localhost:8080/api/user/getAllUser');
+            const fetchedUser = response1.data;
+            setUsers(fetchedUser);
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+    }
+
     useEffect(() => {
-        const fetchUser = async () => {
-            try {
-                const response = await axios.get('http://localhost:8080/api/user/getAllPendingUser');
-                const fetchedPendingUser = response.data;
-                setPendingUsers(fetchedPendingUser);
-
-                const response1 = await axios.get('http://localhost:8080/api/user/getAllUser');
-                const fetchedUser = response1.data;
-                setUsers(fetchedUser);
-
-                setLoading(false);
-            } catch (error) {
-                console.error('Error fetching data:', error);
-                setLoading(false);
-            }
-        };
-
+        fetchPendingUser();
         fetchUser();
     }, []);
 
     const removeUser = async (userID) => {
         try {
-            console.log("HELLO");
             await axios.delete(`http://localhost:8080/api/user/deleteUser/${userID}`);
+            fetchUser();
+            fetchPendingUser();
         } catch (error) {
             alert(error);
         }
@@ -45,9 +50,8 @@ const Admin = () => {
   
       const acceptUser = async (userID) => {
         try {
-            console.log("HELLO1");
             await axios.put(`http://localhost:8080/api/user/acceptUser/${userID}`);
-            console.log("HELLO2");
+            fetchPendingUser();
         } catch (error) {
             alert(error);
         }
