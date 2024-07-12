@@ -23,7 +23,7 @@ public class UserController {
     @Autowired
     private FriendshipService friendshipService;
 
-    @GetMapping("/friends/{userId}")     //method for fetching the users friends
+    @GetMapping("/friends/{userId}")     // Endpoint for fetching the users friends
     public ResponseEntity<List<User>> getFriends(@PathVariable int userId) {
         List<User> friends = friendshipService.getFriends(userId);
         return ResponseEntity.ok(friends);
@@ -51,6 +51,12 @@ public class UserController {
     public ResponseEntity<?> rejectFriendRequest(@RequestParam int requestId) {
         friendshipService.rejectFriendRequest(requestId);
         return ResponseEntity.ok("Friend request rejected successfully");
+    }
+
+    @PostMapping("/removeFriend") //Endpoint to remove a friend
+    public ResponseEntity<?> removeFriend(@RequestParam int userID1, @RequestParam int userID2) {
+        friendshipService.removeFriend(userID1, userID2);
+        return ResponseEntity.ok("Friend removed successfully");
     }
 
 

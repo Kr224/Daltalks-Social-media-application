@@ -21,6 +21,7 @@ const FriendsList = () => {
     fetchFriends();
   }, [userId]);
 
+
   return (
     <div>
       <h2>Friends List</h2>

@@ -57,10 +57,12 @@ public class FriendshipServiceImpl implements FriendshipService {
 
     @Override
     @Transactional
-    public void removeFriend(int friendshipId) {
-        friendshipRepository.deleteById(friendshipId);
+    public void removeFriend(int userID1, int userID2) {
+        List<Friendship> results = friendshipRepository.findByUser1IdAndUser2Id(userID1, userID2);
+        if (!results.isEmpty()) {
+            friendshipRepository.deleteById(results.get(0).getId());
+        }
     }
-
 
     @Override
     public List<Object> getFriendRequests(int userId) {
