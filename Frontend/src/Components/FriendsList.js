@@ -7,6 +7,7 @@ import '../css/friends.css';
 const FriendsList = () => {
   const [friends, setFriends] = useState([]);
   const userId = localStorage.getItem('userId');
+  const [message, setMessage] = useState('');
 
   useEffect(() => {
     const fetchFriends = async () => {
@@ -20,6 +21,22 @@ const FriendsList = () => {
 
     fetchFriends();
   }, [userId]);
+
+  const handleRemoveFriend = async (friendEmail) => { //functionality for removing friend
+    try {
+        const response = await axios.post(`http://localhost:8080/api/user/removeFriend?userID1=${friendEmail}&userID2=${userId}`);
+        setMessage(response.data);
+    } catch (error) {
+        setMessage(error.response.data.message);
+    }
+
+    try {
+      const response = await axios.post(`http://localhost:8080/api/user/removeFriend?userID1=${userId}&userID2=${friendEmail}`);
+      setMessage(response.data);
+    } catch (error) {
+      setMessage(error.response.data.message);
+    }
+};
 
 
   return (
@@ -35,7 +52,7 @@ const FriendsList = () => {
               title={friend.name}
               description={friend.email}
             />
-            <Button danger>Remove</Button>
+            <Button type="primary" danger onClick={() => handleRemoveFriend(friend.id)}>Remove</Button>
           </List.Item>
         )}
       />
