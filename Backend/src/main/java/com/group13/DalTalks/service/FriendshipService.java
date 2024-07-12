@@ -11,4 +11,6 @@ public interface FriendshipService {
 //    List<User> getFriends(int userId);
     List<Object> getFriendRequests(int userId);
 
+    List<User> getFriends(int userId);
+
 }
