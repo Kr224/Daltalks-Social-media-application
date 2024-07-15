@@ -57,21 +57,12 @@ public class FriendshipServiceImpl implements FriendshipService {
 
     @Override
     @Transactional
-    public void removeFriend(int friendshipId) {
-        friendshipRepository.deleteById(friendshipId);
+    public void removeFriend(int userID1, int userID2) {
+        List<Friendship> results = friendshipRepository.findByUser1IdAndUser2Id(userID1, userID2);
+        if (!results.isEmpty()) {
+            friendshipRepository.deleteById(results.get(0).getId());
+        }
     }
-
-//    @Override
-//    public List<User> getFriends(int userId) {
-//        List<User> friends = new ArrayList<>();
-//        List<Friendship> friendships = friendshipRepository.findByUser1IdAndUser2Id(userId, userId);
-//        for (Friendship friendship : friendships) {
-//            int friendId = (friendship.getUser1Id() == userId) ? friendship.getUser2Id() : friendship.getUser1Id();
-//            Optional<User> optionalUser = userRepository.findById(friendId);
-//            optionalUser.ifPresent(friends::add);
-//        }
-//        return friends;
-//    }
 
     @Override
     public List<Object> getFriendRequests(int userId) {
@@ -93,6 +84,25 @@ public class FriendshipServiceImpl implements FriendshipService {
 
         return friendRequests;
     }
+
+    public List<User> getFriends(int userId) {  //method for getting all friends
+        List<Friendship> friendships = friendshipRepository.findByUser1IdAndAccepted(userId, true);
+        List<User> friends = new ArrayList<>();
+
+        for (Friendship friendship : friendships) {
+            Optional<User> friendOpt = userRepository.findById(friendship.getUser2Id());
+            friendOpt.ifPresent(friends::add);
+        }
+
+        friendships = friendshipRepository.findByUser2IdAndAccepted(userId, true);
+        for (Friendship friendship : friendships) {
+            Optional<User> friendOpt = userRepository.findById(friendship.getUser1Id());
+            friendOpt.ifPresent(friends::add);
+        }
+
+        return friends;
+    }
+
 }
 
 

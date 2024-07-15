@@ -23,6 +23,12 @@ public class UserController {
     @Autowired
     private FriendshipService friendshipService;
 
+    @GetMapping("/friends/{userId}")     // Endpoint for fetching the users friends
+    public ResponseEntity<List<User>> getFriends(@PathVariable int userId) {
+        List<User> friends = friendshipService.getFriends(userId);
+        return ResponseEntity.ok(friends);
+    }
+
     @GetMapping("/getFriendRequests") // Endpoint to get friend requests for a user
     public ResponseEntity<List<Object>> getFriendRequests(@RequestParam int userID) {
         List<Object> friendRequests = friendshipService.getFriendRequests(userID);
@@ -48,8 +54,8 @@ public class UserController {
     }
 
     @PostMapping("/removeFriend") //Endpoint to remove a friend
-    public ResponseEntity<?> removeFriend(@RequestParam int friendshipId) {
-        friendshipService.removeFriend(friendshipId);
+    public ResponseEntity<?> removeFriend(@RequestParam int userID1, @RequestParam int userID2) {
+        friendshipService.removeFriend(userID1, userID2);
         return ResponseEntity.ok("Friend removed successfully");
     }
 

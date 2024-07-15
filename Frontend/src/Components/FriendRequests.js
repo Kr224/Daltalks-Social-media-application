@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 import '../css/friends.css';
 
@@ -42,6 +43,7 @@ const FriendRequests = () => {
   return (
     <div>
       <h2>Friend Requests</h2>
+      <Link to="/My-friends">Go to Friends List</Link>
       {requests.length > 0 ? (
         requests.map((request) => (
           <div key={request.requestId}>

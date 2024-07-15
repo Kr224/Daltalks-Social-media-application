@@ -12,6 +12,7 @@ import UserProfilePage from './Components/UserProfilePage';
 // import Navigation from './Components/navigation'; // Assuming you have a Navigation component
 import FriendRequests from './Components/FriendRequests';
 import Friend from './Components/friends';
+import FriendsList from './Components/FriendsList';  // Import the FriendsList component
 
 const App = () => {
   return (
@@ -30,6 +31,7 @@ const App = () => {
           <Route path="/" element={<Navigate to="/login" />} />
           <Route path="/friend" element={<Friend />} />
           <Route path="/friend-requests" element={<FriendRequests />} />
+          <Route path="/My-friends" element={<FriendsList />} />  {/* The route for FriendsList */}
         </Routes>
       </Router>
     </div>

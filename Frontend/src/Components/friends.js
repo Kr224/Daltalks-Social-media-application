@@ -29,14 +29,22 @@ const Friend = () => {
       fetchUser();
   }, []);
 
-  const handleRemoveFriend = async (friendEmail) => {
+  const handleRemoveFriend = async (friendEmail) => { //functionality for removing friend
       try {
-          const response = await axios.post(`http://localhost:8080/api/user/removeFriend?friendshipId=${friendEmail}`);
+          const response = await axios.post(`http://localhost:8080/api/user/removeFriend?userID1=${friendEmail}&userID2=${currentID}`);
           setMessage(response.data);
       } catch (error) {
           setMessage(error.response.data.message);
       }
+
+      try {
+        const response = await axios.post(`http://localhost:8080/api/user/removeFriend?userID1=${currentID}&userID2=${friendEmail}`);
+        setMessage(response.data);
+      } catch (error) {
+        setMessage(error.response.data.message);
+      }
   };
+
 
     const handleAddFriend = async (friendEmail) => {
       try {
