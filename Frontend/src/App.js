@@ -27,6 +27,7 @@ const App = () => {
           <Route path="/error" element={<ErrorPage />} />
           <Route path="/profile" element={<PrivateRoute element={UserProfilePage} />} />
           {/* <Route path="/admin" element={<AdminRoute element={Admin} />} /> */}
+          <Route path="/adminRoute" element={<AdminRoute />} />
           <Route path="/admin" element={<Admin />} />
           <Route path="/profile/:id" element={<PrivateRoute element={ProfilePage} />} />
           <Route path="/editprofile" element={<PrivateRoute element={ProfilePageForm} />} />

@@ -122,4 +122,7 @@ public class UserController {
         return userService.acceptUser(userID);
     }
 
+    @GetMapping("/getRole/{userID}")
+    public String getRole(@PathVariable int userID){return userService.getRole(userID);}
+
 }

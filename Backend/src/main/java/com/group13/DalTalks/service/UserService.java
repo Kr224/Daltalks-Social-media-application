@@ -26,4 +26,5 @@ public interface UserService {
     String acceptUser(int userID);
 
     void deleteUser(int userID);
+    String getRole(int userID);
 }

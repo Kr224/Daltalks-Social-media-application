@@ -31,7 +31,8 @@ const SignUp = () => {
             password,
             securityQuestion: selectedSecurityQuestion,
             securityAnswer,
-            status: "pending"
+            status: "pending",
+            role: "BSB"
         };
 
         try {

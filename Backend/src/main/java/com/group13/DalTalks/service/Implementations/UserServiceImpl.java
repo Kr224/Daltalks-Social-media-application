@@ -139,4 +139,14 @@ public class UserServiceImpl implements UserService {
         this.userRepository.deleteById(userID);
     }
 
+    @Override
+    public String getRole(int userID) {
+        Optional<User> userOptional = userRepository.findById(userID);
+        if (userOptional.isPresent()) {
+            User user = userOptional.get();
+            return user.getRole();
+        } else {
+            return ("User not found with ID: " + userID);
+        }
+    }
 }

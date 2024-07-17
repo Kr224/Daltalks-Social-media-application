@@ -12,7 +12,6 @@ const Admin = () => {
     const [pendingUsers, setPendingUsers] = useState([]);
     const [users, setUsers] = useState([]);
     const [value, setValue] = useState('vertical');
-    // const [role, setRole] = useState('User');
     const navigate = useNavigate();
 
     const onFinish = (values) => {
@@ -88,7 +87,7 @@ const Admin = () => {
                                     <Form.Item
                                     label="userID"
                                     name="userID"
-                                    rules={[{ required: true, message: 'Please input your username!' }]}
+                                    rules={[{ required: true, message: 'No empty field!' }]}
                                     >
                                     <Input />
                                     </Form.Item>
@@ -96,7 +95,7 @@ const Admin = () => {
                                     <Form.Item
                                     label="admin"
                                     name="admin"
-                                    rules={[{ required: true, message: 'Please input your password!' }]}
+                                    rules={[{ required: true, message: 'No empty field!' }]}
                                     >
                                     <Input.Password />
                                     </Form.Item>
