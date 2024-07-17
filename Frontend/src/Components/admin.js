@@ -4,10 +4,12 @@ import { Avatar, Card, Spin } from 'antd';
 import { Button, Form, Input } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
+import { Typography } from 'antd';
 import axios from 'axios';
 import Navigation from './navigation';
 
 const Admin = () => {
+    const { Link } = Typography;
     const [pendingUsers, setPendingUsers] = useState([]);
     const [users, setUsers] = useState([]);
     const value = 'vertical';
@@ -77,7 +79,9 @@ const Admin = () => {
                 <Row justify="center" align="top">
                     <Col span={8}>
                         <Flex vertical={value === 'vertical'} align='center'>
-                            <div></div>
+                            <div>
+                                <h1>Grant admin</h1>
+                            </div>
                             <Form
                                     name="basic"
                                     labelCol={{ span: 8 }}
@@ -116,9 +120,9 @@ const Admin = () => {
                                             <Card style={{ width: 300 }}>
                                             <Avatar size={48} icon={<UserOutlined />} />
                                                 <div class="user-info">
-                                                <p class="account-name" onClick={() => navigate(`/profile/${user.id}`)}>
-                                                    <a>{user.email.split('@')[0]}</a>
-                                                </p>
+                                                <Link onClick={() => navigate(`/profile/${user.id}`)} target="_blank">
+                                                    {user.email.split('@')[0]}
+                                                </Link>
                                                 <Button type="primary" className="follow" onClick={() => acceptUser(user.id)}>Accept</Button>
                                                 <Button type="primary" danger onClick={() => removeUser(user.id)}>Reject</Button>
                                                 </div>
