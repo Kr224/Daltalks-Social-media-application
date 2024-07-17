@@ -124,5 +124,7 @@ public class UserController {
 
     @GetMapping("/getRole/{userID}")
     public String getRole(@PathVariable int userID){return userService.getRole(userID);}
+    @PutMapping("/fixRole/{userID}")
+    public String fixRole(@PathVariable int userID){return userService.setRole(userID);}
 
 }

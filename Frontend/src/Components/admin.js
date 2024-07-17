@@ -15,12 +15,17 @@ const Admin = () => {
     const navigate = useNavigate();
 
     const onFinish = (values) => {
-        console.log('Success:', values.admin);
+        fixRole(values);
+        console.log('Success:', values.userID);
     };
       
     const onFinishFailed = (errorInfo) => {
         console.log('Failed:', errorInfo);
     };
+
+    const fixRole = async (values) => {
+        await axios.put(`http://localhost:8080/api/user/fixRole/${values.userID}`)
+    }
 
     const fetchPendingUser = async () => {
         try {
@@ -90,14 +95,6 @@ const Admin = () => {
                                     rules={[{ required: true, message: 'No empty field!' }]}
                                     >
                                     <Input />
-                                    </Form.Item>
-
-                                    <Form.Item
-                                    label="admin"
-                                    name="admin"
-                                    rules={[{ required: true, message: 'No empty field!' }]}
-                                    >
-                                    <Input.Password />
                                     </Form.Item>
 
                                     <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
