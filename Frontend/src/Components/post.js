@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Col, Row, Card, Avatar, Input, Space, Spin, Flex, Button } from 'antd';
+import { Col, Row, Card, Avatar, Input, Space, Spin, Button, AutoComplete } from 'antd';
 import { UserOutlined, LikeOutlined, CommentOutlined, SendOutlined } from '@ant-design/icons';
 import Friend from './friends';
 import axios from 'axios';
@@ -7,30 +7,25 @@ import Navigation from './navigation';
 import '../css/post.css';
 import { useNavigate } from 'react-router-dom';
 
-const { Search } = Input;
-
 const Post = () => {
     const [posts, setPosts] = useState([]);
-    const [emails, setEmails] = useState([]);
+    const [friends, setFriends] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [searchQuery, setSearchQuery] = useState('');
+    const [searchResults, setSearchResults] = useState([]);
     const navigate = useNavigate();
 
+    const currentID = localStorage.getItem('userId');
+
+    // Fetch posts and friends
     useEffect(() => {
-        const fetchPosts = async () => {
+        const fetchPostsAndFriends = async () => {
             try {
-                const response = await axios.get('http://localhost:8080/api/getAllPost');
-                const fetchedPosts = response.data;
-                setPosts(fetchedPosts);
+                const postResponse = await axios.get('http://localhost:8080/api/getAllPost');
+                setPosts(postResponse.data);
 
-                const emailPromises = fetchedPosts.map(async (post) => {
-                    const userID = post.userID;
-                    const emailResponse = await axios.get(`http://localhost:8080/api/getEmailByUserID/${userID}`);
-                    const email = emailResponse.data.split('@')[0];
-                    return email;
-                });
-
-                const fetchedEmails = await Promise.all(emailPromises);
-                setEmails(fetchedEmails);
+                const friendResponse = await axios.get(`http://localhost:8080/api/user/getAllUser/${currentID}`);
+                setFriends(friendResponse.data);
                 setLoading(false);
             } catch (error) {
                 console.error('Error fetching data:', error);
@@ -38,8 +33,25 @@ const Post = () => {
             }
         };
 
-        fetchPosts();
-    }, []);
+        fetchPostsAndFriends();
+    }, [currentID]);
+
+    // Update search results based on search query
+    useEffect(() => {
+        if (searchQuery) {
+            const results = friends.filter(({ email }) =>
+                email && email.split('@')[0].toLowerCase().includes(searchQuery.toLowerCase()) // Check if email exists
+            );
+            setSearchResults(results);
+        } else {
+            setSearchResults([]);
+        }
+    }, [searchQuery, friends]);
+
+    // Handle selection of a search result
+    const handleSelect = (value, option) => {
+        navigate(`/profile/${option.userID}`);
+    };
 
     return (
         <div className="main">
@@ -49,41 +61,57 @@ const Post = () => {
                 </Col>
                 <Col span={16} className="navigation-col">
                     <div className="search">
-                        <Search className="search-bar"  placeholder="search" />
+                        <AutoComplete
+                            options={searchResults.map(({ email, id }) => ({
+                                value: email.split('@')[0] || '', // Ensure it's defined
+                                label: email.split('@')[0] || '',
+                                userID: id,
+                            }))}
+                            onSelect={handleSelect}
+                            onSearch={(value) => setSearchQuery(value)}
+                            style={{ width: '100%' }}
+                        >
+                            <Input.Search
+                                placeholder="Search friends by email"
+                                value={searchQuery}
+                                onChange={(e) => setSearchQuery(e.target.value)}
+                                style={{ marginBottom: 20 }}
+                            />
+                        </AutoComplete>
                     </div>
                     {loading ? (
                         <div className="loading-container">
                             <Spin size="large" />
                         </div>
                     ) : (
-                        posts.map((post, index) => (
-                                <div class='post'>
-                                    <Flex gap="middle" vertical>
-                                        <Flex vertical className = "post-header">
-                                            <Card style={{ width: 500 }} >
-                                                <div className="space-align-block" class="profile">
-                                                    <Space align="start">
-                                                        <div class="profile-picture">
-                                                            <Avatar size={48} icon={<UserOutlined />} />
-                                                        </div>
-                                                        <div class="username" onClick={() => navigate(`/profile/${post.userID}`)}>
-                                                            <div><a>{emails[index]}</a></div>
-                                                        </div>
-                                                    </Space>  
+                        posts.map((post) => (
+                            <div className="post" key={post.id}>
+                                <div className="post-header">
+                                    <Card style={{ width: 500 }}>
+                                        <div className="profile">
+                                            <Space align="start">
+                                                <div className="profile-picture">
+                                                    <Avatar size={48} icon={<UserOutlined />} />
                                                 </div>
-                                                <div >
-                                                    <h4 >Post Title: {post.postTitle}</h4>
-                                                    <p >Post content: {post.postBodyContent}</p>
+                                                <div className="username" onClick={() => navigate(`/profile/${post.userID}`)}>
+                                                    <div>
+                                                        <a>{post.email ? post.email.split('@')[0] : 'Unknown User'}</a> {/* Check for email */}
+                                                    </div>
                                                 </div>
-                                                <div class="post-actions">
-                                                    <Button type="text" class="like-button"><LikeOutlined /></Button>
-                                                    <Button type="text" class="comment-button"><CommentOutlined /></Button>
-                                                    <Button type="text" class="share-button"><SendOutlined /></Button>
-                                                </div>
-                                            </Card>
-                                        </Flex>
-                                    </Flex>
+                                            </Space>
+                                        </div>
+                                        <div>
+                                            <h4>Post Title: {post.postTitle}</h4>
+                                            <p>Post content: {post.postBodyContent}</p>
+                                        </div>
+                                        <div className="post-actions">
+                                            <Button type="text" className="like-button"><LikeOutlined /></Button>
+                                            <Button type="text" className="comment-button"><CommentOutlined /></Button>
+                                            <Button type="text" className="share-button"><SendOutlined /></Button>
+                                        </div>
+                                    </Card>
                                 </div>
+                            </div>
                         ))
                     )}
                 </Col>
