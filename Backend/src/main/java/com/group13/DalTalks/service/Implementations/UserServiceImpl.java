@@ -128,7 +128,7 @@ public class UserServiceImpl implements UserService {
             User user = userOptional.get();
             user.setStatus(null);
             userRepository.save(user);
-            return "User sucesfully save";
+            return "User successfully save";
         } else {
             return "Can not find user";
         }
