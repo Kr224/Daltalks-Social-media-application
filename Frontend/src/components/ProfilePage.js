@@ -17,7 +17,7 @@ const ProfilePage = () => {
       const fetchProfile = async () => {
         try {
           const response = await axios.get(`http://localhost:8080/profiles/getByUserID/${id}`);
-          const email = await axios.get(`http://localhost:8080/api/getEmailByUserID/${response.data.id}`);
+          const email = await axios.get(`http://localhost:8080/api/getEmailByUserID/${id}`);
           setProfile(response.data);
           setEmail(email.data);
         } catch (error) {

@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Col, Flex, Row } from 'antd';
-import { Avatar, Space, Card, Spin } from 'antd';
-import { Button, Checkbox, Form, Input } from 'antd';
+import { Avatar, Card, Spin } from 'antd';
+import { Button, Form, Input } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
-import { Radio } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Navigation from './navigation';
@@ -11,7 +10,7 @@ import Navigation from './navigation';
 const Admin = () => {
     const [pendingUsers, setPendingUsers] = useState([]);
     const [users, setUsers] = useState([]);
-    const [value, setValue] = useState('vertical');
+    const value = 'vertical';
     const navigate = useNavigate();
 
     const onFinish = (values) => {
