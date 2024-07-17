@@ -80,7 +80,7 @@ const Admin = () => {
                     <Col span={8}>
                         <Flex vertical={value === 'vertical'} align='center'>
                             <div>
-                                <h1>Grant admin</h1>
+                                <h1>Administrator</h1>
                             </div>
                             <Form
                                     name="basic"
