@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { Col, Flex, Row } from 'antd';
-import { Avatar, Space, Card, Button } from 'antd';
+import { Avatar, Space, Card, Spin } from 'antd';
+import { Button, Checkbox, Form, Input } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
+import { Radio } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Navigation from './navigation';
@@ -9,9 +11,17 @@ import Navigation from './navigation';
 const Admin = () => {
     const [pendingUsers, setPendingUsers] = useState([]);
     const [users, setUsers] = useState([]);
-    const [loading, setLoading] = useState(true);
     const [value, setValue] = useState('vertical');
+    // const [role, setRole] = useState('User');
     const navigate = useNavigate();
+
+    const onFinish = (values) => {
+        console.log('Success:', values.admin);
+    };
+      
+    const onFinishFailed = (errorInfo) => {
+        console.log('Failed:', errorInfo);
+    };
 
     const fetchPendingUser = async () => {
         try {
@@ -62,11 +72,47 @@ const Admin = () => {
             <Navigation />
             <div>
                 <Row justify="center" align="top">
-                    <Col span={12}>
+                    <Col span={8}>
+                        <Flex vertical={value === 'vertical'} align='center'>
+                            <div></div>
+                            <Form
+                                    name="basic"
+                                    labelCol={{ span: 8 }}
+                                    wrapperCol={{ span: 16 }}
+                                    style={{ maxWidth: 600 }}
+                                    initialValues={{ remember: true }}
+                                    onFinish={onFinish}
+                                    onFinishFailed={onFinishFailed}
+                                    autoComplete="off"
+                                >
+                                    <Form.Item
+                                    label="userID"
+                                    name="userID"
+                                    rules={[{ required: true, message: 'Please input your username!' }]}
+                                    >
+                                    <Input />
+                                    </Form.Item>
+
+                                    <Form.Item
+                                    label="admin"
+                                    name="admin"
+                                    rules={[{ required: true, message: 'Please input your password!' }]}
+                                    >
+                                    <Input.Password />
+                                    </Form.Item>
+
+                                    <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
+                                    <Button type="primary" htmlType="submit">
+                                        Submit
+                                    </Button>
+                                    </Form.Item>
+                                </Form>
+                        </Flex>
+                    </Col>
+                    <Col span={8}>
                         <Flex vertical={value === 'vertical'} align='center'>
                             <div>
                                 <h1>Pending</h1>
-
                             </div>
                             <div>
                                 {pendingUsers ? (
@@ -85,12 +131,14 @@ const Admin = () => {
                                             </div>
                                     ))
                                     ) : (
-                                    <p>Loading...</p>
+                                    <div className="loading-container">
+                                        <Spin size="large" />
+                                    </div>
                                 )}
                             </div>
                         </Flex>
                     </Col>
-                    <Col span={12}>
+                    <Col span={8}>
                         <div>
                             <Flex vertical={value === 'vertical'} align='center'>
                                 <div>
@@ -101,18 +149,20 @@ const Admin = () => {
                                     users.map((user, index) => (
                                         <div class="user-profile">
                                             <Card style={{ width: 300 }}>
-                                            <Avatar size={48} icon={<UserOutlined />} />
+                                                <Avatar size={48} icon={<UserOutlined />} />
                                                 <div class="user-info">
                                                 <p class="account-name" onClick={() => navigate(`/profile/${user.id}`)}>
                                                     <a>{user.email.split('@')[0]}</a>
                                                 </p>
                                                     <Button type="primary" danger onClick={() => removeUser(user.id)}>Remove</Button>
-                                                </div>
+                                                </div>                                      
                                             </Card> 
                                         </div>             
                                     ))
                                     ) : (
-                                    <p>Loading...</p>
+                                    <div className="loading-container">
+                                        <Spin size="large" />
+                                    </div>
                                 )}
                             </Flex>
                         </div>

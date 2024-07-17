@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Avatar, Space, Card, Button } from 'antd';
+import { Avatar, Space, Card, Button, Spin } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
 
@@ -68,7 +68,9 @@ const Friend = () => {
             </div>             
           ))
           ) : (
-          <p>Loading...</p>
+            <div className="loading-container">
+              <Spin size="large" />
+            </div>
         )}
       </div>
     );
