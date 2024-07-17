@@ -3,6 +3,9 @@ package com.group13.DalTalks.model;
 import jakarta.persistence.*;
 import jakarta.persistence.Id;
 
+import java.util.HashSet;
+import java.util.Set;
+
 @Entity
 public class User {
     @Id
@@ -13,6 +16,9 @@ public class User {
     private String password;
     private String securityQuestion;
     private String securityAnswer;
+
+    @OneToMany(mappedBy = "user")
+    private Set<GroupMembers> memberOf  = new HashSet<>();
 
     // Constructors, getters, and setters
 
@@ -66,5 +72,13 @@ public class User {
 
     public void setSecurityAnswer(String securityAnswer) {
         this.securityAnswer = securityAnswer;
+    }
+
+    public Set<GroupMembers> getMembers() {
+        return memberOf;
+    }
+
+    public void setMembers(Set<GroupMembers> memberOf) {
+        this.memberOf = memberOf;
     }
 }
