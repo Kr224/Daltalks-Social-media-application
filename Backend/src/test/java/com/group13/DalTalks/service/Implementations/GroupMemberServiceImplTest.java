@@ -9,6 +9,10 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -29,6 +33,17 @@ class GroupMemberServiceImplTest {
     GroupMembers returned = groupMemberService.saveGroupMember(groupMembers);
 
     assertEquals(groupMembers, returned, "Membership was not returned correctly.");
+  }
+
+  @Test
+  public void removeGroupMembers() {
+    GroupMembers groupMembers = new GroupMembers();
+
+    when(groupMemberRepository.findById(groupMembers.getId())).thenReturn(Optional.of(groupMembers));
+
+    GroupMembers returned = groupMemberService.removeGroupMember(groupMembers);
+
+    assertEquals(groupMembers, returned, "Deleted group member not returned.");
   }
 
 }

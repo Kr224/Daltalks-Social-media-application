@@ -19,4 +19,9 @@ public class GroupMemberServiceImpl implements GroupMemberService {
   public GroupMembers saveGroupMember(GroupMembers groupMembers) {
     return groupMemberRepository.save(groupMembers);
   }
+
+  @Override
+  public GroupMembers removeGroupMember(GroupMembers groupMembers) {
+    return null;
+  }
 }

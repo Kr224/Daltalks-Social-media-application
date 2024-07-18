@@ -7,4 +7,6 @@ public interface GroupMemberService {
   //-> adding/removing group members, obtaining group members for a particular group
 
   GroupMembers saveGroupMember(GroupMembers groupMembers);
+
+  GroupMembers removeGroupMember(GroupMembers groupMembers);
 }
