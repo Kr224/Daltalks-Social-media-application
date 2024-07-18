@@ -20,6 +20,6 @@ public class GroupServiceImpl implements GroupEntityService {
 
   @Override
   public List<GroupEntity> getAllGroups() {
-    return null;
+    return groupRepository.findAll();
   }
 }
