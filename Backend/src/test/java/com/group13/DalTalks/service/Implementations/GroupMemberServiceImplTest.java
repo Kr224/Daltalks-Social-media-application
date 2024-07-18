@@ -61,4 +61,43 @@ class GroupMemberServiceImplTest {
     assertEquals(allMembers.size(), returned.size(), "Group members not returned correctly.");
   }
 
+
+  @Test
+  public void getMembersFromGroup_twoMembers() {
+    GroupEntity group = new GroupEntity();
+    group.setId(1);
+
+
+    GroupMembers member1 = new GroupMembers();
+    member1.setActive(true);
+    member1.setGroup(group);
+    GroupMembers member2 = new GroupMembers();
+    member2.setActive(true);
+    member2.setGroup(group);
+
+    List<GroupMembers> allMembers = new ArrayList<>();
+    allMembers.add(member1);
+    allMembers.add(member2);
+
+    when(groupMemberRepository.findByGroupId(group.getId())).thenReturn(allMembers);
+
+    List<GroupMembers> returned = groupMemberService.findAllGroupMembersByGroupId(group.getId());
+
+    assertEquals(allMembers.size(), returned.size(), "Group members not returned correctly.");
+  }
+
+  @Test
+  public void getMembersFromGroup_noMembers() {
+    GroupEntity group = new GroupEntity();
+    group.setId(1);
+
+    List<GroupMembers> allMembers = new ArrayList<>();
+
+    when(groupMemberRepository.findByGroupId(group.getId())).thenReturn(allMembers);
+
+    List<GroupMembers> returned = groupMemberService.findAllGroupMembersByGroupId(group.getId());
+
+    assertTrue(allMembers.isEmpty(), "No members should have been returned.");
+  }
+
 }
