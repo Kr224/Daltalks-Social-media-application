@@ -43,4 +43,22 @@ class GroupMemberServiceImplTest {
     assertEquals(groupMembers, returned, "Deleted group member not returned.");
   }
 
+  @Test
+  public void getMembersFromGroup_oneMember() {
+    GroupMembers member1 = new GroupMembers();
+    GroupEntity group = new GroupEntity();
+    group.setId(1);
+    member1.setActive(true);
+    member1.setGroup(group);
+
+    List<GroupMembers> allMembers = new ArrayList<>();
+    allMembers.add(member1);
+
+    when(groupMemberRepository.findByGroupId(group.getId())).thenReturn(allMembers);
+
+    List<GroupMembers> returned = groupMemberService.findAllGroupMembersByGroupId(group.getId());
+
+    assertEquals(allMembers.size(), returned.size(), "Group members not returned correctly.");
+  }
+
 }

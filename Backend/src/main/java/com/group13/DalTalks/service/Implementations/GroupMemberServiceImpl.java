@@ -6,6 +6,8 @@ import com.group13.DalTalks.service.GroupMemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class GroupMemberServiceImpl implements GroupMemberService {
   //here we implement the interface methods
@@ -23,5 +25,10 @@ public class GroupMemberServiceImpl implements GroupMemberService {
     groupMemberRepository.deleteById(groupMembers.getId());
 
     return groupMembers;
+  }
+
+  @Override
+  public List<GroupMembers> findAllGroupMembersByGroupId(int id) {
+    return null;
   }
 }
