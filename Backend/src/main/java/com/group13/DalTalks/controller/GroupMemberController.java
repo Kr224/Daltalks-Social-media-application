@@ -6,6 +6,8 @@ import com.group13.DalTalks.service.GroupMemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
 @RequestMapping("/group_members")
@@ -25,5 +27,9 @@ public class GroupMemberController {
     return groupMemberService.removeGroupMember(groupMembers);
   }
 
+  @GetMapping("/get-all-group-members")
+  public List<GroupMembers> getAllGroupMembers(@RequestBody int groupID) {
+    return groupMemberService.findAllGroupMembersByGroupId(groupID);
+  }
 
 }
