@@ -29,6 +29,6 @@ public class GroupMemberServiceImpl implements GroupMemberService {
 
   @Override
   public List<GroupMembers> findAllGroupMembersByGroupId(int id) {
-    return null;
+    return groupMemberRepository.findByGroupId(id);
   }
 }
