@@ -33,4 +33,18 @@ class GroupEntityServiceImplTest {
 
     assertEquals(group, returned, "Group was not returned!");
   }
+
+  @Test
+  public void getAllGroups() {
+    GroupEntity group = new GroupEntity();
+
+    List<GroupEntity> allGroups = new ArrayList<>();
+    allGroups.add(group);
+
+    when(groupRepository.findAll()).thenReturn(allGroups);
+
+    List<GroupEntity> returnGroups = groupService.getAllGroups();
+
+    assertEquals(returnGroups.size(), allGroups.size(), "returned list is the wrong size");
+  }
 }
