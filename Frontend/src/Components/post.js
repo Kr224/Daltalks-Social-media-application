@@ -95,7 +95,9 @@ const Post = () => {
                                                 </div>
                                                 <div className="username" onClick={() => navigate(`/profile/${post.userID}`)}>
                                                     <div>
-                                                        <a>{post.email ? post.email.split('@')[0] : 'Unknown User'}</a> {/* Check for email */}
+                                                        {friends.find((friend) => friend.id === post.userID)?.email.split('@')[0] 
+                                                            ? <a>{friends.find((friend) => friend.id === post.userID)?.email.split('@')[0]}</a> 
+                                                            : <a onClick={() => navigate(`/profile/${post.userID}`)}>User not found with id: {post.userID}</a>}
                                                     </div>
                                                 </div>
                                             </Space>
