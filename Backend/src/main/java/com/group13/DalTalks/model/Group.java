@@ -1,5 +1,6 @@
 package com.group13.DalTalks.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.Date;
@@ -18,7 +19,8 @@ public class Group {
   private int creatorID;
   private Date creation_date;
 
-  @OneToMany(mappedBy = "groups")
+  @OneToMany(mappedBy = "group", cascade = CascadeType.ALL, orphanRemoval = true)
+  @JsonIgnore
   private Set<GroupMembers> members = new HashSet<>();
 
   public Group() {
@@ -71,11 +73,11 @@ public class Group {
     this.creation_date = creation_date;
   }
 
-  public Set<GroupMembers> getMemberOf() {
+  public Set<GroupMembers> getMembers() {
     return members;
   }
 
-  public void setUsers(Set<GroupMembers> members) {
+  public void setMembers(Set<GroupMembers> members) {
     this.members = members;
   }
 }

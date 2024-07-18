@@ -1,5 +1,6 @@
 package com.group13.DalTalks.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.persistence.Id;
 
@@ -17,7 +18,8 @@ public class User {
     private String securityQuestion;
     private String securityAnswer;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
     private Set<GroupMembers> memberOf  = new HashSet<>();
 
     // Constructors, getters, and setters
