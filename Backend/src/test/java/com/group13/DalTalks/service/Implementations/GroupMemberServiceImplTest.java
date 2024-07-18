@@ -1,8 +1,8 @@
 package com.group13.DalTalks.service.Implementations;
 
+import com.group13.DalTalks.model.GroupEntity;
 import com.group13.DalTalks.model.GroupMembers;
 import com.group13.DalTalks.repository.GroupMemberRepository;
-import com.group13.DalTalks.service.GroupMemberService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -11,7 +11,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;

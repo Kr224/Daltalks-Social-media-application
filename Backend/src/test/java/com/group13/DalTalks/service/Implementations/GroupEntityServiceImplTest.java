@@ -1,32 +1,35 @@
 package com.group13.DalTalks.service.Implementations;
 
-import com.group13.DalTalks.model.Group;
-import com.group13.DalTalks.repository.GroupRepository;
+import com.group13.DalTalks.model.GroupEntity;
+import com.group13.DalTalks.repository.GroupEntityRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-class GroupServiceImplTest {
+class GroupEntityServiceImplTest {
 
   @Mock
-  private GroupRepository groupRepository;
+  private GroupEntityRepository groupRepository;
 
   @InjectMocks
   private GroupServiceImpl groupService;
 
   @Test
   public void createNewGroup() {
-    Group group = new Group();
+    GroupEntity group = new GroupEntity();
 
     when(groupRepository.save(group)).thenReturn(group);
 
-    Group returned = groupService.createGroup(group);
+    GroupEntity returned = groupService.createGroup(group);
 
     assertEquals(group, returned, "Group was not returned!");
   }

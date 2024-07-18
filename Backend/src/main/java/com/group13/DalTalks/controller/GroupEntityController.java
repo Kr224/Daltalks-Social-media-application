@@ -1,19 +1,19 @@
 package com.group13.DalTalks.controller;
 
-import com.group13.DalTalks.model.Group;
-import com.group13.DalTalks.service.GroupService;
+import com.group13.DalTalks.model.GroupEntity;
+import com.group13.DalTalks.service.GroupEntityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
 @RequestMapping("/groups")
-public class GroupController {
+public class GroupEntityController {
   @Autowired
-  private GroupService groupService;
+  private GroupEntityService groupService;
 
   @PostMapping("/create-group")
-  public Group createGroup(@RequestBody Group group) {
+  public GroupEntity createGroup(@RequestBody GroupEntity group) {
     return groupService.createGroup(group);
   }
 }
