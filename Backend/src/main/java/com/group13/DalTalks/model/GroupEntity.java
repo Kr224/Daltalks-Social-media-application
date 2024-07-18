@@ -8,7 +8,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-public class Group {
+public class GroupEntity {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,14 +19,14 @@ public class Group {
   private int creatorID;
   private Date creation_date;
 
-  @OneToMany(mappedBy = "group", cascade = CascadeType.ALL, orphanRemoval = true)
+  @OneToMany(mappedBy = "groupEntity", cascade = CascadeType.ALL, orphanRemoval = true)
   @JsonIgnore
   private Set<GroupMembers> members = new HashSet<>();
 
-  public Group() {
+  public GroupEntity() {
   }
 
-  public Group(String groupName, boolean isPrivate, int creatorID, Date creation_date) {
+  public GroupEntity(String groupName, boolean isPrivate, int creatorID, Date creation_date) {
     this.groupName = groupName;
     this.isPrivate = isPrivate;
     this.creatorID = creatorID;

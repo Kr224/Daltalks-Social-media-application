@@ -1,13 +1,17 @@
 package com.group13.DalTalks.service.Implementations;
 
+import com.group13.DalTalks.model.GroupEntity;
 import com.group13.DalTalks.model.GroupMembers;
 import com.group13.DalTalks.repository.GroupMemberRepository;
-import com.group13.DalTalks.repository.GroupRepository;
+import com.group13.DalTalks.repository.GroupEntityRepository;
 import com.group13.DalTalks.service.GroupMemberService;
 import jakarta.persistence.Access;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
