@@ -39,8 +39,6 @@ class GroupMemberServiceImplTest {
   public void removeGroupMembers() {
     GroupMembers groupMembers = new GroupMembers();
 
-    when(groupMemberRepository.findById(groupMembers.getId())).thenReturn(Optional.of(groupMembers));
-
     GroupMembers returned = groupMemberService.removeGroupMember(groupMembers);
 
     assertEquals(groupMembers, returned, "Deleted group member not returned.");

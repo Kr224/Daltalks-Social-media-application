@@ -8,6 +8,8 @@ import jakarta.persistence.Access;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class GroupMemberServiceImpl implements GroupMemberService {
   //here we implement the interface methods
@@ -22,6 +24,8 @@ public class GroupMemberServiceImpl implements GroupMemberService {
 
   @Override
   public GroupMembers removeGroupMember(GroupMembers groupMembers) {
-    return null;
+    groupMemberRepository.deleteById(groupMembers.getId());
+
+    return groupMembers;
   }
 }

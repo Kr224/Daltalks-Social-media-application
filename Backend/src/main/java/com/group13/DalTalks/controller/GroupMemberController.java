@@ -20,4 +20,9 @@ public class GroupMemberController {
   public GroupMembers createGroupMembers(@RequestBody GroupMembers groupMembers) {
     return groupMemberService.saveGroupMember(groupMembers);
   }
+
+  @DeleteMapping("/remove-friendship")
+  public GroupMembers removeGroupMembers(@RequestBody GroupMembers groupMembers) {
+    return groupMemberService.removeGroupMember(groupMembers);
+  }
 }
