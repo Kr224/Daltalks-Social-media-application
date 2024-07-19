@@ -23,4 +23,9 @@ public class GroupEntityController {
   public List<GroupEntity> getAllGroups() {
     return groupService.getAllGroups();
   }
+
+  @GetMapping("/{id}")
+  public GroupEntity getGroupById(@PathVariable int id) {
+    return groupService.getGroupById(id);
+  }
 }
