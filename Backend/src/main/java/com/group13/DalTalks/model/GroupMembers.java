@@ -11,7 +11,7 @@ public class GroupMembers {
 
   @ManyToOne
   @JoinColumn(name = "group_id")
-  private GroupEntity groupEntity;
+  private GroupEntity group;
 
   @ManyToOne
   @JoinColumn(name = "user_id")
@@ -22,8 +22,8 @@ public class GroupMembers {
   public GroupMembers() {
   }
 
-  public GroupMembers(GroupEntity groupEntity, User user, boolean isActive) {
-    this.groupEntity = groupEntity;
+  public GroupMembers(GroupEntity group, User user, boolean isActive) {
+    this.group = group;
     this.user = user;
     this.isActive = isActive;
   }
@@ -35,12 +35,13 @@ public class GroupMembers {
   public void setId(int id) {
     this.id = id;
   }
-  public GroupEntity getGroupEntity() {
-    return groupEntity;
+
+  public GroupEntity getGroup() {
+    return group;
   }
 
-  public void setGroupEntity(GroupEntity groupEntity) {
-    this.groupEntity = groupEntity;
+  public void setGroup(GroupEntity group) {
+    this.group = group;
   }
 
   public User getUser() {

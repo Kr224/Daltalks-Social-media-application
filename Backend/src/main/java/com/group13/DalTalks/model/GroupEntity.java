@@ -19,7 +19,7 @@ public class GroupEntity {
   private int creatorID;
   private Date creation_date;
 
-  @OneToMany(mappedBy = "groupEntity", cascade = CascadeType.ALL, orphanRemoval = true)
+  @OneToMany(mappedBy = "group", cascade = CascadeType.ALL, orphanRemoval = true)
   @JsonIgnore
   private Set<GroupMembers> members = new HashSet<>();
 

@@ -12,15 +12,15 @@ import java.util.List;
 @RequestMapping("/groups")
 public class GroupEntityController {
   @Autowired
-  private GroupEntityService groupEntityService;
+  private GroupEntityService groupService;
 
   @PostMapping("/create-group")
   public GroupEntity createGroup(@RequestBody GroupEntity group) {
-    return groupEntityService.createGroup(group);
+    return groupService.createGroup(group);
   }
 
-  @GetMapping
-  public List<GroupEntity> getAllGroups() { //api for getting all groups
-    return groupEntityService.getAllGroups();
+  @GetMapping("/get-all-groups")
+  public List<GroupEntity> getAllGroups() {
+    return groupService.getAllGroups();
   }
 }

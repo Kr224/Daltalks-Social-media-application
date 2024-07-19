@@ -1,13 +1,10 @@
 package com.group13.DalTalks.controller;
-
-
 import com.group13.DalTalks.model.GroupMembers;
-import com.group13.DalTalks.repository.GroupMemberRepository;
 import com.group13.DalTalks.service.GroupMemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Map;
+import java.util.List;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
@@ -23,8 +20,14 @@ public class GroupMemberController {
     return groupMemberService.saveGroupMember(groupMembers);
   }
 
-  @DeleteMapping("/remove-friendship")
+  @DeleteMapping("/remove-membership")
   public GroupMembers removeGroupMembers(@RequestBody GroupMembers groupMembers) {
     return groupMemberService.removeGroupMember(groupMembers);
   }
+
+  @GetMapping("/get-all-group-members")
+  public List<GroupMembers> getAllGroupMembers(@RequestBody int groupID) {
+    return groupMemberService.findAllGroupMembersByGroupId(groupID);
+  }
+
 }
