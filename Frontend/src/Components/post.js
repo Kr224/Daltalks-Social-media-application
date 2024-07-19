@@ -63,7 +63,7 @@ const Post = () => {
                     <div className="search">
                         <AutoComplete
                             options={searchResults.map(({ email, id }) => ({
-                                value: email.split('@')[0] || '', // Ensure it's defined
+                                value: email.split('@')[0] || '',
                                 label: email.split('@')[0] || '',
                                 userID: id,
                             }))}
@@ -72,7 +72,7 @@ const Post = () => {
                             style={{ width: '100%' }}
                         >
                             <Input.Search
-                                placeholder="Search friends by email"
+                                placeholder="Search friends"
                                 value={searchQuery}
                                 onChange={(e) => setSearchQuery(e.target.value)}
                                 style={{ marginBottom: 20 }}

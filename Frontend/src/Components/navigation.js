@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button } from 'antd';
-import { HomeOutlined, UserOutlined, LogoutOutlined } from '@ant-design/icons';
+import { HomeOutlined, UserOutlined, LogoutOutlined, UserAddOutlined, TeamOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
 
 const Navigation = () => {
@@ -13,7 +13,7 @@ const Navigation = () => {
   };
 
   return (
-    <div style={{cursor: 'default'}}>
+    <div style={{ cursor: 'default' }}>
       <h1>DalTalks</h1>
       <Button type="text">
         <a href="/main">
@@ -22,6 +22,12 @@ const Navigation = () => {
       </Button>
       <Button type="text" onClick={() => navigate(`/profile`)}>
         <UserOutlined /> User
+      </Button>
+      <Button type="text" onClick={() => navigate(`/friend-requests`)}>
+        <UserAddOutlined /> Add Friend
+      </Button>
+      <Button type="text" onClick={() => navigate(`/My-friends`)}>
+        <TeamOutlined /> Friends
       </Button>
       <Button type="text" onClick={handleLogout}>
         <LogoutOutlined /> Log out

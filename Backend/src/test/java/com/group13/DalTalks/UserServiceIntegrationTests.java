@@ -15,7 +15,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.junit.jupiter.api.extension.ExtendWith;
 
-@ExtendWith(MockitoExtension.class) // Use MockitoExtension for JUnit 5
+@ExtendWith(MockitoExtension.class)
 public class UserServiceIntegrationTests {
 
     @Mock
