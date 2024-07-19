@@ -27,9 +27,9 @@ public class GroupMemberController {
     return groupMemberService.removeGroupMember(groupMembers);
   }
 
-  @GetMapping("/get-all-group-members")
-  public List<GroupMembers> getAllGroupMembers(@RequestBody int groupID) {
-    return groupMemberService.findAllGroupMembersByGroupId(groupID);
+  @GetMapping("/{id}")
+  public List<GroupMembers> getAllGroupMembers(@PathVariable int id) {
+    return groupMemberService.findAllGroupMembersByGroupId(id);
   }
 
 }
