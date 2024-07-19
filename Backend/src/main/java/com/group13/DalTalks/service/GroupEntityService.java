@@ -8,5 +8,7 @@ public interface GroupEntityService {
   GroupEntity createGroup(GroupEntity group);
 
   List<GroupEntity> getAllGroups();
+
+  GroupEntity getGroupById(int id);
 }
 

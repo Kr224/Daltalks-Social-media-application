@@ -4,15 +4,20 @@ import axios from 'axios';
 import '../css/CreateGroup.css';
 
 const CreateGroup = () => {
-  const [name, setName] = useState('');
-  const [visibility, setVisibility] = useState('public');
-  const [createdBy, setCreatedBy] = useState(localStorage.getItem('userId'));
-  const date = new Date();
+  const [groupName, setName] = useState('');
+  const [isPrivate, setVisibility] = useState('public');
+  const [creatorID, setCreatedBy] = useState(localStorage.getItem('userId'));
+  const creation_date = new Date();
   const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
+    console.log(groupName)
+    console.log(isPrivate)
+    console.log(creatorID)
+    console.log(creation_date)
+
     event.preventDefault();
-    const groupData = { name, visibility, created_by: createdBy, date };
+    const groupData = { groupName, isPrivate, creatorID, creation_date };
 
     try {
       const response = await axios.post('http://localhost:8080/groups/create-group', groupData);
@@ -32,11 +37,11 @@ const CreateGroup = () => {
         <input
           type="text"
           placeholder="Group Name"
-          value={name}
+          value={groupName}
           onChange={(e) => setName(e.target.value)}
           required
         />
-        <select value={visibility} onChange={(e) => setVisibility(e.target.value)}>
+        <select value={isPrivate} onChange={(e) => setVisibility(e.target.value)}>
           <option value="public">Public</option>
           <option value="private">Private</option>
         </select>
@@ -47,3 +52,4 @@ const CreateGroup = () => {
 };
 
 export default CreateGroup;
+
