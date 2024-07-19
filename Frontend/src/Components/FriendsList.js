@@ -1,13 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Button, List, Avatar } from 'antd';
+import { Button, List, Avatar, Typography, Card, Spin } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
+import Navigation from './navigation.js';
+import { useNavigate } from 'react-router-dom';
 import '../css/friends.css';
+
+const { Title, Text } = Typography;
 
 const FriendsList = () => {
   const [friends, setFriends] = useState([]);
   const userId = localStorage.getItem('userId');
   const [message, setMessage] = useState('');
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchFriends = async () => {
@@ -22,40 +27,46 @@ const FriendsList = () => {
     fetchFriends();
   }, [userId]);
 
-  const handleRemoveFriend = async (friendEmail) => { //functionality for removing friend
+  const handleRemoveFriend = async (friendEmail) => {
     try {
-        const response = await axios.post(`http://localhost:8080/api/user/removeFriend?userID1=${friendEmail}&userID2=${userId}`);
-        setMessage(response.data);
+      await axios.post(`http://localhost:8080/api/user/removeFriend?userID1=${friendEmail}&userID2=${userId}`);
+      await axios.post(`http://localhost:8080/api/user/removeFriend?userID1=${userId}&userID2=${friendEmail}`);
+      setMessage('Friend removed successfully.');
     } catch (error) {
-        setMessage(error.response.data.message);
+      setMessage(error.response?.data?.message || 'Error removing friend');
     }
-
-    try {
-      const response = await axios.post(`http://localhost:8080/api/user/removeFriend?userID1=${userId}&userID2=${friendEmail}`);
-      setMessage(response.data);
-    } catch (error) {
-      setMessage(error.response.data.message);
-    }
-};
-
+  };
 
   return (
-    <div>
-      <h2>Friends List</h2>
-      <List
-        itemLayout="horizontal"
-        dataSource={friends}
-        renderItem={friend => (
-          <List.Item>
-            <List.Item.Meta
-              avatar={<Avatar icon={<UserOutlined />} />}
-              title={friend.name}
-              description={friend.email}
-            />
-            <Button type="primary" danger onClick={() => handleRemoveFriend(friend.id)}>Remove</Button>
-          </List.Item>
+    <div className="friend-list-container">
+      <Navigation />
+      <Title level={2}>Friends List</Title>
+      <Card className="friends-list-card">
+        {friends.length > 0 ? (
+          <List
+            itemLayout="horizontal"
+            dataSource={friends}
+            renderItem={friend => (
+              <List.Item>
+                <List.Item.Meta
+                  avatar={<Avatar icon={<UserOutlined />} />}
+                  title={
+                    <Text className="account-name" onClick={() => navigate(`/profile/${friend.id}`)}>
+                    <a>{friend.email.split('@')[0]}</a>
+                  </Text>
+                  }
+                />
+                <Button type="primary" danger onClick={() => handleRemoveFriend(friend.id)}>Remove</Button>
+              </List.Item>
+            )}
+          />
+        ) : (
+          <div className="loading-container">
+            <Spin size="large" />
+          </div>
         )}
-      />
+      </Card>
+      {message && <Text type="danger">{message}</Text>}
     </div>
   );
 };
