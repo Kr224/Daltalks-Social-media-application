@@ -41,11 +41,11 @@ public class GroupEntity {
     this.id = id;
   }
 
-  public String getGroup_name() {
+  public String getGroupName() {
     return groupName;
   }
 
-  public void setGroup_name(String groupName) {
+  public void setGroupName(String groupName) {
     this.groupName = groupName;
   }
 
