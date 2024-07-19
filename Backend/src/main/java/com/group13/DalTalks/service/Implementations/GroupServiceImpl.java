@@ -22,4 +22,9 @@ public class GroupServiceImpl implements GroupEntityService {
   public List<GroupEntity> getAllGroups() {
     return groupRepository.findAll();
   }
+
+  @Override
+  public GroupEntity getGroupById(int id) {
+    return null;
+  }
 }

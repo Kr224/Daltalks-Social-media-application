@@ -10,6 +10,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -62,5 +63,17 @@ class GroupEntityServiceImplTest {
     List<GroupEntity> returnGroups = groupService.getAllGroups();
 
     assertEquals(returnGroups.size(), allGroups.size(), "returned list is the wrong size");
+  }
+
+  @Test
+  public void getGroupInfo() {
+    GroupEntity group = new GroupEntity();
+    group.setId(1);
+
+    when(groupRepository.findById(group.getId())).thenReturn(Optional.of(group));
+
+    GroupEntity returned = groupService.getGroupById(group.getId());
+
+    assertEquals(group, returned, "Group was not returned!");
   }
 }
