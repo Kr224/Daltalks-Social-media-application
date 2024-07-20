@@ -68,9 +68,9 @@ const GroupDetails = () => {
     <div className="group-details">
       {group ? (
         <>
-          <h2>{group.name}</h2>
-          <p>Visibility: {group.visibility}</p>
-          <p>Created by: {group.created_by}</p>
+          <h2>{group.groupName}</h2>
+          <p>Visibility: {group.private.toString()}</p>
+          <p>Created by: {group.creatorID}</p>
           <h3>Members</h3>
           <ul>
             {members.map(member => (

@@ -25,7 +25,7 @@ const Friend = () => {
           console.error('Error fetching resume', error);
         }
       };
-    
+
       fetchUser();
   }, []);
 
@@ -72,8 +72,8 @@ const Friend = () => {
                   <Button type="primary" className="follow" onClick={() => handleAddFriend(user.id)}>Follow</Button>
                   <Button type="primary" danger onClick={() => handleRemoveFriend(user.id)}>Remove</Button>
                 </div>
-              </Card> 
-            </div>             
+              </Card>
+            </div>
           ))
           ) : (
           <p>Loading...</p>

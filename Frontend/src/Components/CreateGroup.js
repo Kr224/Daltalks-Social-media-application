@@ -29,7 +29,6 @@ const CreateGroup = () => {
     }
   };
 
-
   return (
     <div className="create-group-form">
       <h2>Create a New Group</h2>
