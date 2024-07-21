@@ -29,6 +29,7 @@ public class GroupMemberServiceImpl implements GroupMemberService {
 
   @Override
   public List<GroupMembers> findAllGroupMembersByGroupId(int id) {
+    System.out.println("Length of list: " + groupMemberRepository.findByGroupId(id).size());
     return groupMemberRepository.findByGroupId(id);
   }
 }

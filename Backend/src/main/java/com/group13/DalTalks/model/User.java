@@ -18,7 +18,6 @@ public class User {
     private String securityQuestion;
     private String securityAnswer;
 
-
     public User() {
     }
 
@@ -68,6 +67,5 @@ public class User {
     public void setSecurityAnswer(String securityAnswer) {
         this.securityAnswer = securityAnswer;
     }
-
 }
 
