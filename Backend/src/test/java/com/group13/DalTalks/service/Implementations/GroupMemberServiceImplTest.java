@@ -2,6 +2,7 @@ package com.group13.DalTalks.service.Implementations;
 
 import com.group13.DalTalks.model.GroupEntity;
 import com.group13.DalTalks.model.GroupMembers;
+import com.group13.DalTalks.model.User;
 import com.group13.DalTalks.repository.GroupMemberRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -37,6 +38,8 @@ class GroupMemberServiceImplTest {
   @Test
   public void removeGroupMembers() {
     GroupMembers groupMembers = new GroupMembers();
+    groupMembers.setUser(new User());
+    groupMembers.setGroup(new GroupEntity());
 
     GroupMembers returned = groupMemberService.removeGroupMember(groupMembers);
 

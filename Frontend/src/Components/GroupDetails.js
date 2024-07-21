@@ -49,7 +49,7 @@ const GroupDetails = () => {
 
   const handleRemoveMember = async (userId) => {
     try {
-      await axios.delete(`http://localhost:8080/group_members/remove-friendship`, {
+      await axios.delete(`http://localhost:8080/group_members/remove-membership`, {
         data: {
           group: { id },
           user: { id: userId }
@@ -76,7 +76,7 @@ const GroupDetails = () => {
             {members.map(member => (
               <li key={member.user_id}>
                 {member.user.id} - {member.isActive ? 'Active' : 'Inactive'}
-                <button onClick={() => handleRemoveMember(member.user_id)}>Remove</button>
+                <button onClick={() => handleRemoveMember(member.user.id)}>Remove</button>
               </li>
             ))}
           </ul>
