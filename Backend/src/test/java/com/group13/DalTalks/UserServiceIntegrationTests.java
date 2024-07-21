@@ -91,4 +91,45 @@ public class UserServiceIntegrationTests {
         });
         assertEquals("Invalid password!", thrown.getMessage());
     }
+
+    @Test
+    public void testCreateUser() {
+        User user = new User();
+        user.setEmail("sample1@dal.ca");
+        user.setPassword("Password!123");
+        user.setSecurityAnswer("What is your mother's maiden name?");
+        user.setSecurityAnswer("ABC");
+
+        assertEquals("User created successfully",userService.createUser(user));
+    }
+
+    @Test
+    public void testCreateUserInvalidEmail() {
+        User user = new User();
+        user.setEmail("sample1@gmail.com");
+        user.setPassword("Password!123");
+        user.setSecurityAnswer("What is your mother's maiden name?");
+        user.setSecurityAnswer("ABC");
+
+        IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> {
+            userService.createUser(user);
+        });
+        assertEquals("The email address used is invalid. This application is only targeted for employees and students who are currently enrolled in Dalhousie.", thrown.getMessage());
+    }
+
+    @Test
+    public void testCreateUserInvalidPassword() {
+        User user = new User();
+        user.setEmail("sample1@dal.ca");
+        user.setPassword("Password");
+        user.setSecurityAnswer("What is your mother's maiden name?");
+        user.setSecurityAnswer("ABC");
+
+        IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> {
+            userService.createUser(user);
+        });
+        assertEquals("Password must be at least 8 characters long, contain at least one uppercase letter, one lowercase letter, one number, and one special character.", thrown.getMessage());
+    }
+
+
 }
