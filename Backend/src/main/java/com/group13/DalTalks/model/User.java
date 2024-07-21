@@ -18,10 +18,6 @@ public class User {
     private String securityQuestion;
     private String securityAnswer;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonIgnore
-    private Set<GroupMembers> memberOf  = new HashSet<>();
-
     // Constructors, getters, and setters
 
     public User() {
@@ -74,14 +70,6 @@ public class User {
 
     public void setSecurityAnswer(String securityAnswer) {
         this.securityAnswer = securityAnswer;
-    }
-
-    public Set<GroupMembers> getMembers() {
-        return memberOf;
-    }
-
-    public void setMembers(Set<GroupMembers> memberOf) {
-        this.memberOf = memberOf;
     }
 }
 

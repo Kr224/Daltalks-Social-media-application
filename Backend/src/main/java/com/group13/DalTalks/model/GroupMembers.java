@@ -1,5 +1,6 @@
 package com.group13.DalTalks.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 @Entity
