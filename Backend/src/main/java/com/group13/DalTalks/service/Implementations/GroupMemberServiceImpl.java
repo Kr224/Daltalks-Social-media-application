@@ -36,7 +36,15 @@ public class GroupMemberServiceImpl implements GroupMemberService {
 
   @Override
   public GroupMembers activateGroupMember(GroupMembers groupMembers) {
-    return null;
+    int groupID = groupMembers.getGroup().getId();
+    int userID = (groupMembers.getUser().getId());
+    GroupMembers existingGroupMember = groupMemberRepository.findByGroupIdAndUserId(groupID, userID);
+    if (existingGroupMember != null) {
+      existingGroupMember.setActive(true);
+      groupMemberRepository.save(existingGroupMember);
+    }
+    return existingGroupMember;
+
   }
 }
 
