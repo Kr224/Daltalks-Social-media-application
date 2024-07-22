@@ -20,6 +20,9 @@ public class GroupMemberServiceImpl implements GroupMemberService {
     if (groupMembers.getGroup() == null || groupMembers.getUser() == null) {
       return null;
     }
+    if (!groupMembers.getGroup().isPrivate()) {
+      groupMembers.setActive(true);
+    }
     return groupMemberRepository.save(groupMembers);
   }
 
