@@ -69,7 +69,7 @@ const GroupDetails = () => {
       {group ? (
         <>
           <h2>{group.groupName}</h2>
-          <p>Visibility: {group.private.toString()}</p>
+          <p>Private: {group.private.toString()}</p>
           <p>Created by: {group.creatorID}</p>
           <h3>Members</h3>
           <ul>
