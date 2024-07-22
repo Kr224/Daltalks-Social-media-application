@@ -7,8 +7,9 @@ public interface FriendshipService {
     void sendFriendRequest(int senderId, int receiverId);
     void acceptFriendRequest(int requestId);
     void rejectFriendRequest(int requestId);
-    void removeFriend(int friendshipId);
-//    List<User> getFriends(int userId);
     List<Object> getFriendRequests(int userId);
+    void removeFriend(int userID1, int userID2);
+
+    List<User> getFriends(int userId);
 
 }
