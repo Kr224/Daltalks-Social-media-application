@@ -14,17 +14,17 @@ const Friend = () => {
   const currentID = localStorage.getItem('userId');
 
   useEffect(() => {
-    const fetchUser = async () => {
-      try {
-        const response = await axios.get(`http://localhost:8080/api/user/getAllUser/${currentID}`);
-        setUser(response.data);
-      } catch (error) {
-        console.error('Error fetching users:', error);
-      }
-    };
-
     fetchUser();
   }, [currentID]);
+
+  const fetchUser = async () => {
+    try {
+      const response = await axios.get(`http://localhost:8080/api/user/getAllUserExceptCurrent/${currentID}`);
+      setUser(response.data);
+    } catch (error) {
+      console.error('Error fetching users:', error);
+    }
+  };
 
   const handleRemoveFriend = async (friendEmail) => {
     try {
@@ -86,4 +86,3 @@ const Friend = () => {
 };
 
 export default Friend;
-
