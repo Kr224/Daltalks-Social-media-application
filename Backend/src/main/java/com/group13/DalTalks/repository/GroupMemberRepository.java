@@ -14,6 +14,9 @@ public interface GroupMemberRepository extends JpaRepository<GroupMembers, Integ
   @Transactional
   void deleteGroupMembersByGroupIdAndUserId(int groupId, int userId);
 
+  GroupMembers findByGroupIdAndUserId(int groupId, int userId);
+
+
   //this allows us to interact with the group members table
   //-> ie we could define a method to search for a particular group, inactive/active members, etc..
 }

@@ -103,4 +103,26 @@ class GroupMemberServiceImplTest {
     assertTrue(allMembers.isEmpty(), "No members should have been returned.");
   }
 
+  @Test
+  public void activateGroupMember() {
+    GroupEntity group = new GroupEntity();
+    group.setId(1);
+    User user = new User();
+    user.setId(1);
+
+    GroupMembers groupMembers = new GroupMembers();
+    groupMembers.setGroup(group);
+    groupMembers.setUser(user);
+
+    GroupMembers existingGroupMember = new GroupMembers();
+    existingGroupMember.setGroup(group);
+    existingGroupMember.setUser(user);
+
+    when(groupMemberRepository.findByGroupIdAndUserId(group.getId(), user.getId())).thenReturn(existingGroupMember);
+
+    GroupMembers returned = groupMemberService.activateGroupMember(groupMembers);
+
+    assertTrue(returned.isActive(), "Group member should be activated.");
+  }
+
 }

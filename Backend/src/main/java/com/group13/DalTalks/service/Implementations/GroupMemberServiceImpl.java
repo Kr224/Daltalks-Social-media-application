@@ -33,5 +33,10 @@ public class GroupMemberServiceImpl implements GroupMemberService {
   public List<GroupMembers> findAllGroupMembersByGroupId(int id) {
     return groupMemberRepository.findByGroupId(id);
   }
+
+  @Override
+  public GroupMembers activateGroupMember(GroupMembers groupMembers) {
+    return null;
+  }
 }
 
