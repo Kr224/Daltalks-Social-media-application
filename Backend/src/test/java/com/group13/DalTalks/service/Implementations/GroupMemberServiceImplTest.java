@@ -27,6 +27,8 @@ class GroupMemberServiceImplTest {
   @Test
   public void createNewGroupMembers() {
     GroupMembers groupMembers = new GroupMembers();
+    groupMembers.setUser(new User());
+    groupMembers.setGroup(new GroupEntity());
 
     when(groupMemberRepository.save(groupMembers)).thenReturn(groupMembers);
 
@@ -38,7 +40,7 @@ class GroupMemberServiceImplTest {
   @Test
   public void saveGroupMember_nullGroup() {
     GroupMembers groupMembers = new GroupMembers();
-    groupMembers.setUser(new User());
+    groupMembers.setGroup(null);
 
     GroupMembers returned = groupMemberService.saveGroupMember(groupMembers);
 
@@ -55,6 +57,19 @@ class GroupMemberServiceImplTest {
     assertNull(returned, "Group member with null user should return null.");
   }
 
+  @Test
+  public void saveGroupMember_publicGroupActiveStatus() {
+    GroupMembers groupMembers = new GroupMembers();
+    groupMembers.setUser(new User());
+    groupMembers.setGroup(new GroupEntity());
+    groupMembers.getGroup().setPrivate(false);
+
+    when(groupMemberRepository.save(groupMembers)).thenReturn(groupMembers);
+
+    GroupMembers returned = groupMemberService.saveGroupMember(groupMembers);
+
+    assertTrue(returned.isActive(), "This is a public group, the group member should be active!");
+  }
 
   @Test
   public void removeGroupMembers() {
@@ -165,17 +180,9 @@ class GroupMemberServiceImplTest {
   }
 
   @Test
-  public void activateGroupMember_existingMemberNull() {
-    GroupEntity group = new GroupEntity();
-    group.setId(1);
-    User user = new User();
-    user.setId(1);
+  public void activateGroupMember_nullMember() {
 
-    GroupMembers groupMembers = new GroupMembers();
-    groupMembers.setGroup(group);
-    groupMembers.setUser(user);
-
-    when(groupMemberRepository.findByGroupIdAndUserId(group.getId(), user.getId())).thenReturn(null);
+    GroupMembers groupMembers = null;
 
     GroupMembers returned = groupMemberService.activateGroupMember(groupMembers);
 

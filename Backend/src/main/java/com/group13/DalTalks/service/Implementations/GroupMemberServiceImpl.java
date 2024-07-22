@@ -1,6 +1,5 @@
 package com.group13.DalTalks.service.Implementations;
 
-import com.group13.DalTalks.model.GroupEntity;
 import com.group13.DalTalks.model.GroupMembers;
 import com.group13.DalTalks.repository.GroupMemberRepository;
 import com.group13.DalTalks.service.GroupMemberService;
@@ -21,24 +20,10 @@ public class GroupMemberServiceImpl implements GroupMemberService {
     if (groupMembers.getGroup() == null || groupMembers.getUser() == null) {
       return null;
     }
-    if (groupMembers.getGroup() != null) {    //Added a condition to check if public or private
-      if (!groupMembers.getGroup().isPrivate()) {
-        groupMembers.setActive(true);
-      }
+    if (!groupMembers.getGroup().isPrivate()) {
+      groupMembers.setActive(true);
     }
     return groupMemberRepository.save(groupMembers);
-  }
-
-  @Override
-  public GroupMembers activateGroupMember(GroupMembers groupMembers) { //activating group member if public
-    int groupID = groupMembers.getGroup().getId();
-    int userID = (groupMembers.getUser().getId());
-    GroupMembers existingGroupMember = groupMemberRepository.findByGroupIdAndUserId(groupID, userID);
-    if (existingGroupMember != null) {
-      existingGroupMember.setActive(true);
-      groupMemberRepository.save(existingGroupMember);
-    }
-    return existingGroupMember;
   }
 
   @Override
@@ -54,5 +39,20 @@ public class GroupMemberServiceImpl implements GroupMemberService {
   public List<GroupMembers> findAllGroupMembersByGroupId(int id) {
     return groupMemberRepository.findByGroupId(id);
   }
-}
 
+  @Override
+  public GroupMembers activateGroupMember(GroupMembers groupMembers) {
+    if (groupMembers == null) {
+      return null;
+    }
+    int groupID = groupMembers.getGroup().getId();
+    int userID = (groupMembers.getUser().getId());
+    GroupMembers existingGroupMember = groupMemberRepository.findByGroupIdAndUserId(groupID, userID);
+    if (existingGroupMember != null) {
+      existingGroupMember.setActive(true);
+      groupMemberRepository.save(existingGroupMember);
+    }
+    return existingGroupMember;
+
+  }
+}
