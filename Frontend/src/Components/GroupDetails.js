@@ -32,20 +32,20 @@ const GroupDetails = () => {
   }, [id]);
 
   const handleAddMember = async (userId) => {
-    try {
-      await axios.post(`http://localhost:8080/group_members/add-membership`, {
-        group: { id },
-        user: { id: userId },
-        isActive: true
-      });
-      alert('Member added successfully');
-      const response = await axios.get(`http://localhost:8080/group_members/${id}`);
-      setMembers(response.data);
-    } catch (error) {
-      console.error('Error adding member', error);
-      alert('Failed to add member');
-    }
-  };
+      try {
+        await axios.post(`http://localhost:8080/group_members/add-membership`, {
+          group: group,
+          user: { id: userId },
+          isActive: true
+        });
+        alert('Member added successfully');
+        const response = await axios.get(`http://localhost:8080/group_members/${id}`);
+        setMembers(response.data);
+      } catch (error) {
+        console.error('Error adding member', error);
+        alert('Failed to add member');
+      }
+    };
 
   const handleRemoveMember = async (userId) => {
     try {
@@ -64,6 +64,21 @@ const GroupDetails = () => {
     }
   };
 
+  const handleActivateMember = async (userId) => {
+      try {
+        const response = await axios.post(`http://localhost:8080/group_members/activate-membership`, {
+          group: { id },
+          user: { id: userId }
+        });
+        alert('Member activated successfully');
+        const responseMembers = await axios.get(`http://localhost:8080/group_members/${id}`);
+        setMembers(responseMembers.data);
+      } catch (error) {
+        console.error('Error activating member', error);
+        alert('Failed to activate member');
+      }
+    };
+
   return (
     <div className="group-details">
       {group ? (
@@ -77,6 +92,7 @@ const GroupDetails = () => {
               <li key={member.user_id}>
                 {member.user.id} - {member.isActive ? 'Active' : 'Inactive'}
                 <button onClick={() => handleRemoveMember(member.user.id)}>Remove</button>
+                <button onClick={() => handleActivateMember(member.user.id)}>Make Active</button>
               </li>
             ))}
           </ul>
