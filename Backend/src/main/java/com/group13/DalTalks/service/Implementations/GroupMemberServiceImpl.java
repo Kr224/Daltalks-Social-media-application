@@ -36,6 +36,9 @@ public class GroupMemberServiceImpl implements GroupMemberService {
 
   @Override
   public GroupMembers activateGroupMember(GroupMembers groupMembers) {
+    if (groupMembers == null) {
+      return null;
+    }
     int groupID = groupMembers.getGroup().getId();
     int userID = (groupMembers.getUser().getId());
     GroupMembers existingGroupMember = groupMemberRepository.findByGroupIdAndUserId(groupID, userID);
