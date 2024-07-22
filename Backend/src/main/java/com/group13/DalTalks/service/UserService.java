@@ -18,4 +18,14 @@ public interface UserService {
     String getEmailByUserID(Integer userID);
 
     List<User> getAllUserExcept(int userID);
+
+    List<User> getAllPendingUser();
+    
+    List<User> getAllUsers();
+
+    String acceptUser(int userID);
+
+    void deleteUser(int userID);
+    String getRole(int userID);
+    String setRole(int userID);
 }

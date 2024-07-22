@@ -103,9 +103,34 @@ public class UserController {
         }
     }
 
-    @GetMapping("/getAllUser/{id}")
+    @GetMapping("/getAllUserExceptCurrent/{id}")
     public List<User> getAllUsers(@PathVariable int id){
         return userService.getAllUserExcept(id);
     }
+
+    @GetMapping("/getAllPendingUser")
+    public List<User> getAllPendingUser(){
+        return userService.getAllPendingUser();
+    }
+
+    @GetMapping("/getAllUser")
+    public List<User> getAllUsers(){
+        return userService.getAllUsers();
+    }
+
+    @DeleteMapping("/deleteUser/{userID}")
+    public void deleteUser(@PathVariable int userID){
+        userService.deleteUser(userID);
+    }
+
+    @PutMapping("/acceptUser/{userID}")
+    public String acceptUser(@PathVariable int userID){
+        return userService.acceptUser(userID);
+    }
+
+    @GetMapping("/getRole/{userID}")
+    public String getRole(@PathVariable int userID){return userService.getRole(userID);}
+    @PutMapping("/fixRole/{userID}")
+    public String fixRole(@PathVariable int userID){return userService.setRole(userID);}
 
 }
