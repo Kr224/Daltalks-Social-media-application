@@ -30,4 +30,9 @@ public class GroupMemberController {
     return groupMemberService.findAllGroupMembersByGroupId(id);
   }
 
+  @PostMapping("/activate-membership")
+  public GroupMembers activateGroupMember(@RequestBody GroupMembers groupMembers) {
+    return groupMemberService.activateGroupMember(groupMembers);
+  }
+
 }
