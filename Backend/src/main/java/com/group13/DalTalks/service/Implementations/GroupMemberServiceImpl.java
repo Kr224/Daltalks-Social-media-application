@@ -1,5 +1,6 @@
 package com.group13.DalTalks.service.Implementations;
 
+import com.group13.DalTalks.model.GroupEntity;
 import com.group13.DalTalks.model.GroupMembers;
 import com.group13.DalTalks.repository.GroupMemberRepository;
 import com.group13.DalTalks.service.GroupMemberService;

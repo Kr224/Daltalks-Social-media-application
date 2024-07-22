@@ -49,7 +49,7 @@ const GroupDetails = () => {
 
   const handleRemoveMember = async (userId) => {
     try {
-      await axios.delete(`http://localhost:8080/group_members/remove-friendship`, {
+      await axios.delete(`http://localhost:8080/group_members/remove-membership`, {
         data: {
           group: { id },
           user: { id: userId }
@@ -90,4 +90,5 @@ const GroupDetails = () => {
 };
 
 export default GroupDetails;
+
 
