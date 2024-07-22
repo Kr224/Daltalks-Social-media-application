@@ -27,6 +27,8 @@ class GroupMemberServiceImplTest {
   @Test
   public void createNewGroupMembers() {
     GroupMembers groupMembers = new GroupMembers();
+    groupMembers.setUser(new User());
+    groupMembers.setGroup(new GroupEntity());
 
     when(groupMemberRepository.save(groupMembers)).thenReturn(groupMembers);
 
