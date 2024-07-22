@@ -7,6 +7,7 @@ const GroupDetails = () => {
   const { id } = useParams();
   const [group, setGroup] = useState(null);
   const [members, setMembers] = useState([]);
+  const [groupCreator, setGroupCreator] = useState(null);
 
   useEffect(() => {
     const fetchGroupInfo = async () => {
@@ -30,6 +31,18 @@ const GroupDetails = () => {
     fetchGroupInfo();
     fetchGroupMembers();
   }, [id]);
+
+  const fetchGroupCreator = async () => {
+      try {
+        const response = await axios.get(`http://localhost:8080/api/getEmailByUserID/${group.creatorID}`);
+        setGroupCreator(response.data);
+      } catch (error) {
+        console.error('Error fetching group creator', error);
+      }
+    };
+
+    fetchGroupCreator();
+  ;
 
   const handleAddMember = async (userId) => {
       try {
@@ -85,7 +98,7 @@ const GroupDetails = () => {
         <>
           <h2>{group.groupName}</h2>
           <p>Private: {group.private.toString()}</p>
-          <p>Created by: {group.creatorID}</p>
+          <p>Created by: {groupCreator}</p>
           <h3>Members</h3>
           <ul>
             {members.map(member => (
