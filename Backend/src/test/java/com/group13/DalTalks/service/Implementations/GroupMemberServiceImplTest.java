@@ -125,4 +125,23 @@ class GroupMemberServiceImplTest {
     assertTrue(returned.isActive(), "Group member should be activated.");
   }
 
+  @Test
+  public void activateGroupMember_nonExistingMember() {
+    GroupEntity group = new GroupEntity();
+    group.setId(1);
+    User user = new User();
+    user.setId(1);
+
+    GroupMembers groupMembers = new GroupMembers();
+    groupMembers.setGroup(group);
+    groupMembers.setUser(user);
+
+    when(groupMemberRepository.findByGroupIdAndUserId(group.getId(), user.getId())).thenReturn(null);
+
+    GroupMembers returned = groupMemberService.activateGroupMember(groupMembers);
+
+    assertNull(returned, "Group member that doesn't exist returns null.");
+  }
+
+
 }
