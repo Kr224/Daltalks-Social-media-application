@@ -90,7 +90,7 @@ const GroupDetails = () => {
           <ul>
             {members.map(member => (
               <li key={member.user_id}>
-                {member.user.id} - {member.isActive ? 'Active' : 'Inactive'}
+                {member.user.email} - {member.active ? 'Active' : 'Inactive'}
                 <button onClick={() => handleRemoveMember(member.user.id)}>Remove</button>
                 <button onClick={() => handleActivateMember(member.user.id)}>Make Active</button>
               </li>
