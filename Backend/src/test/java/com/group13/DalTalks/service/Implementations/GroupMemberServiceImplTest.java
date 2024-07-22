@@ -36,6 +36,26 @@ class GroupMemberServiceImplTest {
   }
 
   @Test
+  public void saveGroupMember_nullGroup() {
+    GroupMembers groupMembers = new GroupMembers();
+    groupMembers.setGroup(null);
+
+    GroupMembers returned = groupMemberService.saveGroupMember(groupMembers);
+
+    assertNull(returned, "Group member with null group should return null.");
+  }
+
+  @Test
+  public void saveGroupMember_nullUser() {
+    GroupMembers groupMembers = new GroupMembers();
+    groupMembers.setGroup(new GroupEntity());
+
+    GroupMembers returned = groupMemberService.saveGroupMember(groupMembers);
+
+    assertNull(returned, "Group member with null user should return null.");
+  }
+
+  @Test
   public void removeGroupMembers() {
     GroupMembers groupMembers = new GroupMembers();
     groupMembers.setUser(new User());
@@ -152,7 +172,5 @@ class GroupMemberServiceImplTest {
 
     assertNull(returned, "Group member should be null if no existing member is found.");
   }
-
-
 
 }
