@@ -65,4 +65,39 @@ class UserServiceImplJUnitTest {
 
         assertEquals(user1.getEmail(), userEmail);
     }
+
+    @Test
+    void acceptUser() {
+        User user = new User("Alice@dal.ca", "pending!123", "What is your mother's maiden name?", "Camille", "pending", "user");
+        userRepository.save(user);
+        String response = userService.acceptUser(user.getId());
+
+        assertEquals("User successfully save", response);
+    }
+
+    @Test
+    void setRole() {
+        User user = new User("Alice@dal.ca", "Pending!123", "What is your mother's maiden name?", "Camille", "pending", "user");
+        userRepository.save(user);
+        userService.setRole(user.getId());
+        assertEquals("BSB", user.getRole());
+    }
+
+    @Test
+    void deleteUser(){
+        User user = new User("Alice@dal.ca", "Pending!123", "What is your mother's maiden name?", "Camille", "pending", "user");
+        userRepository.save(user);
+
+        userService.deleteUser(user.getId());
+
+        Optional<User> deletedUser = userRepository.findById(user.getId());
+        assertEquals(Optional.empty(), deletedUser);
+    }
+
+    @Test
+    void getRole() {
+        User user = new User("Alice@dal.ca", "pending!123", "What is your mother's maiden name?", "Camille", "pending", "user");
+        userRepository.save(user);
+        assertEquals("user", user.getRole());
+    }
 }
