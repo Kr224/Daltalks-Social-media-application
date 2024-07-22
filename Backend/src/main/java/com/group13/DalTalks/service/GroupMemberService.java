@@ -13,5 +13,8 @@ public interface GroupMemberService {
   GroupMembers removeGroupMember(GroupMembers groupMembers);
 
   List<GroupMembers> findAllGroupMembersByGroupId(int id);
+
+  GroupMembers activateGroupMember(GroupMembers groupMembers);
+
 }
 

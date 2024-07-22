@@ -36,6 +36,27 @@ class GroupMemberServiceImplTest {
   }
 
   @Test
+  public void saveGroupMember_nullGroup() {
+    GroupMembers groupMembers = new GroupMembers();
+    groupMembers.setUser(new User());
+
+    GroupMembers returned = groupMemberService.saveGroupMember(groupMembers);
+
+    assertNull(returned, "Group member with null group should return null.");
+  }
+
+  @Test
+  public void saveGroupMember_nullUser() {
+    GroupMembers groupMembers = new GroupMembers();
+    groupMembers.setGroup(new GroupEntity());
+
+    GroupMembers returned = groupMemberService.saveGroupMember(groupMembers);
+
+    assertNull(returned, "Group member with null user should return null.");
+  }
+
+
+  @Test
   public void removeGroupMembers() {
     GroupMembers groupMembers = new GroupMembers();
     groupMembers.setUser(new User());
@@ -101,6 +122,64 @@ class GroupMemberServiceImplTest {
     List<GroupMembers> returned = groupMemberService.findAllGroupMembersByGroupId(group.getId());
 
     assertTrue(allMembers.isEmpty(), "No members should have been returned.");
+  }
+
+  @Test
+  public void activateGroupMember() {
+    GroupEntity group = new GroupEntity();
+    group.setId(1);
+    User user = new User();
+    user.setId(1);
+
+    GroupMembers groupMembers = new GroupMembers();
+    groupMembers.setGroup(group);
+    groupMembers.setUser(user);
+
+    GroupMembers existingGroupMember = new GroupMembers();
+    existingGroupMember.setGroup(group);
+    existingGroupMember.setUser(user);
+
+    when(groupMemberRepository.findByGroupIdAndUserId(group.getId(), user.getId())).thenReturn(existingGroupMember);
+
+    GroupMembers returned = groupMemberService.activateGroupMember(groupMembers);
+
+    assertTrue(returned.isActive(), "Group member should be activated.");
+  }
+
+  @Test
+  public void activateGroupMember_nonExistingMember() {
+    GroupEntity group = new GroupEntity();
+    group.setId(1);
+    User user = new User();
+    user.setId(1);
+
+    GroupMembers groupMembers = new GroupMembers();
+    groupMembers.setGroup(group);
+    groupMembers.setUser(user);
+
+    when(groupMemberRepository.findByGroupIdAndUserId(group.getId(), user.getId())).thenReturn(null);
+
+    GroupMembers returned = groupMemberService.activateGroupMember(groupMembers);
+
+    assertNull(returned, "Group member that doesn't exist returns null.");
+  }
+
+  @Test
+  public void activateGroupMember_existingMemberNull() {
+    GroupEntity group = new GroupEntity();
+    group.setId(1);
+    User user = new User();
+    user.setId(1);
+
+    GroupMembers groupMembers = new GroupMembers();
+    groupMembers.setGroup(group);
+    groupMembers.setUser(user);
+
+    when(groupMemberRepository.findByGroupIdAndUserId(group.getId(), user.getId())).thenReturn(null);
+
+    GroupMembers returned = groupMemberService.activateGroupMember(groupMembers);
+
+    assertNull(returned, "Group member should be null if no existing member is found.");
   }
 
 }
