@@ -2,10 +2,11 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import '../css/CreateGroup.css';
+import { Checkbox } from 'antd';
 
 const CreateGroup = () => {
   const [groupName, setName] = useState('');
-  const [isPrivate, setVisibility] = useState('public');
+  const [isPrivate, setPrivate] = useState(false);
   const [creatorID, setCreatedBy] = useState(localStorage.getItem('userId'));
   const creation_date = new Date();
   const navigate = useNavigate();
@@ -17,7 +18,7 @@ const CreateGroup = () => {
     console.log(creation_date)
 
     event.preventDefault();
-    const groupData = { groupName, isPrivate, creatorID, creation_date };
+    const groupData = { groupName, private: isPrivate, creatorID, creation_date };
 
     try {
       const response = await axios.post('http://localhost:8080/groups/create-group', groupData);
@@ -40,10 +41,10 @@ const CreateGroup = () => {
           onChange={(e) => setName(e.target.value)}
           required
         />
-        <select value={isPrivate} onChange={(e) => setVisibility(e.target.value)}>
-          <option value="public">Public</option>
-          <option value="private">Private</option>
-        </select>
+        <div>
+        <Checkbox name="privateGroupCheck" checked = {isPrivate} onChange={(e) => setPrivate(!isPrivate)} />
+        <label for="privateGroupCheck">Is this a private group?</label>
+        </div>
         <button type="submit">Create Group</button>
       </form>
     </div>

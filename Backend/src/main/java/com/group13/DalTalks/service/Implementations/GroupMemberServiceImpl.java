@@ -23,14 +23,15 @@ public class GroupMemberServiceImpl implements GroupMemberService {
 
   @Override
   public GroupMembers removeGroupMember(GroupMembers groupMembers) {
-    groupMemberRepository.deleteById(groupMembers.getId());
+    int groupID = groupMembers.getGroup().getId();
+    int userID = (groupMembers.getUser().getId());
+    groupMemberRepository.deleteGroupMembersByGroupIdAndUserId(groupID, userID);
 
     return groupMembers;
   }
 
   @Override
   public List<GroupMembers> findAllGroupMembersByGroupId(int id) {
-    System.out.println("Length of list: " + groupMemberRepository.findByGroupId(id).size());
     return groupMemberRepository.findByGroupId(id);
   }
 }

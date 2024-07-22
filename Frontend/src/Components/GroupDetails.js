@@ -69,14 +69,14 @@ const GroupDetails = () => {
       {group ? (
         <>
           <h2>{group.groupName}</h2>
-          <p>Visibility: {group.private.toString()}</p>
+          <p>Private: {group.private.toString()}</p>
           <p>Created by: {group.creatorID}</p>
           <h3>Members</h3>
           <ul>
             {members.map(member => (
               <li key={member.user_id}>
                 {member.user.id} - {member.isActive ? 'Active' : 'Inactive'}
-                <button onClick={() => handleRemoveMember(member.user_id)}>Remove</button>
+                <button onClick={() => handleRemoveMember(member.user.id)}>Remove</button>
               </li>
             ))}
           </ul>
