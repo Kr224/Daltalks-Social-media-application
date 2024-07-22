@@ -143,5 +143,16 @@ class GroupMemberServiceImplTest {
     assertNull(returned, "Group member that doesn't exist returns null.");
   }
 
+  @Test
+  public void activateGroupMember_nullMember() {
+
+    GroupMembers groupMembers = null;
+
+    GroupMembers returned = groupMemberService.activateGroupMember(groupMembers);
+
+    assertNull(returned, "Group member should be null if no existing member is found.");
+  }
+
+
 
 }
