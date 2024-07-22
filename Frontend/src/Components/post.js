@@ -1,41 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import { Col, Row, Card, Avatar, Input, Space, Spin, Button, Modal } from 'antd';
-import { UserOutlined, LikeOutlined, CommentOutlined, SendOutlined, FilterOutlined } from '@ant-design/icons';
-import Friend from './friends';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { Col, Row, Card, Avatar, Input, Space, Spin, Button, AutoComplete } from 'antd';
+import { UserOutlined, LikeOutlined, CommentOutlined, SendOutlined } from '@ant-design/icons';
+import Friend from './friends';
 import Navigation from './navigation';
 import '../css/post.css';
 import { useNavigate } from 'react-router-dom';
-
-const FilterModal = ({ filteredResults, handleResultClick }) => {
-    return (
-        <div className="filter-modal">
-            <h2>Filtered Results</h2>
-            <div>
-                <h3>People</h3>
-                {filteredResults
-                    .filter(result => result.type === 'person')
-                    .map(result => (
-                        <div key={result.id} onClick={() => handleResultClick(result.id, result.type)}>
-                            {result.name}
-                        </div>
-                    ))
-                }
-            </div>
-            <div>
-                <h3>Groups</h3>
-                {filteredResults
-                    .filter(result => result.type === 'group')
-                    .map(result => (
-                        <div key={result.id} onClick={() => handleResultClick(result.id, result.type)}>
-                            {result.name}
-                        </div>
-                    ))
-                }
-            </div>
-        </div>
-    );
-};
 
 const Post = () => {
     const [posts, setPosts] = useState([]);
@@ -43,23 +13,22 @@ const Post = () => {
     const [groups, setGroups] = useState([]);
     const [loading, setLoading] = useState(true);
     const [searchQuery, setSearchQuery] = useState('');
-    const [filteredResults, setFilteredResults] = useState([]);
-    const [showFilterModal, setShowFilterModal] = useState(false);
+    const [searchResults, setSearchResults] = useState([]);
     const navigate = useNavigate();
 
     const currentID = localStorage.getItem('userId');
 
     // Fetch posts, friends, and groups
     useEffect(() => {
-        const fetchData = async () => {
+        const fetchPostsFriendsAndGroups = async () => {
             try {
                 const postResponse = await axios.get('http://localhost:8080/api/getAllPost');
                 setPosts(postResponse.data);
 
-                const friendResponse = await axios.get(`http://localhost:8080/api/user/getAllUser/${currentID}`);
+                const friendResponse = await axios.get('http://localhost:8080/api/user/getAllUser');
                 setFriends(friendResponse.data);
 
-                const groupResponse = await axios.get('http://localhost:8080/api/groups'); // Assuming you have an endpoint for groups
+                const groupResponse = await axios.get('http://localhost:8080/groups/get-all-groups');
                 setGroups(groupResponse.data);
 
                 setLoading(false);
@@ -69,37 +38,43 @@ const Post = () => {
             }
         };
 
-        fetchData();
+        fetchPostsFriendsAndGroups();
     }, [currentID]);
 
-    // Handle filter button click
-    const handleFilterClick = () => {
-        fetchFilteredResults(searchQuery);
-        setShowFilterModal(true);
-    };
+    // Update search results based on search query
+    useEffect(() => {
+        if (searchQuery) {
+            const friendResults = friends.filter(({ email }) =>
+                email && email.split('@')[0].toLowerCase().includes(searchQuery.toLowerCase())
+            ).map(({ email, id }) => ({
+                type: 'friend',
+                value: email.split('@')[0],
+                label: email.split('@')[0],
+                id: id,
+            }));
 
-    // Fetch filtered results based on search query
-    const fetchFilteredResults = (query) => {
-        const allResults = [
-            ...friends.map(friend => ({ id: friend.id, name: friend.email.split('@')[0], type: 'person' })),
-            ...groups.map(group => ({ id: group.id, name: group.name, type: 'group' }))
-        ];
-        const results = allResults.filter(result =>
-            result.name.toLowerCase().includes(query.toLowerCase())
-        );
-        setFilteredResults(results);
-    };
+            const groupResults = groups.filter(({ groupName }) =>
+                groupName && groupName.toLowerCase().includes(searchQuery.toLowerCase())
+            ).map(({ groupName, id }) => ({
+                type: 'group',
+                value: groupName,
+                label: groupName,
+                id: id,
+            }));
 
-    // Handle selection of a filtered result
-    const handleResultClick = (id, type) => {
-        const route = type === 'person' ? `/profile/${id}` : `/group/${id}`;
-        navigate(route);
-        setShowFilterModal(false);
-    };
+            setSearchResults([...friendResults, ...groupResults]);
+        } else {
+            setSearchResults([]);
+        }
+    }, [searchQuery, friends, groups]);
 
-    // Handle modal close
-    const handleClose = () => {
-        setShowFilterModal(false);
+    // Handle selection of a search result
+    const handleSelect = (value, option) => {
+        if (option.type === 'friend') {
+            navigate(`/profile/${option.id}`);
+        } else if (option.type === 'group') {
+            navigate(`/groups/${option.id}`);
+        }
     };
 
     return (
@@ -110,14 +85,19 @@ const Post = () => {
                 </Col>
                 <Col span={16} className="navigation-col">
                     <div className="search">
-                        <Input.Search
-                            placeholder="Search for people or groups"
-                            value={searchQuery}
-                            onChange={(e) => setSearchQuery(e.target.value)}
-                            onSearch={handleFilterClick}
-                            style={{ marginBottom: 20 }}
-                        />
-                        <Button icon={<FilterOutlined />} onClick={handleFilterClick}>Filter</Button>
+                        <AutoComplete
+                            options={searchResults}
+                            onSelect={handleSelect}
+                            onSearch={(value) => setSearchQuery(value)}
+                            style={{ width: '100%' }}
+                        >
+                            <Input.Search
+                                placeholder="Search friends or groups"
+                                value={searchQuery}
+                                onChange={(e) => setSearchQuery(e.target.value)}
+                                style={{ marginBottom: 20 }}
+                            />
+                        </AutoComplete>
                     </div>
                     {loading ? (
                         <div className="loading-container">
@@ -135,8 +115,8 @@ const Post = () => {
                                                 </div>
                                                 <div className="username" onClick={() => navigate(`/profile/${post.userID}`)}>
                                                     <div>
-                                                        {friends.find((friend) => friend.id === post.userID)?.email.split('@')[0]
-                                                            ? <a>{friends.find((friend) => friend.id === post.userID)?.email.split('@')[0]}</a>
+                                                        {friends.find((friend) => friend.id === post.userID)?.email.split('@')[0] 
+                                                            ? <a>{friends.find((friend) => friend.id === post.userID)?.email.split('@')[0]}</a> 
                                                             : <a onClick={() => navigate(`/profile/${post.userID}`)}>User not found with id: {post.userID}</a>}
                                                     </div>
                                                 </div>
@@ -161,14 +141,6 @@ const Post = () => {
                     <Friend />
                 </Col>
             </Row>
-            <Modal
-                visible={showFilterModal}
-                onCancel={handleClose}
-                footer={null}
-                title="Filtered Results"
-            >
-                <FilterModal filteredResults={filteredResults} handleResultClick={handleResultClick} handleClose={handleClose} />
-            </Modal>
         </div>
     );
 };
