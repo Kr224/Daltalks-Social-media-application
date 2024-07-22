@@ -1,6 +1,8 @@
+// src/Components/Filter.js
 import React, { useState } from 'react';
+import './Filter.css';
 
-const SearchFilter = () => {
+const Filter = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [people, setPeople] = useState([
     { name: 'Alice' },
@@ -18,7 +20,7 @@ const SearchFilter = () => {
   };
 
   return (
-    <div>
+    <div className="container">
       <input
         type="text"
         placeholder="Search..."
@@ -65,4 +67,4 @@ const GroupsList = ({ groups, searchTerm }) => {
   );
 };
 
-export default SearchFilter;
+export default Filter;

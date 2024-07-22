@@ -15,7 +15,7 @@ import Friend from './Components/friends';
 import FriendsList from './Components/FriendsList';  // Import the FriendsList component
 import Admin from './Components/admin';
 import AdminRoute from './Components/adminRoute';
-
+import Filter from './Components/Filter';
 const App = () => {
   return (
     <div className="App">
@@ -35,6 +35,7 @@ const App = () => {
           <Route path="/friend" element={<Friend />} />
           <Route path="/friend-requests" element={<FriendRequests />} />
           <Route path="/My-friends" element={<FriendsList />} />  {/* The route for FriendsList */}
+          <Route path="/filter" element={Filter />} />
         </Routes>
       </Router>
     </div>
