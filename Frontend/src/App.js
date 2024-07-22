@@ -35,7 +35,7 @@ const App = () => {
           <Route path="/friend" element={<Friend />} />
           <Route path="/friend-requests" element={<FriendRequests />} />
           <Route path="/My-friends" element={<FriendsList />} />  {/* The route for FriendsList */}
-          <Route path="/filter" element={Filter />} />
+          <Route path="/filter" element={<Filter />} />
         </Routes>
       </Router>
     </div>

@@ -1,54 +1,63 @@
-/* src/Components/Filter.css */
-
-/* General Styles */
-body {
-  font-family: Arial, sans-serif;
-  margin: 0;
-  padding: 20px;
-  background-color: #f4f4f9;
-}
-
 .container {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 20px;
-  background-color: #fff;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
 }
 
-/* Search Input */
 input[type="text"] {
-  width: 100%;
   padding: 10px;
-  margin-bottom: 20px;
+  width: 300px;
+  margin-bottom: 10px;
   border: 1px solid #ccc;
   border-radius: 4px;
   font-size: 16px;
-  box-sizing: border-box;
 }
 
-/* Lists */
-ul {
-  list-style-type: none;
-  padding: 0;
-  margin: 0;
+button {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
 }
 
-li {
-  padding: 10px;
-  border-bottom: 1px solid #eee;
+button:hover {
+  background-color: #0056b3;
 }
 
-/* Section Headings */
-h2 {
-  font-size: 24px;
+.filter-modal {
+  position: absolute;
+  top: 50px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 400px;
+}
+
+.filter-modal h2 {
+  margin-top: 0;
+  text-align: center;
+}
+
+.filter-modal h3 {
+  margin-top: 20px;
+}
+
+.filter-modal div {
   margin-bottom: 10px;
-  color: #333;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 4px;
+  transition: background-color 0.3s;
 }
 
-/* Highlighting Matching Text */
-.highlight {
-  font-weight: bold;
-  color: #007bff;
+.filter-modal div:hover {
+  background-color: #f0f0f0;
 }
