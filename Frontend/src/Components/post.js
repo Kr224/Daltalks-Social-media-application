@@ -24,7 +24,7 @@ const Post = () => {
                 const postResponse = await axios.get('http://localhost:8080/api/getAllPost');
                 setPosts(postResponse.data);
 
-                const friendResponse = await axios.get(`http://localhost:8080/api/user/getAllUser/${currentID}`);
+                const friendResponse = await axios.get(`http://localhost:8080/api/user/getAllUser`);
                 setFriends(friendResponse.data);
                 setLoading(false);
             } catch (error) {
