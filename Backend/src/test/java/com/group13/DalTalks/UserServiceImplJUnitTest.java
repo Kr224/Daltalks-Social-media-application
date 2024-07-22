@@ -33,8 +33,9 @@ class UserServiceImplJUnitTest {
         userRepository.save(user1);
 
         List<User> getAllUserExcept = userService.getAllUserExcept(user1.getId());
+        List<User> allUser = userService.getAllUsers();
 
-        assertEquals(0, getAllUserExcept.size());
+        assertEquals(allUser.size()-1, getAllUserExcept.size());
     }
 
     @Test
