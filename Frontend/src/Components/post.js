@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Col, Row, Card, Avatar, Input, Space, Spin, Button, AutoComplete } from 'antd';
-import { UserOutlined, LikeOutlined, CommentOutlined, SendOutlined } from '@ant-design/icons';
+import { UserOutlined, LikeOutlined, CommentOutlined, SendOutlined, TeamOutlined } from '@ant-design/icons';
 import Friend from './friends';
 import Navigation from './navigation';
 import '../css/post.css';
@@ -49,7 +49,11 @@ const Post = () => {
             ).map(({ email, id }) => ({
                 type: 'friend',
                 value: email.split('@')[0],
-                label: email.split('@')[0],
+                label: (
+                    <div>
+                        <UserOutlined /> {email.split('@')[0]}
+                    </div>
+                ),
                 id: id,
             }));
 
@@ -58,7 +62,11 @@ const Post = () => {
             ).map(({ groupName, id }) => ({
                 type: 'group',
                 value: groupName,
-                label: groupName,
+                label: (
+                    <div>
+                        <TeamOutlined /> {groupName}
+                    </div>
+                ),
                 id: id,
             }));
 
