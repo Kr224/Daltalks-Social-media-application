@@ -56,6 +56,20 @@ class GroupMemberServiceImplTest {
   }
 
   @Test
+  public void saveGroupMember_publicGroupActiveStatus() {
+    GroupMembers groupMembers = new GroupMembers();
+    groupMembers.setUser(new User());
+    groupMembers.setGroup(new GroupEntity());
+    groupMembers.getGroup().setPrivate(false);
+
+    when(groupMemberRepository.save(groupMembers)).thenReturn(groupMembers);
+
+    GroupMembers returned = groupMemberService.saveGroupMember(groupMembers);
+
+    assertTrue(returned.isActive(), "This is a public group, the group member should be active!");
+  }
+
+  @Test
   public void removeGroupMembers() {
     GroupMembers groupMembers = new GroupMembers();
     groupMembers.setUser(new User());
