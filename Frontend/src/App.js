@@ -13,6 +13,8 @@ import UserProfilePage from './Components/UserProfilePage';
 import FriendRequests from './Components/FriendRequests';
 import Friend from './Components/friends';
 import FriendsList from './Components/FriendsList';  // Import the FriendsList component
+import Admin from './Components/admin';
+import AdminRoute from './Components/adminRoute';
 
 const App = () => {
   return (
