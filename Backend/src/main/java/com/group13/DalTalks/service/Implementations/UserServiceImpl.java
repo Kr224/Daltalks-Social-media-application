@@ -88,11 +88,6 @@ public class UserServiceImpl implements UserService {
                                    .stream()
                                    .filter(user -> user.getId() != userID)
                                    .collect(Collectors.toList());
-
-                        //   return this.userRepository.findAll()
-                        //   .stream()
-                        //   .filter(user -> user.getId() != userID && "approved".equals(user.getStatus()))
-                        //   .collect(Collectors.toList());
     }
 
     @Override
@@ -101,11 +96,6 @@ public class UserServiceImpl implements UserService {
                                 .stream()
                                 .filter(user -> "pending".equals(user.getStatus()))
                                 .collect(Collectors.toList());
-
-                        //   return this.userRepository.findAll()
-                        //   .stream()
-                        //   .filter(user -> user.getId() != userID && "approved".equals(user.getStatus()))
-                        //   .collect(Collectors.toList());
     }
 
     @Override
