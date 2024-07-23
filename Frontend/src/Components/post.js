@@ -1,31 +1,39 @@
 import React, { useEffect, useState } from 'react';
-import { Col, Row, Card, Avatar, Input, Space, Spin, Button, AutoComplete } from 'antd';
-import { UserOutlined, LikeOutlined, CommentOutlined, SendOutlined } from '@ant-design/icons';
+import { Col, Row, Card, Avatar, Input, Space, Spin, Button, AutoComplete, Select } from 'antd';
+import { UserOutlined, LikeOutlined, CommentOutlined, SendOutlined, TeamOutlined } from '@ant-design/icons';
 import Friend from './friends';
 import axios from 'axios';
 import Navigation from './navigation';
 import '../css/post.css';
 import { useNavigate } from 'react-router-dom';
 
+const { Option } = Select;
+
 const Post = () => {
     const [posts, setPosts] = useState([]);
     const [friends, setFriends] = useState([]);
+    const [groups, setGroups] = useState([]);
     const [loading, setLoading] = useState(true);
     const [searchQuery, setSearchQuery] = useState('');
     const [searchResults, setSearchResults] = useState([]);
+    const [filter, setFilter] = useState('people'); // Add filter state
     const navigate = useNavigate();
 
     const currentID = localStorage.getItem('userId');
 
-    // Fetch posts and friends
+    // Fetch posts, friends, and groups
     useEffect(() => {
-        const fetchPostsAndFriends = async () => {
+        const fetchPostsFriendsAndGroups = async () => {
             try {
                 const postResponse = await axios.get('http://localhost:8080/api/getAllPost');
                 setPosts(postResponse.data);
 
-                const friendResponse = await axios.get(`http://localhost:8080/api/user/getAllUser`);
+                const friendResponse = await axios.get('http://localhost:8080/api/user/getAllUser');
                 setFriends(friendResponse.data);
+
+                const groupResponse = await axios.get('http://localhost:8080/groups/get-all-groups');
+                setGroups(groupResponse.data);
+
                 setLoading(false);
             } catch (error) {
                 console.error('Error fetching data:', error);
@@ -33,24 +41,48 @@ const Post = () => {
             }
         };
 
-        fetchPostsAndFriends();
+        fetchPostsFriendsAndGroups();
     }, [currentID]);
 
-    // Update search results based on search query
+    // Update search results based on search query and filter
     useEffect(() => {
         if (searchQuery) {
-            const results = friends.filter(({ email }) =>
-                email && email.split('@')[0].toLowerCase().includes(searchQuery.toLowerCase()) // Check if email exists
-            );
-            setSearchResults(results);
+            let results;
+            if (filter === 'people') {
+                results = friends.filter(({ email }) =>
+                    email && email.split('@')[0].toLowerCase().includes(searchQuery.toLowerCase())
+                );
+            } else {
+                results = groups.filter(({ groupName }) =>
+                    groupName && groupName.toLowerCase().includes(searchQuery.toLowerCase())
+                );
+            }
+            setSearchResults(results.map(({ email, id, groupName }) => ({
+                type: filter === 'people' ? 'friend' : 'group',
+                value: filter === 'people' ? (email ? email.split('@')[0] : '') : (groupName ? groupName : ''),
+                label: filter === 'people' ? (
+                    <div>
+                        <UserOutlined /> {email.split('@')[0]}
+                    </div>
+                ) : (
+                    <div>
+                        <TeamOutlined /> {groupName}
+                    </div>
+                ),
+                id: id,
+            })));
         } else {
             setSearchResults([]);
         }
-    }, [searchQuery, friends]);
+    }, [searchQuery, friends, groups, filter]);
 
     // Handle selection of a search result
     const handleSelect = (value, option) => {
-        navigate(`/profile/${option.userID}`);
+        if (option.type === 'friend') {
+            navigate(`/profile/${option.id}`);
+        } else if (option.type === 'group') {
+            navigate(`/groups/${option.id}`);
+        }
     };
 
     return (
@@ -60,22 +92,26 @@ const Post = () => {
                     <Navigation />
                 </Col>
                 <Col span={16} className="navigation-col">
-                    <div className="search">
+                    <div className="filter-container">
+                        <Select
+                            defaultValue="people"
+                            onChange={(value) => setFilter(value)}
+                            className="filter-dropdown"
+                        >
+                            <Option value="people">People</Option>
+                            <Option value="groups">Groups</Option>
+                        </Select>
                         <AutoComplete
-                            options={searchResults.map(({ email, id }) => ({
-                                value: email.split('@')[0] || '',
-                                label: email.split('@')[0] || '',
-                                userID: id,
-                            }))}
+                            options={searchResults}
                             onSelect={handleSelect}
                             onSearch={(value) => setSearchQuery(value)}
                             style={{ width: '100%' }}
                         >
                             <Input.Search
-                                placeholder="Search friends"
+                                placeholder="Search friends or groups"
                                 value={searchQuery}
                                 onChange={(e) => setSearchQuery(e.target.value)}
-                                style={{ marginBottom: 20 }}
+                                className="search-bar"
                             />
                         </AutoComplete>
                     </div>
@@ -95,8 +131,8 @@ const Post = () => {
                                                 </div>
                                                 <div className="username" onClick={() => navigate(`/profile/${post.userID}`)}>
                                                     <div>
-                                                        {friends.find((friend) => friend.id === post.userID)?.email.split('@')[0] 
-                                                            ? <a>{friends.find((friend) => friend.id === post.userID)?.email.split('@')[0]}</a> 
+                                                        {friends.find((friend) => friend.id === post.userID)?.email.split('@')[0]
+                                                            ? <a>{friends.find((friend) => friend.id === post.userID)?.email.split('@')[0]}</a>
                                                             : <a onClick={() => navigate(`/profile/${post.userID}`)}>User not found with id: {post.userID}</a>}
                                                     </div>
                                                 </div>

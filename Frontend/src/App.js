@@ -1,3 +1,4 @@
+import React from 'react';
 import './App.css';
 import Post from './Components/post';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
@@ -15,6 +16,10 @@ import Friend from './Components/friends';
 import FriendsList from './Components/FriendsList';  // Import the FriendsList component
 import Admin from './Components/admin';
 import AdminRoute from './Components/adminRoute';
+import Filter from './Components/Filter';
+import CreateGroup from './Components/CreateGroup'; // Import CreateGroup component
+import GroupList from './Components/GroupList'; // Import GroupList component
+import GroupDetails from './Components/GroupDetails';
 
 const App = () => {
   return (
@@ -35,6 +40,10 @@ const App = () => {
           <Route path="/friend" element={<Friend />} />
           <Route path="/friend-requests" element={<FriendRequests />} />
           <Route path="/My-friends" element={<FriendsList />} />  {/* The route for FriendsList */}
+          <Route path="/filter" element={<Filter />} />
+          <Route path="/create-group" element={<PrivateRoute element={CreateGroup} />} />
+          <Route path="/groups" element={<PrivateRoute element={GroupList} />} />
+          <Route path="/groups/:id" element={<PrivateRoute element={GroupDetails} />} />
         </Routes>
       </Router>
     </div>
