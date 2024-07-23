@@ -26,7 +26,15 @@ public class FriendshipServiceImpl implements FriendshipService {
     @Override
     @Transactional
     public void sendFriendRequest(int senderId, int receiverId) {
+        // if findByUser1IdAndUser2Id finds a non-empty entity in the repository, then the
+        // users are either already friends or having a pending friend request -> no new request should be made
         if (!friendshipRepository.findByUser1IdAndUser2Id(senderId,receiverId).isEmpty()) {
+            return;
+        }
+
+        // we need to check in the opposite order to prevent duplicate friend requests
+        // -> ie A is friends with B, and B is friends with A.
+        if (!friendshipRepository.findByUser1IdAndUser2Id(receiverId,senderId).isEmpty()) {
             return;
         }
 
