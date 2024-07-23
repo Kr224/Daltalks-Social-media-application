@@ -16,7 +16,7 @@ const Post = () => {
     const [loading, setLoading] = useState(true);
     const [searchQuery, setSearchQuery] = useState('');
     const [searchResults, setSearchResults] = useState([]);
-    const [filter, setFilter] = useState('people'); // Add filter state
+    const [filter, setFilter] = useState('people');
     const navigate = useNavigate();
 
     const currentID = localStorage.getItem('userId');
@@ -47,30 +47,35 @@ const Post = () => {
     // Update search results based on search query and filter
     useEffect(() => {
         if (searchQuery) {
-            let results;
             if (filter === 'people') {
-                results = friends.filter(({ email }) =>
+                const results = friends.filter(({ email }) =>
                     email && email.split('@')[0].toLowerCase().includes(searchQuery.toLowerCase())
-                );
-            } else {
-                results = groups.filter(({ groupName }) =>
+                ).map(({ email, id }) => ({
+                    type: 'friend',
+                    value: email.split('@')[0],
+                    label: (
+                        <div>
+                            <UserOutlined /> {email.split('@')[0]}
+                        </div>
+                    ),
+                    id: id,
+                }));
+                setSearchResults(results);
+            } else if (filter === 'groups') {
+                const results = groups.filter(({ groupName }) =>
                     groupName && groupName.toLowerCase().includes(searchQuery.toLowerCase())
-                );
+                ).map(({ groupName, id }) => ({
+                    type: 'group',
+                    value: groupName,
+                    label: (
+                        <div>
+                            <TeamOutlined /> {groupName}
+                        </div>
+                    ),
+                    id: id,
+                }));
+                setSearchResults(results);
             }
-            setSearchResults(results.map(({ email, id, groupName }) => ({
-                type: filter === 'people' ? 'friend' : 'group',
-                value: filter === 'people' ? (email ? email.split('@')[0] : '') : (groupName ? groupName : ''),
-                label: filter === 'people' ? (
-                    <div>
-                        <UserOutlined /> {email.split('@')[0]}
-                    </div>
-                ) : (
-                    <div>
-                        <TeamOutlined /> {groupName}
-                    </div>
-                ),
-                id: id,
-            })));
         } else {
             setSearchResults([]);
         }
