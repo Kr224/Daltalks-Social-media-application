@@ -77,10 +77,18 @@ class UserServiceImplJUnitTest {
     }
 
     @Test
-    void setRole() {
+    void SetRoleUser() {
         User user = new User("Alice@dal.ca", "Pending!123", "What is your mother's maiden name?", "Camille", "pending", "user");
         userRepository.save(user);
-        userService.setRole(user.getId());
+        userService.SetRole(user.getId(), "user");
+        assertEquals("user", user.getRole());
+    }
+
+    @Test
+    void SetRoleAdmin() {
+        User user = new User("Alice@dal.ca", "Pending!123", "What is your mother's maiden name?", "Camille", "pending", "user");
+        userRepository.save(user);
+        userService.SetRole(user.getId(), "admin");
         assertEquals("BSB", user.getRole());
     }
 
