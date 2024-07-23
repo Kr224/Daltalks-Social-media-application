@@ -162,4 +162,17 @@ public class UserServiceImpl implements UserService {
             return "Can not find user";
         }
     }
+
+    @Override
+    public String setRole2(int userID){
+        Optional<User> userOptional = userRepository.findById(userID);
+        if (userOptional.isPresent()) {
+            User user = userOptional.get();
+            user.setRole("");
+            userRepository.save(user);
+            return "User successfully save";
+        } else {
+            return "Can not find user";
+        }
+    }
 }

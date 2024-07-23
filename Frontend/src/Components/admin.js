@@ -18,6 +18,12 @@ const Admin = () => {
     const onFinish = (values) => {
         fixRole(values);
         console.log('Success:', values.userID);
+        alert("User's role set successfully");
+    };
+    const onFinish2 = (values) => {
+        fixRole2(values);
+        console.log('Success:', values.userID);
+        alert("User's role set successfully");
     };
       
     const onFinishFailed = (errorInfo) => {
@@ -26,6 +32,9 @@ const Admin = () => {
 
     const fixRole = async (values) => {
         await axios.put(`http://localhost:8080/api/user/fixRole/${values.userID}`)
+    }
+    const fixRole2 = async (values) => {
+        await axios.put(`http://localhost:8080/api/user/fixRole2/${values.userID}`)
     }
 
     const fetchPendingUser = async () => {
@@ -106,6 +115,35 @@ const Admin = () => {
                                     </Button>
                                     </Form.Item>
                                 </Form>
+
+                            <div>
+                                <h1>User</h1>
+                            </div>
+                                <Form
+                                    name="basic"
+                                    labelCol={{ span: 8 }}
+                                    wrapperCol={{ span: 16 }}
+                                    style={{ maxWidth: 600 }}
+                                    initialValues={{ remember: true }}
+                                    onFinish={onFinish2}
+                                    onFinishFailed={onFinishFailed}
+                                    autoComplete="off"
+                                >
+                                    <Form.Item
+                                    label="userID"
+                                    name="userID"
+                                    rules={[{ required: true, message: 'No empty field!' }]}
+                                    >
+                                    <Input />
+                                    </Form.Item>
+
+                                    <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
+                                    <Button type="primary" htmlType="submit">
+                                        Submit
+                                    </Button>
+                                    </Form.Item>
+                                </Form>
+
                         </Flex>
                     </Col>
                     <Col span={8}>
