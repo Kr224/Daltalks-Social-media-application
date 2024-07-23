@@ -1,15 +1,8 @@
-<<<<<<< HEAD
 import React, { useEffect, useState } from 'react';
 import { Col, Row, Card, Avatar, Input, Space, Spin, Button, AutoComplete, Select } from 'antd';
-import { UserOutlined, LikeOutlined, CommentOutlined, SendOutlined } from '@ant-design/icons';
-import Friend from './friends';
-=======
-import React, { useState, useEffect } from 'react';
->>>>>>> origin
-import axios from 'axios';
-import { Col, Row, Card, Avatar, Input, Space, Spin, Button, AutoComplete } from 'antd';
 import { UserOutlined, LikeOutlined, CommentOutlined, SendOutlined, TeamOutlined } from '@ant-design/icons';
 import Friend from './friends';
+import axios from 'axios';
 import Navigation from './navigation';
 import '../css/post.css';
 import { useNavigate } from 'react-router-dom';
@@ -54,55 +47,34 @@ const Post = () => {
     // Update search results based on search query and filter
     useEffect(() => {
         if (searchQuery) {
-<<<<<<< HEAD
             let results;
             if (filter === 'people') {
                 results = friends.filter(({ email }) =>
                     email && email.split('@')[0].toLowerCase().includes(searchQuery.toLowerCase())
                 );
             } else {
-                results = friends.filter(({ groupName }) =>
+                results = groups.filter(({ groupName }) =>
                     groupName && groupName.toLowerCase().includes(searchQuery.toLowerCase())
                 );
             }
-            setSearchResults(results);
-        } else {
-            setSearchResults([]);
-        }
-    }, [searchQuery, friends, filter]);
-=======
-            const friendResults = friends.filter(({ email }) =>
-                email && email.split('@')[0].toLowerCase().includes(searchQuery.toLowerCase())
-            ).map(({ email, id }) => ({
-                type: 'friend',
-                value: email.split('@')[0],
-                label: (
+            setSearchResults(results.map(({ email, id, groupName }) => ({
+                type: filter === 'people' ? 'friend' : 'group',
+                value: filter === 'people' ? (email ? email.split('@')[0] : '') : (groupName ? groupName : ''),
+                label: filter === 'people' ? (
                     <div>
                         <UserOutlined /> {email.split('@')[0]}
                     </div>
-                ),
-                id: id,
-            }));
-
-            const groupResults = groups.filter(({ groupName }) =>
-                groupName && groupName.toLowerCase().includes(searchQuery.toLowerCase())
-            ).map(({ groupName, id }) => ({
-                type: 'group',
-                value: groupName,
-                label: (
+                ) : (
                     <div>
                         <TeamOutlined /> {groupName}
                     </div>
                 ),
                 id: id,
-            }));
-
-            setSearchResults([...friendResults, ...groupResults]);
+            })));
         } else {
             setSearchResults([]);
         }
-    }, [searchQuery, friends, groups]);
->>>>>>> origin
+    }, [searchQuery, friends, groups, filter]);
 
     // Handle selection of a search result
     const handleSelect = (value, option) => {
@@ -111,12 +83,6 @@ const Post = () => {
         } else if (option.type === 'group') {
             navigate(`/groups/${option.id}`);
         }
-    };
-
-    // Filter results based on the current search query and filter type
-    const handleFilterClick = () => {
-        // Trigger the same effect as changing the filter
-        setSearchQuery(searchQuery); // This will force useEffect to run again
     };
 
     return (
@@ -136,25 +102,13 @@ const Post = () => {
                             <Option value="groups">Groups</Option>
                         </Select>
                         <AutoComplete
-<<<<<<< HEAD
-                            options={searchResults.map(({ email, id, groupName }) => ({
-                                value: filter === 'people' ? (email ? email.split('@')[0] : '') : (groupName ? groupName : ''),
-                                label: filter === 'people' ? (email ? email.split('@')[0] : '') : (groupName ? groupName : ''),
-                                userID: id,
-                            }))}
-=======
                             options={searchResults}
->>>>>>> origin
                             onSelect={handleSelect}
                             onSearch={(value) => setSearchQuery(value)}
                             style={{ width: '100%' }}
                         >
                             <Input.Search
-<<<<<<< HEAD
-                                placeholder="Search"
-=======
                                 placeholder="Search friends or groups"
->>>>>>> origin
                                 value={searchQuery}
                                 onChange={(e) => setSearchQuery(e.target.value)}
                                 className="search-bar"
