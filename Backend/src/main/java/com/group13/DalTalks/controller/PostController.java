@@ -34,8 +34,6 @@ public class PostController {
         userService.createUser(user);
     }
 
-
-
     @GetMapping("/getEmailByUserID/{id}")
     public String getEmailByUserID(@PathVariable int id){
         return userService.getEmailByUserID(id);
