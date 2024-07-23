@@ -1,7 +1,11 @@
 package com.group13.DalTalks.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.persistence.Id;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class User {
@@ -16,8 +20,6 @@ public class User {
     private String status;
     private String role;
 
-    // Constructors, getters, and setters
-
     public User() {
     }
 
@@ -29,8 +31,6 @@ public class User {
         this.status = status;
         this.role = role;
     }
-
-    // Getters and setters
 
     public int getId() {
         return id;
@@ -82,3 +82,4 @@ public class User {
     public String getRole() {return role;}
     public void setRole(String role) {this.role = role;}
 }
+
