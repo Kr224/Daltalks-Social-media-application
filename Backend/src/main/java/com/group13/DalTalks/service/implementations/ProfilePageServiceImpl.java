@@ -17,6 +17,9 @@ public class ProfilePageServiceImpl implements ProfilePageService {
 
   @Override
   public ProfilePage createProfile(ProfilePage page) {
+    if (page == null) {
+      return null;
+    }
     return profilePageRepository.save(page);
   }
 
