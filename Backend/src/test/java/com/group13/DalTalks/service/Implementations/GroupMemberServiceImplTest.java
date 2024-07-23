@@ -353,8 +353,6 @@ class GroupMemberServiceImplTest {
     existingGroupMember.setGroup(group);
     existingGroupMember.setUser(user);
 
-    when(groupMemberRepository.findByGroupIdAndUserId(group.getId(), user.getId())).thenReturn(existingGroupMember);
-
     try {
       GroupMembers returned = groupMemberService.activateGroupMember(groupMembers, signedInUserID);
       //this should fail -> only the creator should be able to activate the group member
