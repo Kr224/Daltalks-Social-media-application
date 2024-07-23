@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
+import Navigation from './navigation.js';
 import '../css/GroupDetails.css';
 
 const GroupDetails = () => {
@@ -93,6 +94,8 @@ const GroupDetails = () => {
     };
 
   return (
+    <div>
+      <Navigation />
     <div className="group-details">
       {group ? (
         <>
@@ -114,6 +117,7 @@ const GroupDetails = () => {
       ) : (
         <p>Loading group details...</p>
       )}
+    </div>
     </div>
   );
 };

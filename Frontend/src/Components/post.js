@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { Col, Row, Card, Avatar, Input, Space, Spin, Button, AutoComplete, Select } from 'antd';
 import { UserOutlined, LikeOutlined, CommentOutlined, SendOutlined, TeamOutlined } from '@ant-design/icons';
 import Friend from './friends';
@@ -6,6 +6,7 @@ import axios from 'axios';
 import Navigation from './navigation';
 import '../css/post.css';
 import { useNavigate } from 'react-router-dom';
+import debounce from 'lodash/debounce'; // Import lodash debounce
 
 const { Option } = Select;
 
@@ -16,7 +17,7 @@ const Post = () => {
     const [loading, setLoading] = useState(true);
     const [searchQuery, setSearchQuery] = useState('');
     const [searchResults, setSearchResults] = useState([]);
-    const [filter, setFilter] = useState('people'); // Add filter state
+    const [filter, setFilter] = useState('people');
     const navigate = useNavigate();
 
     const currentID = localStorage.getItem('userId');
@@ -44,37 +45,56 @@ const Post = () => {
         fetchPostsFriendsAndGroups();
     }, [currentID]);
 
-    // Update search results based on search query and filter
-    useEffect(() => {
-        if (searchQuery) {
-            let results;
-            if (filter === 'people') {
-                results = friends.filter(({ email }) =>
-                    email && email.split('@')[0].toLowerCase().includes(searchQuery.toLowerCase())
-                );
+    // Debounced search handler
+    const handleSearch = useCallback(
+        debounce((query) => {
+            if (query) {
+                let results = [];
+                if (filter === 'people') {
+                    results = friends
+                        .filter(({ email }) =>
+                            email && email.split('@')[0].toLowerCase().includes(query.toLowerCase())
+                        )
+                        .map(({ email, id }) => ({
+                            type: 'friend',
+                            value: email.split('@')[0],
+                            label: (
+                                <div>
+                                    <UserOutlined /> {email.split('@')[0]}
+                                </div>
+                            ),
+                            id: id,
+                        }));
+                } else if (filter === 'groups') {
+                    results = groups
+                        .filter(({ groupName }) =>
+                            groupName && groupName.toLowerCase().includes(query.toLowerCase())
+                        )
+                        .map(({ groupName, id }) => ({
+                            type: 'group',
+                            value: groupName,
+                            label: (
+                                <div>
+                                    <TeamOutlined /> {groupName}
+                                </div>
+                            ),
+                            id: id,
+                        }));
+                }
+                setSearchResults(results);
             } else {
-                results = groups.filter(({ groupName }) =>
-                    groupName && groupName.toLowerCase().includes(searchQuery.toLowerCase())
-                );
+                setSearchResults([]);
             }
-            setSearchResults(results.map(({ email, id, groupName }) => ({
-                type: filter === 'people' ? 'friend' : 'group',
-                value: filter === 'people' ? (email ? email.split('@')[0] : '') : (groupName ? groupName : ''),
-                label: filter === 'people' ? (
-                    <div>
-                        <UserOutlined /> {email.split('@')[0]}
-                    </div>
-                ) : (
-                    <div>
-                        <TeamOutlined /> {groupName}
-                    </div>
-                ),
-                id: id,
-            })));
-        } else {
-            setSearchResults([]);
-        }
-    }, [searchQuery, friends, groups, filter]);
+        }, 300), // Debounce time (in milliseconds)
+        [friends, groups, filter]
+    );
+
+    // Handle search input change
+    const handleSearchInputChange = (e) => {
+        const query = e.target.value;
+        setSearchQuery(query);
+        handleSearch(query);
+    };
 
     // Handle selection of a search result
     const handleSelect = (value, option) => {
@@ -95,7 +115,10 @@ const Post = () => {
                     <div className="filter-container">
                         <Select
                             defaultValue="people"
-                            onChange={(value) => setFilter(value)}
+                            onChange={(value) => {
+                                setFilter(value);
+                                handleSearch(searchQuery); // Refetch results when filter changes
+                            }}
                             className="filter-dropdown"
                         >
                             <Option value="people">People</Option>
@@ -104,13 +127,12 @@ const Post = () => {
                         <AutoComplete
                             options={searchResults}
                             onSelect={handleSelect}
-                            onSearch={(value) => setSearchQuery(value)}
                             style={{ width: '100%' }}
                         >
                             <Input.Search
                                 placeholder="Search friends or groups"
                                 value={searchQuery}
-                                onChange={(e) => setSearchQuery(e.target.value)}
+                                onChange={handleSearchInputChange}
                                 className="search-bar"
                             />
                         </AutoComplete>
