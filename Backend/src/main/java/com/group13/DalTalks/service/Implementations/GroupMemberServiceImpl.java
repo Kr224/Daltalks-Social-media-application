@@ -64,4 +64,8 @@ public class GroupMemberServiceImpl implements GroupMemberService {
     return existingGroupMember;
 
   }
+  @Override
+  public List<GroupMembers> findGroupsByUserId(int userId) {
+    return groupMemberRepository.findByUserId(userId);
+  }
 }

@@ -35,4 +35,9 @@ public class GroupMemberController {
     return groupMemberService.activateGroupMember(groupMembers, signedInUserID);
   }
 
+  @GetMapping("/user/{userId}")
+  public List<GroupMembers> getGroupsByUserId(@PathVariable int userId) {
+    return groupMemberService.findGroupsByUserId(userId);
+  }
+
 }
