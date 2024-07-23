@@ -14,4 +14,6 @@ public interface ProfilePageService {
   ProfilePage updateProfilePage(int userID, ProfilePage page);
 
   ProfilePage deleteProfilePage(int id);
+
+  List<ProfilePage> getAllProfiles();
 }

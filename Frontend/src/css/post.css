@@ -122,3 +122,20 @@
     height: 100vh;
 }
 
+.search-bar-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 1rem;
+}
+
+.filter-select .ant-select-selector {
+    text-align: left;
+}
+
+.filter-select .ant-select-selection-item {
+    text-align: left;
+}
+
+.filter-select .ant-select-dropdown {
+    text-align: left;
+}
