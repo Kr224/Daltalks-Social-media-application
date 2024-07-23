@@ -54,6 +54,9 @@ public class UserServiceImpl implements UserService {
         if (!user.getPassword().equals(password)) {
             throw new IllegalArgumentException("Invalid password!");
         }
+        else if(!(user.getStatus() == null)){
+            throw new IllegalArgumentException("User account has not been accepted!");
+        }
 
         return user;
     }
