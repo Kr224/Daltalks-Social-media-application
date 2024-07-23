@@ -31,6 +31,9 @@ public class GroupMemberServiceImpl implements GroupMemberService {
 
   @Override
   public GroupMembers removeGroupMember(GroupMembers groupMembers, int signedInUserID) {
+    if (groupMembers.getGroup().isPrivate() && groupMembers.getGroup().getCreatorID() != signedInUserID) {
+      throw new RuntimeException("You do not have authorization to remove a group member!");
+    }
     int groupID = groupMembers.getGroup().getId();
     int userID = (groupMembers.getUser().getId());
     groupMemberRepository.deleteGroupMembersByGroupIdAndUserId(groupID, userID);
