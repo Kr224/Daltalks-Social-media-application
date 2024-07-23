@@ -52,7 +52,7 @@ public class GroupMemberServiceImpl implements GroupMemberService {
       return null;
     }
     if (groupMembers.getGroup().isPrivate() && groupMembers.getGroup().getCreatorID() != signedInUserID) {
-      throw new RuntimeException("You do not have authorization to remove a group member!");
+      throw new RuntimeException("You do not have authorization to activate a group member!");
     }
     int groupID = groupMembers.getGroup().getId();
     int userID = (groupMembers.getUser().getId());
