@@ -16,7 +16,7 @@ public class GroupMemberServiceImpl implements GroupMemberService {
   private GroupMemberRepository groupMemberRepository;
 
   @Override
-  public GroupMembers saveGroupMember(GroupMembers groupMembers) {
+  public GroupMembers saveGroupMember(GroupMembers groupMembers, int signedInUserID) {
     if (groupMembers.getGroup() == null || groupMembers.getUser() == null) {
       return null;
     }

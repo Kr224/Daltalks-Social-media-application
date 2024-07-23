@@ -15,9 +15,9 @@ public class GroupMemberController {
 
   //here we could create calls for adding group members, deleting group members, and getting group members
 
-  @PostMapping("/add-membership")
-  public GroupMembers createGroupMembers(@RequestBody GroupMembers groupMembers) {
-    return groupMemberService.saveGroupMember(groupMembers);
+  @PostMapping("/add-membership/{signedInUserID}")
+  public GroupMembers createGroupMembers(@RequestBody GroupMembers groupMembers, @PathVariable int signedInUserID) {
+    return groupMemberService.saveGroupMember(groupMembers, signedInUserID);
   }
 
   @DeleteMapping("/remove-membership")
