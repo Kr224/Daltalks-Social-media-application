@@ -66,6 +66,21 @@
     width: 60%;
 }
 
+.filter-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.loading-container {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.post-content {
+    padding: 10px;
+}
+
 .filter-modal {
     position: absolute;
     top: 50px;
@@ -106,3 +121,4 @@
     align-items: center;
     height: 100vh;
 }
+
