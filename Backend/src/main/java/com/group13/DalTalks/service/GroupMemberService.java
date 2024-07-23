@@ -10,7 +10,7 @@ public interface GroupMemberService {
 
   GroupMembers saveGroupMember(GroupMembers groupMembers, int signedInUserID);
 
-  GroupMembers removeGroupMember(GroupMembers groupMembers);
+  GroupMembers removeGroupMember(GroupMembers groupMembers, int signedInUserID);
 
   List<GroupMembers> findAllGroupMembersByGroupId(int id);
 

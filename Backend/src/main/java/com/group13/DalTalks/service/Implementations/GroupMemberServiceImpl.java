@@ -30,7 +30,7 @@ public class GroupMemberServiceImpl implements GroupMemberService {
   }
 
   @Override
-  public GroupMembers removeGroupMember(GroupMembers groupMembers) {
+  public GroupMembers removeGroupMember(GroupMembers groupMembers, int signedInUserID) {
     int groupID = groupMembers.getGroup().getId();
     int userID = (groupMembers.getUser().getId());
     groupMemberRepository.deleteGroupMembersByGroupIdAndUserId(groupID, userID);

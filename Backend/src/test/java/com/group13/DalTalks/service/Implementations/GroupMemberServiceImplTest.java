@@ -85,7 +85,9 @@ class GroupMemberServiceImplTest {
     groupMembers.setUser(new User());
     groupMembers.setGroup(new GroupEntity());
 
-    GroupMembers returned = groupMemberService.removeGroupMember(groupMembers);
+    int signedInUserID = 1;
+
+    GroupMembers returned = groupMemberService.removeGroupMember(groupMembers, signedInUserID);
 
     assertEquals(groupMembers, returned, "Deleted group member not returned.");
   }
@@ -241,6 +243,57 @@ class GroupMemberServiceImplTest {
     try {
       GroupMembers returned = groupMemberService.saveGroupMember(groupMembers, signedInUserID);
       //this test should fail here, as an error must be thrown if the group creator is not the one adding to a private group
+      fail();
+    } catch (RuntimeException e) {
+      assertTrue(true);
+    }
+  }
+
+  @Test
+  public void createGroupMember_privateGroup_GroupCreatorRemoving() {
+    GroupEntity group = new GroupEntity();
+    group.setId(1);
+    group.setPrivate(true);
+    group.setCreatorID(1);
+    User user = new User();
+    user.setId(1);
+
+    int signedInUserID = 1;
+
+    GroupMembers groupMembers = new GroupMembers();
+    groupMembers.setGroup(group);
+    groupMembers.setUser(user);
+
+
+    try {
+      GroupMembers returned = groupMemberService.removeGroupMember(groupMembers, signedInUserID);
+      assertEquals(groupMembers, returned);
+    } catch (RuntimeException e) {
+      //no error should be passed -> the creator can remove anyone to the group
+      fail();
+    }
+  }
+
+
+  @Test
+  public void createGroupMember_privateGroup_NotGroupCreatorRemoving() {
+    GroupEntity group = new GroupEntity();
+    group.setId(1);
+    group.setPrivate(true);
+    group.setCreatorID(1);
+    User user = new User();
+    user.setId(1);
+
+    int signedInUserID = 10;
+
+    GroupMembers groupMembers = new GroupMembers();
+    groupMembers.setGroup(group);
+    groupMembers.setUser(user);
+
+
+    try {
+      GroupMembers returned = groupMemberService.removeGroupMember(groupMembers, signedInUserID);
+      //an exception should be thrown if it's not the group creator removing someone
       fail();
     } catch (RuntimeException e) {
       assertTrue(true);

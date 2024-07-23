@@ -20,9 +20,9 @@ public class GroupMemberController {
     return groupMemberService.saveGroupMember(groupMembers, signedInUserID);
   }
 
-  @DeleteMapping("/remove-membership")
-  public GroupMembers removeGroupMembers(@RequestBody GroupMembers groupMembers) {
-    return groupMemberService.removeGroupMember(groupMembers);
+  @DeleteMapping("/remove-membership/{signedInUserID}")
+  public GroupMembers removeGroupMembers(@RequestBody GroupMembers groupMembers, @PathVariable int signedInUserID) {
+    return groupMemberService.removeGroupMember(groupMembers, signedInUserID);
   }
 
   @GetMapping("/{id}")
