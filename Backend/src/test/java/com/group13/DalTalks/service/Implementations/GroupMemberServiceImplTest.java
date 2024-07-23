@@ -238,8 +238,6 @@ class GroupMemberServiceImplTest {
     groupMembers.setGroup(group);
     groupMembers.setUser(user);
 
-    when(groupMemberRepository.save(groupMembers)).thenReturn(groupMembers);
-
     try {
       GroupMembers returned = groupMemberService.saveGroupMember(groupMembers, signedInUserID);
       //this test should fail here, as an error must be thrown if the group creator is not the one adding to a private group

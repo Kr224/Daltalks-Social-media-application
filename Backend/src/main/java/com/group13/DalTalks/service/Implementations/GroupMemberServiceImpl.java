@@ -20,6 +20,9 @@ public class GroupMemberServiceImpl implements GroupMemberService {
     if (groupMembers.getGroup() == null || groupMembers.getUser() == null) {
       return null;
     }
+    if (groupMembers.getGroup().isPrivate() && groupMembers.getGroup().getCreatorID() != signedInUserID) {
+      throw new RuntimeException("You do not have authorization to add a group member!");
+    }
     if (!groupMembers.getGroup().isPrivate()) {
       groupMembers.setActive(true);
     }
