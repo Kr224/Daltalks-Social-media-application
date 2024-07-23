@@ -14,7 +14,7 @@ public interface GroupMemberService {
 
   List<GroupMembers> findAllGroupMembersByGroupId(int id);
 
-  GroupMembers activateGroupMember(GroupMembers groupMembers);
+  GroupMembers activateGroupMember(GroupMembers groupMembers, int signedInUserID);
 }
 
 

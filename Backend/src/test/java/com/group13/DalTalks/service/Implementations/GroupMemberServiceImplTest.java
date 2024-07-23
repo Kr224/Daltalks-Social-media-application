@@ -164,9 +164,11 @@ class GroupMemberServiceImplTest {
     existingGroupMember.setGroup(group);
     existingGroupMember.setUser(user);
 
+    int signedInUserID = 1;
+
     when(groupMemberRepository.findByGroupIdAndUserId(group.getId(), user.getId())).thenReturn(existingGroupMember);
 
-    GroupMembers returned = groupMemberService.activateGroupMember(groupMembers);
+    GroupMembers returned = groupMemberService.activateGroupMember(groupMembers, signedInUserID);
 
     assertTrue(returned.isActive(), "Group member should be activated.");
   }
@@ -182,19 +184,21 @@ class GroupMemberServiceImplTest {
     groupMembers.setGroup(group);
     groupMembers.setUser(user);
 
+    int signedInUserID = 1;
+
     when(groupMemberRepository.findByGroupIdAndUserId(group.getId(), user.getId())).thenReturn(null);
 
-    GroupMembers returned = groupMemberService.activateGroupMember(groupMembers);
+    GroupMembers returned = groupMemberService.activateGroupMember(groupMembers, signedInUserID);
 
     assertNull(returned, "Group member that doesn't exist returns null.");
   }
 
   @Test
   public void activateGroupMember_nullMember() {
-
+    int signedInUserID = 1;
     GroupMembers groupMembers = null;
 
-    GroupMembers returned = groupMemberService.activateGroupMember(groupMembers);
+    GroupMembers returned = groupMemberService.activateGroupMember(groupMembers, signedInUserID);
 
     assertNull(returned, "Group member should be null if no existing member is found.");
   }
@@ -294,6 +298,66 @@ class GroupMemberServiceImplTest {
     try {
       GroupMembers returned = groupMemberService.removeGroupMember(groupMembers, signedInUserID);
       //an exception should be thrown if it's not the group creator removing someone
+      fail();
+    } catch (RuntimeException e) {
+      assertTrue(true);
+    }
+  }
+
+  @Test
+  public void createGroupMember_privateGroup_GroupCreatorActivating() {
+    GroupEntity group = new GroupEntity();
+    group.setId(1);
+    group.setPrivate(true);
+    group.setCreatorID(1);
+    User user = new User();
+    user.setId(1);
+
+    int signedInUserID = 1;
+
+    GroupMembers groupMembers = new GroupMembers();
+    groupMembers.setGroup(group);
+    groupMembers.setUser(user);
+
+    GroupMembers existingGroupMember = new GroupMembers();
+    existingGroupMember.setGroup(group);
+    existingGroupMember.setUser(user);
+
+    when(groupMemberRepository.findByGroupIdAndUserId(group.getId(), user.getId())).thenReturn(existingGroupMember);
+
+    try {
+      GroupMembers returned = groupMemberService.activateGroupMember(groupMembers, signedInUserID);
+      assertTrue(returned.isActive(), "User was not made active!");
+    } catch (RuntimeException e) {
+      //no error should be passed -> the creator can activate anyone in the group
+      fail();
+    }
+  }
+
+  @Test
+  public void createGroupMember_privateGroup_NotGroupCreatorActivating() {
+    GroupEntity group = new GroupEntity();
+    group.setId(1);
+    group.setPrivate(true);
+    group.setCreatorID(1);
+    User user = new User();
+    user.setId(1);
+
+    int signedInUserID = 10;
+
+    GroupMembers groupMembers = new GroupMembers();
+    groupMembers.setGroup(group);
+    groupMembers.setUser(user);
+
+    GroupMembers existingGroupMember = new GroupMembers();
+    existingGroupMember.setGroup(group);
+    existingGroupMember.setUser(user);
+
+    when(groupMemberRepository.findByGroupIdAndUserId(group.getId(), user.getId())).thenReturn(existingGroupMember);
+
+    try {
+      GroupMembers returned = groupMemberService.activateGroupMember(groupMembers, signedInUserID);
+      //this should fail -> only the creator should be able to activate the group member
       fail();
     } catch (RuntimeException e) {
       assertTrue(true);

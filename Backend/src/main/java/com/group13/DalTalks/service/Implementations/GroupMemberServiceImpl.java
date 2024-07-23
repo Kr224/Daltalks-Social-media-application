@@ -47,7 +47,7 @@ public class GroupMemberServiceImpl implements GroupMemberService {
   }
 
   @Override
-  public GroupMembers activateGroupMember(GroupMembers groupMembers) {
+  public GroupMembers activateGroupMember(GroupMembers groupMembers, int signedInUserID) {
     if (groupMembers == null) {
       return null;
     }

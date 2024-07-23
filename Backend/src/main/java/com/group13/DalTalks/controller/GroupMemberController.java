@@ -30,9 +30,9 @@ public class GroupMemberController {
     return groupMemberService.findAllGroupMembersByGroupId(id);
   }
 
-  @PostMapping("/activate-membership")
-  public GroupMembers activateGroupMember(@RequestBody GroupMembers groupMembers) {
-    return groupMemberService.activateGroupMember(groupMembers);
+  @PostMapping("/activate-membership/{signedInUserID}")
+  public GroupMembers activateGroupMember(@RequestBody GroupMembers groupMembers, @PathVariable int signedInUserID) {
+    return groupMemberService.activateGroupMember(groupMembers, signedInUserID);
   }
 
 }
