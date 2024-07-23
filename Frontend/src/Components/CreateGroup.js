@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import '../css/CreateGroup.css';
+import Navigation from './navigation.js';
 import { Checkbox } from 'antd';
 
 const CreateGroup = () => {
@@ -31,6 +32,8 @@ const CreateGroup = () => {
   };
 
   return (
+    <div>
+      <Navigation />
     <div className="create-group-form">
       <h2>Create a New Group</h2>
       <form onSubmit={handleSubmit}>
@@ -47,6 +50,7 @@ const CreateGroup = () => {
         </div>
         <button type="submit">Create Group</button>
       </form>
+    </div>
     </div>
   );
 };
