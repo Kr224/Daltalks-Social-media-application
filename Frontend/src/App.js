@@ -20,6 +20,7 @@ import Filter from './Components/Filter';
 import CreateGroup from './Components/CreateGroup'; // Import CreateGroup component
 import GroupList from './Components/GroupList'; // Import GroupList component
 import GroupDetails from './Components/GroupDetails';
+//import MyGroups from './Components/MyGroups';
 
 const App = () => {
   return (
