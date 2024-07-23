@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { Col, Row, Card, Avatar, Input, Space, Spin, Button, AutoComplete, Select } from 'antd';
 import { UserOutlined, LikeOutlined, CommentOutlined, SendOutlined, TeamOutlined } from '@ant-design/icons';
 import Friend from './friends';
@@ -6,63 +6,34 @@ import axios from 'axios';
 import Navigation from './navigation';
 import '../css/post.css';
 import { useNavigate } from 'react-router-dom';
+import debounce from 'lodash/debounce'; // Import lodash debounce
 
 const { Option } = Select;
 
 const Post = () => {
     const [posts, setPosts] = useState([]);
-    const [users, setUsers] = useState([]);
+    const [friends, setFriends] = useState([]);
     const [groups, setGroups] = useState([]);
     const [loading, setLoading] = useState(true);
     const [searchQuery, setSearchQuery] = useState('');
     const [searchResults, setSearchResults] = useState([]);
     const [filter, setFilter] = useState('people');
-    const [selectedInterests, setSelectedInterests] = useState([]);
-    const [selectedStatus, setSelectedStatus] = useState([]);
-    const [selectedMajor, setSelectedMajor] = useState([]);
-    const [allInterests, setAllInterests] = useState(new Set());
-    const [allStatus, setAllStatus] = useState(new Set());
-    const [allMajor, setAllMajor] = useState(new Set());
     const navigate = useNavigate();
 
     const currentID = localStorage.getItem('userId');
 
-    // Fetch posts, users, groups, and profiles
+    // Fetch posts, friends, and groups
     useEffect(() => {
-        const fetchData = async () => {
+        const fetchPostsFriendsAndGroups = async () => {
             try {
                 const postResponse = await axios.get('http://localhost:8080/api/getAllPost');
                 setPosts(postResponse.data);
 
-                const userResponse = await axios.get('http://localhost:8080/api/user/getAllUser');
-                setUsers(userResponse.data);
+                const friendResponse = await axios.get('http://localhost:8080/api/user/getAllUser');
+                setFriends(friendResponse.data);
 
                 const groupResponse = await axios.get('http://localhost:8080/groups/get-all-groups');
                 setGroups(groupResponse.data);
-
-                const profilesResponse = await axios.get('http://localhost:8080/profiles/getAllProfiles');
-                const profiles = profilesResponse.data;
-
-                // Extract and store unique interests, status, and major
-                const interestsSet = new Set();
-                const statusSet = new Set();
-                const majorSet = new Set();
-
-                profiles.forEach(profile => {
-                    if (profile.interests) {
-                        profile.interests.split(',').forEach(interest => interestsSet.add(interest.trim()));
-                    }
-                    if (profile.status) {
-                        statusSet.add(profile.status.trim());
-                    }
-                    if (profile.major) {
-                        majorSet.add(profile.major.trim());
-                    }
-                });
-
-                setAllInterests(interestsSet);
-                setAllStatus(statusSet);
-                setAllMajor(majorSet);
 
                 setLoading(false);
             } catch (error) {
@@ -71,48 +42,59 @@ const Post = () => {
             }
         };
 
-        fetchData();
+        fetchPostsFriendsAndGroups();
     }, [currentID]);
 
-    // Update search results based on search query and filters
-    useEffect(() => {
-        if (searchQuery) {
-            let results = [];
-            if (filter === 'people') {
-                results = users
-                    .filter(({ email, interests, status, major }) =>
-                        email &&
-                        email.split('@')[0].toLowerCase().includes(searchQuery.toLowerCase()) &&
-                        (selectedInterests.length === 0 || (interests && interests.split(',').some(interest => selectedInterests.includes(interest.trim())))) &&
-                        (selectedStatus.length === 0 || (status && selectedStatus.includes(status.trim()))) &&
-                        (selectedMajor.length === 0 || (major && selectedMajor.includes(major.trim())))
-                    );
+    // Debounced search handler
+    const handleSearch = useCallback(
+        debounce((query) => {
+            if (query) {
+                let results = [];
+                if (filter === 'people') {
+                    results = friends
+                        .filter(({ email }) =>
+                            email && email.split('@')[0].toLowerCase().includes(query.toLowerCase())
+                        )
+                        .map(({ email, id }) => ({
+                            type: 'friend',
+                            value: email.split('@')[0],
+                            label: (
+                                <div>
+                                    <UserOutlined /> {email.split('@')[0]}
+                                </div>
+                            ),
+                            id: id,
+                        }));
+                } else if (filter === 'groups') {
+                    results = groups
+                        .filter(({ groupName }) =>
+                            groupName && groupName.toLowerCase().includes(query.toLowerCase())
+                        )
+                        .map(({ groupName, id }) => ({
+                            type: 'group',
+                            value: groupName,
+                            label: (
+                                <div>
+                                    <TeamOutlined /> {groupName}
+                                </div>
+                            ),
+                            id: id,
+                        }));
+                }
+                setSearchResults(results);
             } else {
-                results = groups
-                    .filter(({ groupName }) =>
-                        groupName && groupName.toLowerCase().includes(searchQuery.toLowerCase())
-                    );
+                setSearchResults([]);
             }
-            // Debugging: Check searchResults before setting state
-            console.log('Filtered Results:', results);
-            setSearchResults(results.map(({ email, id, groupName }) => ({
-                type: filter === 'people' ? 'friend' : 'group',
-                value: filter === 'people' ? (email ? email.split('@')[0] : '') : (groupName ? groupName : ''),
-                label: filter === 'people' ? (
-                    <div>
-                        <UserOutlined /> {email.split('@')[0]}
-                    </div>
-                ) : (
-                    <div>
-                        <TeamOutlined /> {groupName}
-                    </div>
-                ),
-                id: id,
-            })));
-        } else {
-            setSearchResults([]);
-        }
-    }, [searchQuery, users, groups, filter, selectedInterests, selectedStatus, selectedMajor]);
+        }, 300), // Debounce time (in milliseconds)
+        [friends, groups, filter]
+    );
+
+    // Handle search input change
+    const handleSearchInputChange = (e) => {
+        const query = e.target.value;
+        setSearchQuery(query);
+        handleSearch(query);
+    };
 
     // Handle selection of a search result
     const handleSelect = (value, option) => {
@@ -133,69 +115,27 @@ const Post = () => {
                     <div className="filter-container">
                         <Select
                             defaultValue="people"
-                            onChange={(value) => setFilter(value)}
+                            onChange={(value) => {
+                                setFilter(value);
+                                handleSearch(searchQuery); // Refetch results when filter changes
+                            }}
                             className="filter-dropdown"
                         >
                             <Option value="people">People</Option>
                             <Option value="groups">Groups</Option>
-                            <Option value="interests">Interests</Option>
-                            <Option value="status">Status</Option>
-                            <Option value="major">Major</Option>
                         </Select>
-                        {filter === 'interests' && (
-                            <Select
-                                className="filter-select"
-                                mode="multiple"
-                                placeholder="Select interests"
-                                onChange={setSelectedInterests}
-                                style={{ width: '100%' }}
-                            >
-                                {[...allInterests].map(interest => (
-                                    <Option key={interest} value={interest}>{interest}</Option>
-                                ))}
-                            </Select>
-                        )}
-                        {filter === 'status' && (
-                            <Select
-                                className="filter-select"
-                                mode="multiple"
-                                placeholder="Select status"
-                                onChange={setSelectedStatus}
-                                style={{ width: '100%' }}
-                            >
-                                {[...allStatus].map(status => (
-                                    <Option key={status} value={status}>{status}</Option>
-                                ))}
-                            </Select>
-                        )}
-                        {filter === 'major' && (
-                            <Select
-                                className="filter-select"
-                                mode="multiple"
-                                placeholder="Select major"
-                                onChange={setSelectedMajor}
-                                style={{ width: '100%' }}
-                            >
-                                {[...allMajor].map(major => (
-                                    <Option key={major} value={major}>{major}</Option>
-                                ))}
-                            </Select>
-                        )}
-                        {(filter === 'people' || filter === 'groups') && (
-                            <AutoComplete
-                                options={searchResults}
-                                onSelect={handleSelect}
-                                onSearch={(value) => setSearchQuery(value)}
-                                style={{ width: '100%' }}
-                            >
-                                <Input.Search
-                                    placeholder="Search people or groups"
-                                    value={searchQuery}
-                                    onChange={(e) => setSearchQuery(e.target.value)}
-                                    className="search-bar"
-                                />
-                            </AutoComplete>
-                        )}
+                        <AutoComplete
+                            options={searchResults}
+                            onSelect={handleSelect}
+                            style={{ width: '100%' }}
+                        >
+                            <Input.Search
+                                placeholder="Search friends or groups"
+                                value={searchQuery}
+                                onChange={handleSearchInputChange}
+                                className="search-bar"
+                            />
+                        </AutoComplete>
                     </div>
                     {loading ? (
                         <div className="loading-container">
@@ -213,8 +153,8 @@ const Post = () => {
                                                 </div>
                                                 <div className="username" onClick={() => navigate(`/profile/${post.userID}`)}>
                                                     <div>
-                                                        {users.find((user) => user.id === post.userID)?.email.split('@')[0]
-                                                            ? <a>{users.find((user) => user.id === post.userID)?.email.split('@')[0]}</a>
+                                                        {friends.find((friend) => friend.id === post.userID)?.email.split('@')[0]
+                                                            ? <a>{friends.find((friend) => friend.id === post.userID)?.email.split('@')[0]}</a>
                                                             : <a onClick={() => navigate(`/profile/${post.userID}`)}>User not found with id: {post.userID}</a>}
                                                     </div>
                                                 </div>
