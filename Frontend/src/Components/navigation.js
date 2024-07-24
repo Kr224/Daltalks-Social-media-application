@@ -35,6 +35,9 @@ const Navigation = () => {
       <Button type="text" onClick={() => navigate(`/groups`)}>
         <GroupOutlined /> All Groups
       </Button>
+      <Button type="text" onClick={() => navigate(`/my-groups`)}>
+        <GroupOutlined /> My Groups
+      </Button>
       <Button type="text" onClick={handleLogout}>
         <LogoutOutlined /> Log out
       </Button>
