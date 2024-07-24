@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import Navigation from './navigation.js';
 import '../css/GroupList.css';
 
 const GroupList = () => {
@@ -21,6 +22,7 @@ const GroupList = () => {
 
   return (
     <div className="group-list">
+      <Navigation />
       <h2>Groups</h2>
       <ul>
         {groups.map(group => (

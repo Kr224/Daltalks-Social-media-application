@@ -10,13 +10,11 @@ import ProfilePageForm from './Components/ProfilePageForm';
 import ErrorPage from './Components/ErrorPage';
 import PrivateRoute from './Components/PrivateRoute';
 import UserProfilePage from './Components/UserProfilePage';
-// import Navigation from './Components/navigation'; // Assuming you have a Navigation component
 import FriendRequests from './Components/FriendRequests';
 import Friend from './Components/friends';
 import FriendsList from './Components/FriendsList';  // Import the FriendsList component
 import Admin from './Components/admin';
 import AdminRoute from './Components/adminRoute';
-import Filter from './Components/Filter';
 import CreateGroup from './Components/CreateGroup'; // Import CreateGroup component
 import GroupList from './Components/GroupList'; // Import GroupList component
 import GroupDetails from './Components/GroupDetails';
@@ -40,8 +38,7 @@ const App = () => {
           <Route path="/" element={<Navigate to="/login" />} />
           <Route path="/friend" element={<Friend />} />
           <Route path="/friend-requests" element={<FriendRequests />} />
-          <Route path="/My-friends" element={<FriendsList />} />  {/* The route for FriendsList */}
-          <Route path="/filter" element={<Filter />} />
+          <Route path="/My-friends" element={<FriendsList />} />
           <Route path="/create-group" element={<PrivateRoute element={CreateGroup} />} />
           <Route path="/groups" element={<PrivateRoute element={GroupList} />} />
           <Route path="/groups/:id" element={<PrivateRoute element={GroupDetails} />} />

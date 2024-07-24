@@ -6,6 +6,7 @@ import com.group13.DalTalks.service.ProfilePageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -16,6 +17,9 @@ public class ProfilePageServiceImpl implements ProfilePageService {
 
   @Override
   public ProfilePage createProfile(ProfilePage page) {
+    if (page == null) {
+      return null;
+    }
     return profilePageRepository.save(page);
   }
 
@@ -73,5 +77,10 @@ public class ProfilePageServiceImpl implements ProfilePageService {
     }
 
     return null;
+  }
+
+  @Override
+  public List<ProfilePage> getAllProfiles() {
+    return profilePageRepository.findAll();
   }
 }

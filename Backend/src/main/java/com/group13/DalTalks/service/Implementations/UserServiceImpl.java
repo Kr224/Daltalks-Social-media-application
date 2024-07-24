@@ -54,6 +54,9 @@ public class UserServiceImpl implements UserService {
         if (!user.getPassword().equals(password)) {
             throw new IllegalArgumentException("Invalid password!");
         }
+        else if(!(user.getStatus() == null)){
+            throw new IllegalArgumentException("User account has not been accepted!");
+        }
 
         return user;
     }
@@ -85,11 +88,6 @@ public class UserServiceImpl implements UserService {
                                    .stream()
                                    .filter(user -> user.getId() != userID)
                                    .collect(Collectors.toList());
-
-                        //   return this.userRepository.findAll()
-                        //   .stream()
-                        //   .filter(user -> user.getId() != userID && "approved".equals(user.getStatus()))
-                        //   .collect(Collectors.toList());
     }
 
     @Override
@@ -98,11 +96,6 @@ public class UserServiceImpl implements UserService {
                                 .stream()
                                 .filter(user -> "pending".equals(user.getStatus()))
                                 .collect(Collectors.toList());
-
-                        //   return this.userRepository.findAll()
-                        //   .stream()
-                        //   .filter(user -> user.getId() != userID && "approved".equals(user.getStatus()))
-                        //   .collect(Collectors.toList());
     }
 
     @Override

@@ -16,6 +16,14 @@ public class Post {
 
     private String PostBodyContent;
 
+    public int getPostId() {
+        return PostId;
+    }
+
+    public void setPostId(int postId) {
+        PostId = postId;
+    }
+
     public int getUserID() {
         return UserID;
     }
@@ -44,8 +52,7 @@ public class Post {
 
     }
 
-    public Post(int PostId, int UserID, String PostTitle, String PostBodyContent) {
-        this.PostId = PostId;
+    public Post(int UserID, String PostTitle, String PostBodyContent) {
         this.UserID = UserID;
         this.PostTitle = PostTitle;
         this.PostBodyContent = PostBodyContent;

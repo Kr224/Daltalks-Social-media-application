@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button } from 'antd';
-import { HomeOutlined, UserOutlined, LogoutOutlined, UserAddOutlined, TeamOutlined } from '@ant-design/icons';
+import { HomeOutlined, UserOutlined, LogoutOutlined, UserAddOutlined, TeamOutlined, PlusOutlined, GroupOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
 
 const Navigation = () => {
@@ -26,8 +26,14 @@ const Navigation = () => {
       <Button type="text" onClick={() => navigate(`/friend-requests`)}>
         <UserAddOutlined /> Add Friend
       </Button>
-      <Button type="text" onClick={() => navigate(`/My-friends`)}>
+      <Button type="text" onClick={() => navigate(`/my-friends`)}>
         <TeamOutlined /> Friends
+      </Button>
+      <Button type="text" onClick={() => navigate(`/create-group`)}>
+        <PlusOutlined /> Create Group
+      </Button>
+      <Button type="text" onClick={() => navigate(`/groups`)}>
+        <GroupOutlined /> All Groups
       </Button>
       <Button type="text" onClick={handleLogout}>
         <LogoutOutlined /> Log out
