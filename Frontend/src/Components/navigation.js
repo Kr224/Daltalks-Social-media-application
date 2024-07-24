@@ -24,7 +24,7 @@ const Navigation = () => {
         <UserOutlined /> User
       </Button>
       <Button type="text" onClick={() => navigate(`/friend-requests`)}>
-        <UserAddOutlined /> Add Friend
+        <UserAddOutlined /> Friend Requests
       </Button>
       <Button type="text" onClick={() => navigate(`/my-friends`)}>
         <TeamOutlined /> Friends

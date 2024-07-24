@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import Navigation from './navigation.js';
 import '../css/MyGroups.css';
 
 const MyGroups = () => {
@@ -21,6 +22,7 @@ const MyGroups = () => {
 
     return (
         <div className="my-groups">
+            <Navigation />
             <h2>My Groups</h2>
             <ul>
                 {groups.length > 0 ? (
