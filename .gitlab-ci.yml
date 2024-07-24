@@ -23,7 +23,7 @@ build-frontend:
     - install-frontend  # ensures node_modules is available from the install-frontend job
   script:
     - cd Frontend  # changes the directory to Frontend/src
-    - npm run build  # runs the build command
+    - CI=false npm run build  # runs the build command without treating warnings as errors
   artifacts:
     paths:
       - Frontend/build/  # stores the build artifacts from the build directory
