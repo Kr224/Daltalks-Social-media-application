@@ -9,6 +9,7 @@ const GroupDetails = () => {
   const [group, setGroup] = useState(null);
   const [members, setMembers] = useState([]);
   const [groupCreator, setGroupCreator] = useState(null);
+  const signedInUserId = localStorage.getItem('userId');
 
   useEffect(() => {
     const fetchGroupInfo = async () => {
@@ -47,7 +48,7 @@ const GroupDetails = () => {
 
   const handleAddMember = async (userId) => {
       try {
-        await axios.post(`http://localhost:8080/group_members/add-membership`, {
+        await axios.post(`http://localhost:8080/group_members/add-membership/${signedInUserId}`, {
           group: group,
           user: { id: userId },
           isActive: true
@@ -63,9 +64,9 @@ const GroupDetails = () => {
 
   const handleRemoveMember = async (userId) => {
     try {
-      await axios.delete(`http://localhost:8080/group_members/remove-membership`, {
+      await axios.delete(`http://localhost:8080/group_members/remove-membership/${signedInUserId}`, {
         data: {
-          group: { id },
+          group: group,
           user: { id: userId }
         }
       });
@@ -80,8 +81,8 @@ const GroupDetails = () => {
 
   const handleActivateMember = async (userId) => {
       try {
-        const response = await axios.post(`http://localhost:8080/group_members/activate-membership`, {
-          group: { id },
+        const response = await axios.post(`http://localhost:8080/group_members/activate-membership/${signedInUserId}`, {
+          group: group,
           user: { id: userId }
         });
         alert('Member activated successfully');

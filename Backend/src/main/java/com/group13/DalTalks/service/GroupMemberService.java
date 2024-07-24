@@ -8,13 +8,15 @@ public interface GroupMemberService {
   //here we can define the methods that the service needs
   //-> adding/removing group members, obtaining group members for a particular group
 
-  GroupMembers saveGroupMember(GroupMembers groupMembers);
+  GroupMembers saveGroupMember(GroupMembers groupMembers, int signedInUserID);
 
-  GroupMembers removeGroupMember(GroupMembers groupMembers);
+  GroupMembers removeGroupMember(GroupMembers groupMembers, int signedInUserID);
 
   List<GroupMembers> findAllGroupMembersByGroupId(int id);
 
-  GroupMembers activateGroupMember(GroupMembers groupMembers);
+  GroupMembers activateGroupMember(GroupMembers groupMembers, int signedInUserID);
+
+  List<GroupMembers> findGroupsByUserId(int userId);
 }
 
 

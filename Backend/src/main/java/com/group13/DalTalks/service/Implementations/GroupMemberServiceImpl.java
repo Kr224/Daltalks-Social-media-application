@@ -16,9 +16,12 @@ public class GroupMemberServiceImpl implements GroupMemberService {
   private GroupMemberRepository groupMemberRepository;
 
   @Override
-  public GroupMembers saveGroupMember(GroupMembers groupMembers) {
+  public GroupMembers saveGroupMember(GroupMembers groupMembers, int signedInUserID) {
     if (groupMembers.getGroup() == null || groupMembers.getUser() == null) {
       return null;
+    }
+    if (groupMembers.getGroup().isPrivate() && groupMembers.getGroup().getCreatorID() != signedInUserID) {
+      throw new RuntimeException("You do not have authorization to add a group member!");
     }
     if (!groupMembers.getGroup().isPrivate()) {
       groupMembers.setActive(true);
@@ -27,7 +30,10 @@ public class GroupMemberServiceImpl implements GroupMemberService {
   }
 
   @Override
-  public GroupMembers removeGroupMember(GroupMembers groupMembers) {
+  public GroupMembers removeGroupMember(GroupMembers groupMembers, int signedInUserID) {
+    if (groupMembers.getGroup().isPrivate() && groupMembers.getGroup().getCreatorID() != signedInUserID) {
+      throw new RuntimeException("You do not have authorization to remove a group member!");
+    }
     int groupID = groupMembers.getGroup().getId();
     int userID = (groupMembers.getUser().getId());
     groupMemberRepository.deleteGroupMembersByGroupIdAndUserId(groupID, userID);
@@ -41,9 +47,12 @@ public class GroupMemberServiceImpl implements GroupMemberService {
   }
 
   @Override
-  public GroupMembers activateGroupMember(GroupMembers groupMembers) {
+  public GroupMembers activateGroupMember(GroupMembers groupMembers, int signedInUserID) {
     if (groupMembers == null) {
       return null;
+    }
+    if (groupMembers.getGroup().isPrivate() && groupMembers.getGroup().getCreatorID() != signedInUserID) {
+      throw new RuntimeException("You do not have authorization to activate a group member!");
     }
     int groupID = groupMembers.getGroup().getId();
     int userID = (groupMembers.getUser().getId());
@@ -54,5 +63,9 @@ public class GroupMemberServiceImpl implements GroupMemberService {
     }
     return existingGroupMember;
 
+  }
+  @Override
+  public List<GroupMembers> findGroupsByUserId(int userId) {
+    return groupMemberRepository.findByUserId(userId);
   }
 }

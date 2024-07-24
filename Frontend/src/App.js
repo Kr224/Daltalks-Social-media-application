@@ -18,6 +18,7 @@ import AdminRoute from './Components/adminRoute';
 import CreateGroup from './Components/CreateGroup'; // Import CreateGroup component
 import GroupList from './Components/GroupList'; // Import GroupList component
 import GroupDetails from './Components/GroupDetails';
+import MyGroups from './Components/MyGroups';
 
 const App = () => {
   return (
@@ -41,6 +42,7 @@ const App = () => {
           <Route path="/create-group" element={<PrivateRoute element={CreateGroup} />} />
           <Route path="/groups" element={<PrivateRoute element={GroupList} />} />
           <Route path="/groups/:id" element={<PrivateRoute element={GroupDetails} />} />
+          <Route path="/my-groups" element={<PrivateRoute element={MyGroups} />} />
         </Routes>
       </Router>
     </div>

@@ -15,14 +15,14 @@ public class GroupMemberController {
 
   //here we could create calls for adding group members, deleting group members, and getting group members
 
-  @PostMapping("/add-membership")
-  public GroupMembers createGroupMembers(@RequestBody GroupMembers groupMembers) {
-    return groupMemberService.saveGroupMember(groupMembers);
+  @PostMapping("/add-membership/{signedInUserID}")
+  public GroupMembers createGroupMembers(@RequestBody GroupMembers groupMembers, @PathVariable int signedInUserID) {
+    return groupMemberService.saveGroupMember(groupMembers, signedInUserID);
   }
 
-  @DeleteMapping("/remove-membership")
-  public GroupMembers removeGroupMembers(@RequestBody GroupMembers groupMembers) {
-    return groupMemberService.removeGroupMember(groupMembers);
+  @DeleteMapping("/remove-membership/{signedInUserID}")
+  public GroupMembers removeGroupMembers(@RequestBody GroupMembers groupMembers, @PathVariable int signedInUserID) {
+    return groupMemberService.removeGroupMember(groupMembers, signedInUserID);
   }
 
   @GetMapping("/{id}")
@@ -30,9 +30,14 @@ public class GroupMemberController {
     return groupMemberService.findAllGroupMembersByGroupId(id);
   }
 
-  @PostMapping("/activate-membership")
-  public GroupMembers activateGroupMember(@RequestBody GroupMembers groupMembers) {
-    return groupMemberService.activateGroupMember(groupMembers);
+  @PostMapping("/activate-membership/{signedInUserID}")
+  public GroupMembers activateGroupMember(@RequestBody GroupMembers groupMembers, @PathVariable int signedInUserID) {
+    return groupMemberService.activateGroupMember(groupMembers, signedInUserID);
+  }
+
+  @GetMapping("/user/{userId}")
+  public List<GroupMembers> getGroupsByUserId(@PathVariable int userId) {
+    return groupMemberService.findGroupsByUserId(userId);
   }
 
 }
