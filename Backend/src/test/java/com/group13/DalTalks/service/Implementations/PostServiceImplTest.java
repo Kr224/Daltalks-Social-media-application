@@ -39,4 +39,20 @@ class PostServiceImplTest {
         Post getPost = postService.getPostById(post.getPostId());
         assertEquals(getPost, post);
     }
+
+    @Test
+    void post_testAttributes() {
+        Post post = new Post();
+        post.setUserID(20);
+        post.setPostTitle("Hello everybody");
+        post.setPostBodyContent("Post body content 1");
+
+        postRepository.save(post);
+        Post getPost = postService.getPostById(post.getPostId());
+
+        assertEquals(getPost.getPostTitle(), "Hello everybody", "Incorrect title");
+        assertEquals(getPost.getPostBodyContent(), "Post body content 1", "Incorrect body content");
+        assertEquals(getPost.getPostId(), post.getPostId(), "Wrong id");
+        assertEquals(getPost.getUserID(), 20, "Wrong id");
+    }
 }

@@ -9,6 +9,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -33,6 +34,24 @@ class GroupEntityServiceImplTest {
     GroupEntity returned = groupService.createGroup(group);
 
     assertEquals(group, returned, "Group was not returned!");
+  }
+
+  @Test
+  public void createNewGroup_testAttributes() {
+    GroupEntity group = new GroupEntity();
+    group.setGroupName("Group");
+    group.setCreatorID(1);
+    group.setPrivate(false);
+    group.setCreation_date(new Date());
+
+    when(groupRepository.save(group)).thenReturn(group);
+
+    GroupEntity returned = groupService.createGroup(group);
+
+    assertEquals(group.getGroupName(), returned.getGroupName(), "Names do not match");
+    assertEquals(group.getCreatorID(), returned.getCreatorID(), "IDs do not match");
+    assertEquals(group.isPrivate(), returned.isPrivate(), "Privacy levels do not match");
+    assertEquals(group.getCreation_date(), returned.getCreation_date(), "Names do not match");
   }
 
   @Test
