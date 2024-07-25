@@ -112,10 +112,15 @@ public class UserServiceIntegrationTests {
         user.setSecurityAnswer("What is your mother's maiden name?");
         user.setSecurityAnswer("ABC");
 
+        String expectedMessage = "The email address used is invalid. This application is only targeted for employees" +
+                " and students who are currently enrolled in Dalhousie.";
+
         IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> {
             userService.createUser(user);
         });
-        assertEquals("The email address used is invalid. This application is only targeted for employees and students who are currently enrolled in Dalhousie.", thrown.getMessage());
+
+        String actualMessage = thrown.getMessage();
+        assertEquals(expectedMessage, actualMessage);
     }
 
     @Test
@@ -126,10 +131,15 @@ public class UserServiceIntegrationTests {
         user.setSecurityAnswer("What is your mother's maiden name?");
         user.setSecurityAnswer("ABC");
 
+        String expectedMessage = "Password must be at least 8 characters long, contain at least one uppercase " +
+                "letter, one lowercase letter, one number, and one special character.";
+
         IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> {
             userService.createUser(user);
         });
-        assertEquals("Password must be at least 8 characters long, contain at least one uppercase letter, one lowercase letter, one number, and one special character.", thrown.getMessage());
+
+        String actualMessage = thrown.getMessage();
+        assertEquals(expectedMessage, actualMessage);
     }
 
     @Test
