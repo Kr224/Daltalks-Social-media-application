@@ -5,6 +5,7 @@ import com.group13.DalTalks.model.User;
 import com.group13.DalTalks.repository.FriendshipRepository;
 import com.group13.DalTalks.repository.UserRepository;
 import com.group13.DalTalks.service.Implementations.FriendshipServiceImpl;
+import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -19,6 +20,7 @@ import java.util.Properties;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
+@Transactional
 class FriendshipServiceImplTest {
 
     @Mock

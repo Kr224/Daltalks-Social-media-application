@@ -4,6 +4,7 @@ import com.group13.DalTalks.model.GroupEntity;
 import com.group13.DalTalks.model.GroupMembers;
 import com.group13.DalTalks.model.User;
 import com.group13.DalTalks.repository.GroupMemberRepository;
+import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -17,6 +18,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
+@Transactional
 class GroupMemberServiceImplTest {
   @Mock
   private GroupMemberRepository groupMemberRepository;
