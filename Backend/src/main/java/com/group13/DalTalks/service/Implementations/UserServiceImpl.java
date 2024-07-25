@@ -28,17 +28,25 @@ public class UserServiceImpl implements UserService {
     }
 
     private void validateEmail(String email) {
+        String errorMessage = "The email address used is invalid. This application is only targeted for employees " +
+                "and students who are currently enrolled in Dalhousie.";
+
         if (!email.endsWith("@dal.ca")) {
-            throw new IllegalArgumentException("The email address used is invalid. This application is only targeted for employees and students who are currently enrolled in Dalhousie.");
+            throw new IllegalArgumentException(errorMessage);
         }
     }
 
+
     private void validatePassword(String password) {
         String regex = "^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[^a-zA-Z0-9]).{8,}$";
+        String errorMessage = "Password must be at least 8 characters long, contain at least one uppercase letter, " +
+                "one lowercase letter, one number, and one special character.";
+
         if (!Pattern.compile(regex).matcher(password).matches()) {
-            throw new IllegalArgumentException("Password must be at least 8 characters long, contain at least one uppercase letter, one lowercase letter, one number, and one special character.");
+            throw new IllegalArgumentException(errorMessage);
         }
     }
+
 
     private void checkDuplicateEmail(String email) {
         Optional<User> existingUser = userRepository.findByEmail(email);
@@ -85,19 +93,18 @@ public class UserServiceImpl implements UserService {
     
     @Override
     public List<User> getAllUserExcept(int userID) {
-        return this.userRepository.findAll()
-                                  .stream()
-                                    .filter(user -> user.getId() != userID)
-                                   .filter(user -> user.getStatus() == null)
-                                   .collect(Collectors.toList());
+        List<User> getAllUsers = this.userRepository.findAll();
+        Stream<User> StreamUsers = getAllUsers.stream();
+        Stream<User> filterUsers = StreamUsers.filter(user -> user.getId() != userID);
+        return filterUsers.collect(Collectors.toList());
     }
 
     @Override
     public List<User> getAllPendingUser() {
-        return this.userRepository.findAll()
-                                .stream()
-                                .filter(user -> "pending".equals(user.getStatus()))
-                                .collect(Collectors.toList());
+        List<User> getAllUsers = this.userRepository.findAll();
+        Stream<User> StreamUsers = getAllUsers.stream();
+        Stream<User> filterUsers = StreamUsers.filter(user -> "pending".equals(user.getStatus()));
+        return filterUsers.collect(Collectors.toList());
     }
 
     @Override

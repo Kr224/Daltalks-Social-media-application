@@ -9,6 +9,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -16,6 +17,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
+@Transactional
 class ProfilePageServiceImplTest {
 
   @Mock
@@ -23,6 +25,8 @@ class ProfilePageServiceImplTest {
 
   @InjectMocks
   ProfilePageServiceImpl profilePageServiceImpl;
+
+  private final int userID = 10;
 
   @BeforeEach
   public void setUp() {
@@ -62,11 +66,10 @@ class ProfilePageServiceImplTest {
 
   @Test
   public void getProfileByID_notFound() {
-    int idToFind = 10;
 
-    when(profilePageRepository.findById(idToFind)).thenReturn(Optional.empty());
+    when(profilePageRepository.findById(userID)).thenReturn(Optional.empty());
 
-    ProfilePage result = profilePageServiceImpl.getProfilePageById(idToFind);
+    ProfilePage result = profilePageServiceImpl.getProfilePageById(userID);
 
     assertNull(result, "Profile should not have been found");
   }
@@ -85,11 +88,10 @@ class ProfilePageServiceImplTest {
 
   @Test
   public void getProfilePageByUserID_profileNotPresent() {
-    int idToFind = 10;
 
-    when(profilePageRepository.findByUserID(idToFind)).thenReturn(null);
+    when(profilePageRepository.findByUserID(userID)).thenReturn(null);
 
-    ProfilePage result = profilePageServiceImpl.getProfilePageByUserID(idToFind);
+    ProfilePage result = profilePageServiceImpl.getProfilePageByUserID(userID);
 
     assertNull(result, "Profile page should not have been found!");
   }
@@ -159,11 +161,10 @@ class ProfilePageServiceImplTest {
 
   @Test
   public void deleteProfilePage_notFound() {
-    int idToFind = 10;
 
-    when(profilePageRepository.findById(idToFind)).thenReturn(Optional.empty());
+    when(profilePageRepository.findById(userID)).thenReturn(Optional.empty());
 
-    ProfilePage returned = profilePageServiceImpl.deleteProfilePage(idToFind);
+    ProfilePage returned = profilePageServiceImpl.deleteProfilePage(userID);
 
     assertNull(returned, "Null should have been returned");
   }
