@@ -94,9 +94,11 @@ class GroupMemberServiceImplTest {
 
   @Test
   public void getMembersFromGroup_oneMember() {
+    int groupId = 1;
+
     GroupMembers member1 = new GroupMembers();
     GroupEntity group = new GroupEntity();
-    group.setId(1);
+    group.setId(groupId);
     member1.setActive(true);
     member1.setGroup(group);
 
@@ -113,8 +115,10 @@ class GroupMemberServiceImplTest {
 
   @Test
   public void getMembersFromGroup_twoMembers() {
+    int groupId = 1;
+
     GroupEntity group = new GroupEntity();
-    group.setId(1);
+    group.setId(groupId);
 
 
     GroupMembers member1 = new GroupMembers();
@@ -137,8 +141,10 @@ class GroupMemberServiceImplTest {
 
   @Test
   public void getMembersFromGroup_noMembers() {
+    int groupId = 1;
+
     GroupEntity group = new GroupEntity();
-    group.setId(1);
+    group.setId(groupId);
 
     List<GroupMembers> allMembers = new ArrayList<>();
 
@@ -151,10 +157,13 @@ class GroupMemberServiceImplTest {
 
   @Test
   public void activateGroupMember() {
+    int groupId = 1;
+    int userId = 1;
+
     GroupEntity group = new GroupEntity();
-    group.setId(1);
+    group.setId(groupId);
     User user = new User();
-    user.setId(1);
+    user.setId(userId);
 
     GroupMembers groupMembers = new GroupMembers();
     groupMembers.setGroup(group);
@@ -175,10 +184,14 @@ class GroupMemberServiceImplTest {
 
   @Test
   public void activateGroupMember_nonExistingMember() {
+    int groupId = 1;
+    int creatorId = 1;
+    int userId = 1;
+
     GroupEntity group = new GroupEntity();
-    group.setId(1);
+    group.setId(groupId);
     User user = new User();
-    user.setId(1);
+    user.setId(userId);
 
     GroupMembers groupMembers = new GroupMembers();
     groupMembers.setGroup(group);
@@ -206,13 +219,17 @@ class GroupMemberServiceImplTest {
   @Test
   public void getGroupsByUserId_userHasGroups() {
     int userId = 1;
+    int group1_ID = 1;
+    int group2_ID = 2;
+    int expectedGroupCount = 2;
+
     User user = new User();
     user.setId(userId);
 
     GroupEntity group1 = new GroupEntity();
-    group1.setId(1);
+    group1.setId(group1_ID);
     GroupEntity group2 = new GroupEntity();
-    group2.setId(2);
+    group2.setId(group2_ID);
 
     GroupMembers member1 = new GroupMembers();
     member1.setUser(user);
@@ -230,9 +247,9 @@ class GroupMemberServiceImplTest {
 
     List<GroupMembers> returnedGroups = groupMemberService.findGroupsByUserId(userId);
 
-    assertEquals(2, returnedGroups.size(), "User should have 2 groups.");
-    assertTrue(returnedGroups.stream().anyMatch(gm -> gm.getGroup().getId() == 1), "Returned groups should contain group1.");
-    assertTrue(returnedGroups.stream().anyMatch(gm -> gm.getGroup().getId() == 2), "Returned groups should contain group2.");
+    assertEquals(expectedGroupCount, returnedGroups.size(), "User should have 2 groups.");
+    assertTrue(returnedGroups.stream().anyMatch(gm -> gm.getGroup().getId() == group1_ID), "Returned groups should contain group1.");
+    assertTrue(returnedGroups.stream().anyMatch(gm -> gm.getGroup().getId() == group2_ID), "Returned groups should contain group2.");
   }
 
   @Test
@@ -259,12 +276,16 @@ class GroupMemberServiceImplTest {
 
   @Test
   public void createGroupMember_privateGroup_GroupCreatorAdding() {
+    int groupId = 1;
+    int creatorId = 1;
+    int userId = 1;
+
     GroupEntity group = new GroupEntity();
-    group.setId(1);
+    group.setId(groupId);
     group.setPrivate(true);
-    group.setCreatorID(1);
+    group.setCreatorID(creatorId);
     User user = new User();
-    user.setId(1);
+    user.setId(userId);
 
     int signedInUserID = 1;
 
@@ -285,12 +306,16 @@ class GroupMemberServiceImplTest {
 
   @Test
   public void createGroupMember_privateGroup_GroupCreatorNotAdding() {
+    int groupId = 1;
+    int creatorId = 1;
+    int userId = 1;
+
     GroupEntity group = new GroupEntity();
-    group.setId(1);
+    group.setId(groupId);
     group.setPrivate(true);
-    group.setCreatorID(1);
+    group.setCreatorID(creatorId);
     User user = new User();
-    user.setId(1);
+    user.setId(userId);
 
     int signedInUserID = 5;
 
@@ -309,12 +334,16 @@ class GroupMemberServiceImplTest {
 
   @Test
   public void createGroupMember_privateGroup_GroupCreatorRemoving() {
+    int groupId = 1;
+    int creatorId = 1;
+    int userId = 1;
+
     GroupEntity group = new GroupEntity();
-    group.setId(1);
+    group.setId(groupId);
     group.setPrivate(true);
-    group.setCreatorID(1);
+    group.setCreatorID(creatorId);
     User user = new User();
-    user.setId(1);
+    user.setId(userId);
 
     int signedInUserID = 1;
 
@@ -335,12 +364,16 @@ class GroupMemberServiceImplTest {
 
   @Test
   public void createGroupMember_privateGroup_NotGroupCreatorRemoving() {
+    int groupId = 1;
+    int creatorId = 1;
+    int userId = 1;
+
     GroupEntity group = new GroupEntity();
-    group.setId(1);
+    group.setId(groupId);
     group.setPrivate(true);
-    group.setCreatorID(1);
+    group.setCreatorID(creatorId);
     User user = new User();
-    user.setId(1);
+    user.setId(userId);
 
     int signedInUserID = 10;
 
@@ -360,12 +393,16 @@ class GroupMemberServiceImplTest {
 
   @Test
   public void createGroupMember_privateGroup_GroupCreatorActivating() {
+    int groupId = 1;
+    int creatorId = 1;
+    int userId = 1;
+
     GroupEntity group = new GroupEntity();
-    group.setId(1);
+    group.setId(groupId);
     group.setPrivate(true);
-    group.setCreatorID(1);
+    group.setCreatorID(creatorId);
     User user = new User();
-    user.setId(1);
+    user.setId(userId);
 
     int signedInUserID = 1;
 
@@ -390,12 +427,16 @@ class GroupMemberServiceImplTest {
 
   @Test
   public void createGroupMember_privateGroup_NotGroupCreatorActivating() {
+    int groupId = 1;
+    int creatorId = 1;
+    int userId = 1;
+
     GroupEntity group = new GroupEntity();
-    group.setId(1);
+    group.setId(groupId);
     group.setPrivate(true);
-    group.setCreatorID(1);
+    group.setCreatorID(creatorId);
     User user = new User();
-    user.setId(1);
+    user.setId(userId);
 
     int signedInUserID = 10;
 
