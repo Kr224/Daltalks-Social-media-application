@@ -23,6 +23,10 @@ public class UserController {
     @Autowired
     private FriendshipService friendshipService;
 
+    private int unauthorized = 401;
+    private int map = 404;
+    private int clientError = 400;
+
     @GetMapping("/friends/{userId}")     // Endpoint for fetching the users friends
     public ResponseEntity<List<User>> getFriends(@PathVariable int userId) {
         List<User> friends = friendshipService.getFriends(userId);
@@ -66,7 +70,7 @@ public class UserController {
             String result = userService.createUser(user);
             return ResponseEntity.ok(result);
         } catch (IllegalArgumentException e) {
-            return ResponseEntity.status(401).body(e.getMessage());
+            return ResponseEntity.status(unauthorized).body(e.getMessage());
         }
     }
 
@@ -76,7 +80,7 @@ public class UserController {
             User user = userService.login(loginRequest.getEmail(), loginRequest.getPassword());
             return ResponseEntity.ok(user);
         } catch (IllegalArgumentException e) {
-            return ResponseEntity.status(400).body(e.getMessage());
+            return ResponseEntity.status(clientError).body(e.getMessage());
         }
     }
 
@@ -87,7 +91,7 @@ public class UserController {
             return ResponseEntity.ok(user);
         }
         catch (IllegalArgumentException e) {
-            return ResponseEntity.status(404).body(e.getMessage());
+            return ResponseEntity.status(map).body(e.getMessage());
         }
     }
 
@@ -99,7 +103,7 @@ public class UserController {
             userService.resetPassword(email, newPassword);
             return ResponseEntity.ok("Password reset successful!");
         } catch (IllegalArgumentException e) {
-            return ResponseEntity.status(400).body(e.getMessage());
+            return ResponseEntity.status(clientError).body(e.getMessage());
         }
     }
 
