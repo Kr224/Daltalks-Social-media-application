@@ -49,7 +49,7 @@ const Admin = () => {
 
     const fetchUser = async () => {
         try{
-            const response1 = await axios.get('http://localhost:8080/api/user/getAllUser');
+            const response1 = await axios.get('http://localhost:8080/api/user/getAllApprovedUser');
             const fetchedUser = response1.data;
             setUsers(fetchedUser);
         } catch (error) {
@@ -76,6 +76,7 @@ const Admin = () => {
         try {
             await axios.put(`http://localhost:8080/api/user/acceptUser/${userID}`);
             fetchPendingUser();
+            fetchUser();
         } catch (error) {
             alert(error);
         }

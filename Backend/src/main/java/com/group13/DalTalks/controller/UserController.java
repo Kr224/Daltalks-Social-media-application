@@ -113,6 +113,11 @@ public class UserController {
         return userService.getAllPendingUser();
     }
 
+    @GetMapping("/getAllApprovedUser")
+    public List<User> getAllApprovedUser(){
+        return userService.getAllApprovedUser();
+    }
+
     @GetMapping("/getAllUser")
     public List<User> getAllUsers(){
         return userService.getAllUsers();
