@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 
 import java.util.regex.Pattern;
 import java.util.*;
+import java.util.stream.Stream;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -85,8 +86,9 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<User> getAllUserExcept(int userID) {
         return this.userRepository.findAll()
-                                   .stream()
-                                   .filter(user -> user.getId() != userID)
+                                  .stream()
+                                    .filter(user -> user.getId() != userID)
+                                   .filter(user -> user.getStatus() == null)
                                    .collect(Collectors.toList());
     }
 
@@ -101,6 +103,14 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<User> getAllUsers() {
         return this.userRepository.findAll();
+    }
+
+    @Override
+    public List<User> getAllApprovedUser(){
+        List<User> getAllUsers = this.userRepository.findAll();
+        Stream<User> StreamUsers = getAllUsers.stream();
+        Stream<User> filterUsers = StreamUsers.filter(user -> user.getStatus() == null);
+        return filterUsers.collect(Collectors.toList());
     }
 
     @Override
