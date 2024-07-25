@@ -5,6 +5,7 @@ import com.group13.DalTalks.model.User;
 import com.group13.DalTalks.repository.FriendshipRepository;
 import com.group13.DalTalks.repository.UserRepository;
 import com.group13.DalTalks.service.Implementations.FriendshipServiceImpl;
+import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -19,6 +20,7 @@ import java.util.Properties;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
+@Transactional
 class FriendshipServiceImplTest {
 
     @Mock
@@ -34,16 +36,20 @@ class FriendshipServiceImplTest {
     private User user2;
     private Friendship friendship;
 
+    private final int userID_1 = 1;
+
+    private final int userID_2 = 2;
+
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
 
         user1 = new User();
-        user1.setId(1);
+        user1.setId(userID_1);
         user1.setEmail("user1@example.com");
 
         user2 = new User();
-        user2.setId(2);
+        user2.setId(userID_2);
         user2.setEmail("user2@example.com");
 
         friendship = new Friendship();

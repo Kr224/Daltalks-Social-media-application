@@ -51,13 +51,18 @@ class UserServiceImplJUnitTest {
 
     @Test
     void getAllPendingUser() {
-        User user1 = new User("Alice@dal.ca", "Pending!123", "What is your mother's maiden name?", "Camille", "pending", "user");
-        userService.createUser(user1);
+        createPendingUser("Alice@dal.ca", "Pending!123", "What is your mother's maiden name?", "Camille");
 
-        List<User> getAllPendingUser = userService.getAllPendingUser();
+        List<User> pendingUsers = userService.getAllPendingUser();
 
-        assertEquals(1, getAllPendingUser.size());
+        assertEquals(1, pendingUsers.size());
     }
+
+    private void createPendingUser(String email, String password, String securityQuestion, String securityAnswer) {
+        User user = new User(email, password, securityQuestion, securityAnswer, "pending", "user");
+        userService.createUser(user);
+    }
+
 
     @Test
     void getAllUsers() {
