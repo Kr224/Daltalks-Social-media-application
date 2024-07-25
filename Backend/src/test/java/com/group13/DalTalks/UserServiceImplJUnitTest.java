@@ -39,6 +39,17 @@ class UserServiceImplJUnitTest {
     }
 
     @Test
+    void getAllApprovedUser() {
+        User user1 = new User("Alice@dal.ca", "Pending!123", "What is your mother's maiden name?", "Camille", "pending", "user");
+        userRepository.save(user1);
+
+        List<User> getAllApprovedUser = userService.getAllApprovedUser();
+        List<User> allUser = userService.getAllUsers();
+
+        assertEquals(allUser.size()-1, getAllApprovedUser.size());
+    }
+
+    @Test
     void getAllPendingUser() {
         User user1 = new User("Alice@dal.ca", "Pending!123", "What is your mother's maiden name?", "Camille", "pending", "user");
         userService.createUser(user1);

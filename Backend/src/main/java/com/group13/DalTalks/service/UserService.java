@@ -22,6 +22,8 @@ public interface UserService {
     
     List<User> getAllUsers();
 
+    List<User> getAllApprovedUser();
+
     String acceptUser(int userID);
 
     void deleteUser(int userID);

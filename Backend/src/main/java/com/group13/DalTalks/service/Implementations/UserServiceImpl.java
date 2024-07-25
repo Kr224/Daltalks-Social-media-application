@@ -105,6 +105,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public List<User> getAllApprovedUser(){
+        List<User> getAllUsers = this.userRepository.findAll();
+        Stream<User> StreamUsers = getAllUsers.stream();
+        Stream<User> filterUsers = StreamUsers.filter(user -> user.getStatus() == null);
+        return filterUsers.collect(Collectors.toList());
+    }
+
+    @Override
     public String getEmailByUserID(Integer userID) {
         Optional<User> userOptional = userRepository.findById(userID);
         if (userOptional.isPresent()) {
