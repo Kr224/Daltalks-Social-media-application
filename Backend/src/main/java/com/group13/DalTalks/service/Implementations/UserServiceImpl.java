@@ -85,19 +85,18 @@ public class UserServiceImpl implements UserService {
     
     @Override
     public List<User> getAllUserExcept(int userID) {
-        return this.userRepository.findAll()
-                                  .stream()
-                                    .filter(user -> user.getId() != userID)
-                                   .filter(user -> user.getStatus() == null)
-                                   .collect(Collectors.toList());
+        List<User> getAllUsers = this.userRepository.findAll();
+        Stream<User> StreamUsers = getAllUsers.stream();
+        Stream<User> filterUsers = StreamUsers.filter(user -> user.getId() != userID);
+        return filterUsers.collect(Collectors.toList());
     }
 
     @Override
     public List<User> getAllPendingUser() {
-        return this.userRepository.findAll()
-                                .stream()
-                                .filter(user -> "pending".equals(user.getStatus()))
-                                .collect(Collectors.toList());
+        List<User> getAllUsers = this.userRepository.findAll();
+        Stream<User> StreamUsers = getAllUsers.stream();
+        Stream<User> filterUsers = StreamUsers.filter(user -> "pending".equals(user.getStatus()));
+        return filterUsers.collect(Collectors.toList());
     }
 
     @Override
